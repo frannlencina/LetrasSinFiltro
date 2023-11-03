@@ -17,11 +17,36 @@
 }
 
 body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+  background-color: #F9F9F9;
+}
+
+#heroTitle {
+  background: linear-gradient(270deg, #106BEB 69.08%, rgba(184, 213, 255, 0.70) 98.29%);
+  background-clip: text;
+  
+}
+
+#heroTitleSecond {
+  color: #18181B;
+}
+
+#heroTitleThirst {
+ background: linear-gradient(90deg, #106BEB 30.59%, rgba(16, 107, 235, 0.00) 89.37%);
+background-clip: text;
+-webkit-background-clip: text;
+-webkit-text-fill-color: transparent;
+}
+
+#mainCard{
+  background-image: url('/background-main-card.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+Footer{
+  background-image: url('/footer-background.png');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
 }
