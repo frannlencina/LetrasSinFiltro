@@ -8,7 +8,7 @@ export default function Footer() {
         instagram: {
             name: "Instagram",
             logoSrc: "/instagram-logo.png",
-            desc: "For announcements, tips and general information.",
+            desc: "For announcements, updates and exclusive information.",
             link: "https://www.instagram.com/fran.lencinaa/"
         },
         twitter: {
@@ -20,7 +20,7 @@ export default function Footer() {
         cafecito: {
             name: "Cafecito",
             logoSrc: "/cafecito-logo.jpg",
-            desc: "For announcements, tips and general information.",
+            desc: "To help keep this beautiful project going",
             link: "https://cafecito.app/"
         },
     };
