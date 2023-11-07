@@ -1,15 +1,44 @@
-import { FC, useState } from 'react';
+'use client'
+import { useEffect } from 'react';
 import Image from 'next/image';
 import { useEmotion } from '../context/EmotionContext';
+import { useSearchParams, useRouter } from 'next/navigation'
 
-const EmotionButtons: FC = () => {
+const EmotionButtons = () => {
+    const router = useRouter();
 
+
+    const searchParams = useSearchParams()
+    const focus = searchParams.get('focus')
 
     const { changeEmotion, emotion } = useEmotion();
 
-    const handleButtonClick = (newEmotion: string) => {
+    const handleButtonClick = (newEmotion) => {
         changeEmotion(newEmotion);
+
+        // Verificación de router para uso en el cliente
+        if (router) {
+            router.push(`/?focus=${newEmotion}`, {shallow: true, scroll: false });
+        }
     };
+
+    useEffect(() => {
+        console.log(focus);
+        if (focus) {
+            // Validación para permitir solo ciertos valores
+            const allowedEmotions = ['Triste', 'Enamorado', 'Feliz', 'Enojado', 'Loco'];
+            if (allowedEmotions.includes(focus)) {
+                changeEmotion(focus);
+            } else {
+                console.log('No es una emoción permitida');
+            }
+        } else {
+            console.log('No hay focus');
+        }
+    }, []);
+    
+    
+
 
     const images = [
         { src: "/memoji-triste.png", alt: "Memoji triste", emotion: "Triste" },
@@ -20,7 +49,6 @@ const EmotionButtons: FC = () => {
     ];
 
     return (
-
         <>
             <div className='max-w-6xl'>
                 <div className="flex gap-4 items-center">
@@ -32,27 +60,24 @@ const EmotionButtons: FC = () => {
                             <path d="M12 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"></path>
                             <path d="M12 12m-5 0a5 5 0 1 0 10 0a5 5 0 1 0 -10 0"></path>
                             <path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0"></path>
-                        </svg>                    
+                        </svg>
                     </div>
-
                     <p className="opacity-100  select-none  bg-blue-200 text-blue-500  rounded-lg px-2 py-[2px] text-center text-md">{emotion}</p>
                 </div>
             </div>
             <hr />
             <div className='flex gap-4'>
-                {
-                    images.map((image, index) => (
-                        <button key={index} onClick={() => handleButtonClick(image.emotion)}>
-                            <Image
-                                className={image.emotion === emotion ? 'rounded-lg cursor-pointer bg-blue-500 scale-110' : 'rounded-lg cursor-pointer hover:scale-110 transition-all hover:bg-blue-500 '}
-                                src={image.src}
-                                width={80}
-                                height={80}
-                                alt={image.alt}
-                            />
-                        </button>
-                    ))
-                }
+                {images.map((image, index) => (
+                    <button key={index} onClick={() => handleButtonClick(image.emotion)}>
+                        <Image
+                            className={image.emotion === emotion ? 'rounded-lg cursor-pointer bg-blue-500 scale-110' : 'rounded-lg cursor-pointer hover:scale-110 transition-all hover:bg-blue-500 '}
+                            src={image.src}
+                            width={80}
+                            height={80}
+                            alt={image.alt}
+                        />
+                    </button>
+                ))}
             </div>
         </>
     );
