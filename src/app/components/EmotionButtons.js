@@ -54,8 +54,8 @@ const EmotionButtons = () => {
                 <div className="flex gap-4 items-center">
                     <h4 className="font-black text-black text-2xl ">Mood</h4>
                     <div className='relative group'>
-                        <span className='hidden group-hover:block  absolute z-20 text-blue-200 font-medium bg-blue-800 rounded-lg text-xs -translate-y-8 -translate-x-3 px-2 py-[2px] '>focus</span>
-                        <svg className="icon icon-tabler icon-tabler-target opacity-10" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                        <span className='hidden group-hover:block group-hover:animate-fadeIn  absolute z-20 text-blue-200 font-medium bg-blue-800 rounded-lg text-xs -translate-y-8 -translate-x-3 px-2 py-[2px] '>focus</span>
+                        <svg className="icon icon-tabler icon-tabler-target opacity-10" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" fill="none" strokeLinecap="round" strokeLinejoin="round">
                             <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
                             <path d="M12 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"></path>
                             <path d="M12 12m-5 0a5 5 0 1 0 10 0a5 5 0 1 0 -10 0"></path>

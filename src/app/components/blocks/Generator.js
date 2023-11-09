@@ -4,6 +4,8 @@ import * as htmlToImage from 'html-to-image';
 import { useState } from "react";
 import { stylesToolsGen } from "@/app/utils/styles";
 import { useEmotion } from "@/app/context/EmotionContext";
+import MenubarGen from "./MenubarGen";
+
 export default function Generator() {
 
     const { emotion } = useEmotion()
@@ -24,7 +26,7 @@ export default function Generator() {
             console.error('Elemento no encontrado');
         }
     }
-    
+
     {/* Simulacion temporal  almacenamiento de frases. Proximamente utilizacion de API en IA */ }
 
     const frases = {
@@ -161,7 +163,7 @@ export default function Generator() {
                 setFraseFocus(frases.locura);
                 break;
             default:
-                setFraseFocus(frases.felicidad);
+                setFraseFocus(['Por favor selecciona un mood']);
                 break;
         }
         const randomIndex = Math.floor(Math.random() * fraseFocus.length);
@@ -173,14 +175,14 @@ export default function Generator() {
         <div>
             <div id="mainCard" className="pb-32">
                 <div className="min-w-[450px] min-h-[450px] flex justify-center items-center">
-                    <div id="elementToDownload" className="hover:scale-105 transition-all duration-200">
+                    <div id="elementToDownload" className="transition-all duration-200 mt-28">
                         <CardTemplate text={textFocus} />
                     </div>
                 </div>
                 <div className="flex justify-between max-w-[50%] mx-auto text-2xl translate-y-4">
                     <div className="flex gap-4">
-                        <button onClick={reloadTextFocus} className={`text-blue-600 ` + stylesToolsGen.common}><i className="ri-loop-left-line"></i></button>
-                        <button className={`text-yellow-400 ` + stylesToolsGen.common}><i className="ri-star-line"></i></button>
+                        <button onClick={reloadTextFocus} className='text-blue-500 hover:bg-blue- px-2 py-1 rounded-xl transition-all duration-200'><i className="ri-loop-left-line"></i></button>
+                        <button className='text-yellow-500 hover:bg-yellow-100 px-2 py-1 rounded-xl transition-all duration-200'><i className="ri-star-line"></i></button>
                     </div>
                     <div className="flex gap-4 opacity-50">
                         <button className={stylesToolsGen.common} ><i className="ri-share-forward-line"></i></button>
