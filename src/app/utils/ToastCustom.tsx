@@ -30,7 +30,7 @@ export const selectTemplate = () => {
             </div>
                 <button
                     onClick={() => toast.dismiss(t.id)}
-                    className="w-fit text-xl h-fit border border-transparent rounded-2xl px-2 py-1 m-2 flex items-center justify-center font-medium text-red-600 hover:text-red-500 focus:outline-none focus:ring-2 focus:ring-red-500"
+                    className="w-fit text-xl h-fit border border-transparent rounded-2xl px-2 py-1 m-2 flex items-center justify-center font-medium  text-red-600 hover:text-red-300 focus:outline-none focus:ring-2 focus:ring-red-500"
                 >
                     <i className="ri-close-fill pointer-events-none"></i>
                 </button>

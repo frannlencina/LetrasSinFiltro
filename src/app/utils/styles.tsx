@@ -5,7 +5,8 @@ export const stylesNavFooter = {
 }
 
 export const stylesToolsGen = {
-    common: "hover:bg-stone-300 px-2 py-1 rounded-xl transition-all duration-200"
+    common: "hover:scale-110 px-2 py-1 rounded-xl transition-all duration-200",
+    disable: "opacity-20 pointer-events-none"
 }
 
 // Radix Ui Component

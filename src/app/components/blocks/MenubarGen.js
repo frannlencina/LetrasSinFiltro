@@ -7,9 +7,9 @@ import Image from 'next/image';
 
 import { selectTemplate } from '../../utils/ToastCustom'
 export default function MenubarGen() {
-    
+
     {/* Simulacion temporal  almacenamiento de plantillas. Proximamente utilizacion JSONS y BD */ }
-    
+
     const plantillas = [
         { src: "/templates/magnum.png", alt: "Plantilla Colocial", name: "Colocial" },
         { src: "/templates/magnum.png", alt: "Plantilla Griego", name: "Griego" },
@@ -35,8 +35,10 @@ export default function MenubarGen() {
                         </Dialog.Trigger>
                         <Dialog.Portal>
                             <Dialog.Overlay id='dialog-over' className="bg-black bg-opacity-50 fixed inset-0 z-10 animate-fadeIn" />
-                            <Dialog.Content  className="fixed animate-scaleIn z-20 top-[50%] left-[50%] overscroll-y-none w-[90vw] max-w-[800px] translate-x-[-50%] translate-y-[-50%] rounded-[6px] bg-white p-[25px]" onInteractOutside={handleOutsideClick}>
-                                <Badge text='Las plantillas del generador no son las mismas que el sector comunidad.' icon={true} type='yellow' />
+                            <Dialog.Content className="fixed z-20 md:px-16 top-[50%] left-[50%] overscroll-y-none w-[90vw] max-w-[800px] translate-x-[-50%] translate-y-[-50%] rounded-[6px] bg-white p-[25px]" onInteractOutside={handleOutsideClick}>
+                                <div className='flex items-center justify-center'>
+                                    <Badge text='Las plantillas del generador no son las mismas que el sector comunidad.' icon={true} type='yellow' />
+                                </div>
                                 <Dialog.Title className="m-0 mt-4 text-lg font-medium">
                                     Plantillas
                                 </Dialog.Title>
@@ -47,8 +49,8 @@ export default function MenubarGen() {
                                 <div className='grid grid-cols-1 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4 gap-2 place-items-center'>
                                     {plantillas.map((item, index) => (
                                         <div>
-                                            <div className='relative group rounded-lg  '>
-                                                <div onClick={selectTemplate} className='hidden absolute w-full h-full group-hover:flex items-center justify-center bg-blue-600 bg-opacity-70 rounded-lg cursor-pointer '>
+                                            <div className='relative group rounded-lg'>
+                                                <div onClick={selectTemplate} className='hidden absolute w-full h-full group-hover:flex items-center justify-center bg-blue-600 bg-opacity-70 rounded-lg cursor-pointer hover:ring-4 focus:ring-blue-800'>
                                                     <div className='font-bold text-white select-none text-4xl'><i class="ri-check-line"></i></div>
                                                 </div>
                                                 <Image
@@ -61,7 +63,7 @@ export default function MenubarGen() {
                                             </div>
                                             <div className='text-sm opacity-70 flex items-center font-medium gap-2 mt-2' key={index}>
                                                 {item.name}
-                                                <Badge icon={false} text='new' type='green' />
+                                                <Badge icon={false} text='new' type='blue' />
                                             </div>
                                         </div>
                                     ))}
@@ -79,7 +81,7 @@ export default function MenubarGen() {
                 </Menubar.Menu>
 
                 <Menubar.Menu>
-                    <Menubar.Trigger className={stylesMenuBar.trigger}>Config</Menubar.Trigger>
+                    <Menubar.Trigger className={stylesMenuBar.trigger}>Editar</Menubar.Trigger>
                     <Menubar.Portal>
                         <Menubar.Content className={stylesMenuBar.content} align="start" sideOffset={5} alignOffset={-3}>
                             <Menubar.Item className={stylesMenuBar.item}>
@@ -95,36 +97,12 @@ export default function MenubarGen() {
                     </Menubar.Portal>
                 </Menubar.Menu>
                 <Menubar.Menu>
-                    <Menubar.Trigger className='opacity-50 pointer-events-none mx-2'>Soon</Menubar.Trigger>
+                    <Menubar.Trigger className={stylesMenuBar.trigger}>Favorito</Menubar.Trigger>
                     <Menubar.Portal>
-                        <Menubar.Content
-                            className="MenubarContent"
-                            align="start"
-                            sideOffset={5}
-                            alignOffset={-14}
-                        >
-
-                            <Menubar.CheckboxItem
-                                className="MenubarCheckboxItem inset"
-
-                            >
-                                <Menubar.ItemIndicator className="MenubarItemIndicator">
-
-                                </Menubar.ItemIndicator>
-
-                            </Menubar.CheckboxItem>
-
-                            <Menubar.Separator className="MenubarSeparator" />
-                            <Menubar.Item className="MenubarItem inset">
-                                Reload <div className="RightSlot">⌘ R</div>
-                            </Menubar.Item>
-                            <Menubar.Item className="MenubarItem inset" disabled>
-                                Force Reload <div className="RightSlot">⇧ ⌘ R</div>
-                            </Menubar.Item>
-                            <Menubar.Separator className="MenubarSeparator" />
-                            <Menubar.Item className="MenubarItem inset">Toggle Fullscreen</Menubar.Item>
-                            <Menubar.Separator className="MenubarSeparator" />
-                            <Menubar.Item className="MenubarItem inset">Hide Sidebar</Menubar.Item>
+                    <Menubar.Content>
+                        <Menubar.Item>
+                           
+                        </Menubar.Item>
                         </Menubar.Content>
                     </Menubar.Portal>
                 </Menubar.Menu>
