@@ -4,6 +4,7 @@ import Generator from "./components/blocks/Generator";
 import EmotionButtons from './components/EmotionButtons'
 import { EmotionProvider, useEmotion } from "./context/EmotionContext";
 import MenubarGen from './components/blocks/MenubarGen'
+import { Toaster } from 'react-hot-toast';
 
 export default function Home() {
 
@@ -20,7 +21,9 @@ export default function Home() {
   return (
     <>
       <EmotionProvider>
+        
         <main className="flex min-h-screen flex-col items-center justify-center max-w-6xl mx-auto">
+                <Toaster />
           <div className="flex flex-col items-center justify-center pt-48 pb-12">
 
             <Badge text="Alpha v1.0" type="yellow" icon={true} />

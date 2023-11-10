@@ -61,3 +61,15 @@ Footer{
     }
   }
 }
+
+@layer utilities {
+  @keyframes scaleIn {
+    from {
+      transform: scale3d(1);
+    }
+    to {
+      transform: scale3d(1.5);
+    }
+  }
+}
+

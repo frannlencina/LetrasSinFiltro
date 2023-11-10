@@ -175,13 +175,15 @@ export default function Generator() {
         <div>
             <div id="mainCard" className="pb-32">
                 <div className="min-w-[450px] min-h-[450px] flex justify-center items-center">
-                    <div id="elementToDownload" className="transition-all duration-200 mt-28">
+                    <div className="mt-32">
+                    <div id="elementToDownload" className="transition-all duration-200">
                         <CardTemplate text={textFocus} />
+                    </div>
                     </div>
                 </div>
                 <div className="flex justify-between max-w-[50%] mx-auto text-2xl translate-y-4">
                     <div className="flex gap-4">
-                        <button onClick={reloadTextFocus} className='text-blue-500 hover:bg-blue- px-2 py-1 rounded-xl transition-all duration-200'><i className="ri-loop-left-line"></i></button>
+                        <button onClick={reloadTextFocus} className='text-blue-500 hover:bg-blue-200 focus:bg-blue-200  hover:scale-105 hover:rotate-180 focus:ring-4 focsu:ring-blue-500  px-2 py-1 rounded-xl transition-all duration-200'><i className="ri-loop-left-line"></i></button>
                         <button className='text-yellow-500 hover:bg-yellow-100 px-2 py-1 rounded-xl transition-all duration-200'><i className="ri-star-line"></i></button>
                     </div>
                     <div className="flex gap-4 opacity-50">

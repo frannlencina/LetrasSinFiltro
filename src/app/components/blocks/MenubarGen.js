@@ -4,8 +4,12 @@ import * as Dialog from '@radix-ui/react-dialog';
 import { stylesMenuBar } from '@/app/utils/styles';
 import Badge from '../Badge';
 import Image from 'next/image';
+
+import { selectTemplate } from '../../utils/ToastCustom'
 export default function MenubarGen() {
+    
     {/* Simulacion temporal  almacenamiento de plantillas. Proximamente utilizacion JSONS y BD */ }
+    
     const plantillas = [
         { src: "/templates/magnum.png", alt: "Plantilla Colocial", name: "Colocial" },
         { src: "/templates/magnum.png", alt: "Plantilla Griego", name: "Griego" },
@@ -13,11 +17,17 @@ export default function MenubarGen() {
         { src: "/templates/magnum.png", alt: "Plantilla Magnum", name: "Magnum" },
         { src: "/templates/magnum.png", alt: "Plantilla Say", name: "Say" },
     ];
+
+    // Funcion para detener el auto cerrado del Modal 
+    const handleOutsideClick = (e) => {
+        e.preventDefault();
+    }
     return (
         <>
+
             <Menubar.Root className={stylesMenuBar.root}>
                 <Menubar.Menu>
-                    <Dialog.Root>
+                    <Dialog.Root  >
                         <Dialog.Trigger className={stylesMenuBar.trigger} asChild>
                             <button>
                                 Plantilla
@@ -25,20 +35,20 @@ export default function MenubarGen() {
                         </Dialog.Trigger>
                         <Dialog.Portal>
                             <Dialog.Overlay id='dialog-over' className="bg-black bg-opacity-50 fixed inset-0 z-10 animate-fadeIn" />
-                            <Dialog.Content className="fixed z-20 top-[50%] left-[50%] overscroll-y-none  w-[90vw] max-w-[800px] translate-x-[-50%] translate-y-[-50%] rounded-[6px] bg-white p-[25px]">
+                            <Dialog.Content  className="fixed animate-scaleIn z-20 top-[50%] left-[50%] overscroll-y-none w-[90vw] max-w-[800px] translate-x-[-50%] translate-y-[-50%] rounded-[6px] bg-white p-[25px]" onInteractOutside={handleOutsideClick}>
                                 <Badge text='Las plantillas del generador no son las mismas que el sector comunidad.' icon={true} type='yellow' />
-                                <Dialog.Title className="m-0 mt-4 text-[17px] font-medium">
+                                <Dialog.Title className="m-0 mt-4 text-lg font-medium">
                                     Plantillas
                                 </Dialog.Title>
-                                <Dialog.Description className=" mt-[10px] text-[15px]">
+                                <Dialog.Description className=" mt-[10px] text-md">
                                     Elige la plantilla que mas te guste y usala a tu gusto
                                 </Dialog.Description>
                                 <hr className='my-6' />
                                 <div className='grid grid-cols-1 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4 gap-2 place-items-center'>
                                     {plantillas.map((item, index) => (
                                         <div>
-                                            <div className='relative group rounded-lg '>
-                                                <div className='hidden absolute w-full h-full group-hover:flex items-center justify-center bg-blue-600 bg-opacity-70 rounded-lg cursor-pointer '>
+                                            <div className='relative group rounded-lg  '>
+                                                <div onClick={selectTemplate} className='hidden absolute w-full h-full group-hover:flex items-center justify-center bg-blue-600 bg-opacity-70 rounded-lg cursor-pointer '>
                                                     <div className='font-bold text-white select-none text-4xl'><i class="ri-check-line"></i></div>
                                                 </div>
                                                 <Image
@@ -58,19 +68,11 @@ export default function MenubarGen() {
                                 </div>
                                 <div className="mt-[25px] flex justify-end">
                                     <Dialog.Close asChild>
-                                        <button className="bg-green4 text-green11 hover:bg-green5 focus:shadow-green7 inline-flex h-[35px] items-center justify-center rounded-[4px] px-[15px] font-medium leading-none focus:shadow-[0_0_0_2px] focus:outline-none">
+                                        <button className="bg-green4 hover:bg-red-200 transition-all  text-red-600 text-green11 hover:bg-green5 focus:shadow-green7 inline-flex h-[35px] items-center justify-center rounded-[4px] px-[15px] font-medium leading-none focus:shadow-[0_0_0_2px] focus:outline-none">
                                             Cerrar
                                         </button>
                                     </Dialog.Close>
                                 </div>
-                                <Dialog.Close asChild>
-                                    <button
-                                        className="text-violet11 hover:bg-violet4 focus:shadow-violet7 absolute top-[10px] right-[10px] inline-flex h-[25px] w-[25px] appearance-none items-center justify-center rounded-full focus:shadow-[0_0_0_2px] focus:outline-none"
-                                        aria-label="Close"
-                                    >
-
-                                    </button>
-                                </Dialog.Close>
                             </Dialog.Content>
                         </Dialog.Portal>
                     </Dialog.Root>
@@ -92,7 +94,6 @@ export default function MenubarGen() {
                         </Menubar.Content>
                     </Menubar.Portal>
                 </Menubar.Menu>
-
                 <Menubar.Menu>
                     <Menubar.Trigger className='opacity-50 pointer-events-none mx-2'>Soon</Menubar.Trigger>
                     <Menubar.Portal>

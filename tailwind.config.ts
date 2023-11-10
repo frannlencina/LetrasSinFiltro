@@ -15,6 +15,7 @@ const config: Config = {
       },
       animation: {
         fadeIn: "fadeIn 0.3s ease-in",
+        scaleIn: "scaleIn 0.3s ease-in"
       },
     },
   },
