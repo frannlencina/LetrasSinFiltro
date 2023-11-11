@@ -5,14 +5,11 @@ import * as htmlToImage from 'html-to-image';
 import { useState } from "react";
 import { stylesToolsGen } from "@/app/utils/styles";
 import { useEmotion } from "@/app/context/EmotionContext";
-import { stylesMenuBar } from '@/app/utils/styles';
-
 
 
 export default function Generator() {
 
     const { emotion } = useEmotion()
-
     const downloadToImage = async () => {
         const element = document.getElementById('elementToDownload');
         if (element) {
@@ -174,12 +171,28 @@ export default function Generator() {
         setTextFocus(fraseSeleccionada);
     };
 
-   
-
     const onCopyUrl = () => {
         const currentURL = window.location.href;
         navigator.clipboard.writeText(currentURL)
     }
+
+    const copyToClipboard = () => {
+        if (textFocus !== 'Por favor selecciona un mood') {
+            if (!navigator.clipboard) {
+                alert("Your browser doesn't support this feature.")
+            } else {
+                try {
+                    navigator.clipboard.writeText(textFocus);
+                } catch (err) {
+                    console.error('Async: Could not copy text: ', err);
+                }
+            }
+        } else {
+            alert('No hay ninguna frase')
+        }
+    }
+
+    const textTwit = 'hola como estas'
 
     return (
         <div>
@@ -198,19 +211,25 @@ export default function Generator() {
                     </div>
                     <div className="flex gap-4 opacity-50 items-center">
                         <button className={stylesToolsGen.common} >
-                            <Popover.Root>
+                            <Popover.Root >
                                 <Popover.Trigger asChild>
                                     <button className="IconButton" aria-label="Update dimensions">
                                         <i className="ri-share-forward-line"></i>
                                     </button>
                                 </Popover.Trigger>
-                                <Popover.Portal>
-                                    <Popover.Content className="PopoverContent" sideOffset={5}>
-                                        <div className="flex flex-col gap-10">
-                                           <button className={stylesMenuBar.item}  onClick={onCopyUrl}>Copiar URL</button>
+                                <Popover.Portal >
+                                    <Popover.Content className="flex divide-y flex-col gap-2 items-center bg-white p-2 rounded-lg" sideOffset={5}>
+                                        <div className="text-center items-center">
+                                            <a className={stylesToolsGen.shareButtons} href={`https://twitter.com/intent/tweet?text=${textFocus}`} target="_blank"><i class="ri-twitter-x-line"></i></a>
                                         </div>
                                         
-                                        <Popover.Arrow className="PopoverArrow" />
+                                        <div>
+                                            <button className={stylesToolsGen.shareButtons} onClick={onCopyUrl}>Copiar Url</button>
+                                        </div>
+                                        <div>
+                                            <button className={stylesToolsGen.shareButtons} onClick={() => copyToClipboard()}>Copiar Txt</button>
+                                        </div>
+                                        <Popover.Arrow className="opacity-30" />
                                     </Popover.Content>
                                 </Popover.Portal>
                             </Popover.Root></button>
@@ -218,6 +237,6 @@ export default function Generator() {
                     </div>
                 </div>
             </div>
-        </div>
+        </div >
     )
 }
