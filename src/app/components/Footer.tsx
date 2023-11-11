@@ -9,19 +9,19 @@ export default function Footer() {
             name: "Instagram",
             logoSrc: "/instagram-logo.png",
             desc: "For announcements, updates and exclusive information.",
-            link: "https://www.instagram.com/fran.lencinaa/"
+            link: "https://www.instagram.com/letrassinnfiltro/"
         },
         twitter: {
             name: "Twitter/X",
             logoSrc: "/x-logo.png",
             desc: "For announcements, tips and general information.",
-            link: "https://twitter.com/franlencinaa"
+            link: "https://twitter.com/letrass1nfiltro"
         },
         cafecito: {
             name: "Cafecito",
             logoSrc: "/cafecito-logo.jpg",
             desc: "To help keep this beautiful project going",
-            link: "https://cafecito.app/"
+            link: "https://cafecito.app/letrassinfiltro"
         },
     };
     return (

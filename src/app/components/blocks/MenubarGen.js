@@ -107,32 +107,7 @@ export default function MenubarGen() {
                     </Menubar.Portal>
                 </Menubar.Menu>
 
-                <Menubar.Menu>
-                    <Menubar.Trigger className='opacity-50 pointer-events-none'>Soon</Menubar.Trigger>
-                    <Menubar.Portal>
-                        <Menubar.Content
-                            className="MenubarContent"
-                            align="start"
-                            sideOffset={5}
-                            alignOffset={-14}
-                        >
-                            <Menubar.RadioGroup>
 
-                                <Menubar.RadioItem className="MenubarRadioItem inset">
-                                    <Menubar.ItemIndicator className="MenubarItemIndicator">
-
-                                    </Menubar.ItemIndicator>
-
-                                </Menubar.RadioItem>
-
-                                <Menubar.Separator className="MenubarSeparator" />
-                                <Menubar.Item className="MenubarItem inset">Edit…</Menubar.Item>
-                                <Menubar.Separator className="MenubarSeparator" />
-                                <Menubar.Item className="MenubarItem inset">Add Profile…</Menubar.Item>
-                            </Menubar.RadioGroup>
-                        </Menubar.Content>
-                    </Menubar.Portal>
-                </Menubar.Menu>
             </Menubar.Root>
         </>
     )

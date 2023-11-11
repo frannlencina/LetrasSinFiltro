@@ -7,7 +7,7 @@ import { stylesToolsGen } from "@/app/utils/styles";
 import { useEmotion } from "@/app/context/EmotionContext";
 import { useSearchParams, useRouter } from 'next/navigation'
 import { ToastCustom } from '../../utils/ToastCustom'
-
+import Tooltip from "../Tooltip";
 export default function Generator() {
     const [ toImageLoader, setToImageLoader ] = useState(false)
 
@@ -243,7 +243,11 @@ export default function Generator() {
                 <div className="flex justify-between max-w-[50%] mx-auto text-2xl translate-y-4">
                     <div className="flex gap-4 items-center">
                         <button onClick={reloadTextFocus} className='text-blue-500 hover:scale-110 hover:rotate-180  px-2 py-1 rounded-xl transition-all duration-200'><i className="ri-loop-left-line"></i></button>
-                        <button className={stylesToolsGen.disable}><i className="ri-star-line"></i></button>
+                        <div className="relative group">
+                        <Tooltip text={'proximamente'}/>
+                            <button className={stylesToolsGen.disable}><i className="ri-star-line"></i></button>
+                        </div>
+                        
                     </div>
                     <div className="flex gap-4 opacity-50 items-center">
                         <button className={stylesToolsGen.common} >

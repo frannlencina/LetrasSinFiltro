@@ -4,7 +4,7 @@ type ToastProps = {
     text: string;
 };
 
-export const ToastCustom: React.FC<ToastProps> = ({ text }) => {
+export const ToastCustom: React.FC<ToastProps> = ({ text } ) => {
     toast.custom((t) => (
         <div
             className={`${t.visible ? 'animate-enter' : 'animate-leave'
