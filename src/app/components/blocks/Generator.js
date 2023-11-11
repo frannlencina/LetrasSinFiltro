@@ -6,8 +6,10 @@ import { useState, useEffect } from "react";
 import { stylesToolsGen } from "@/app/utils/styles";
 import { useEmotion } from "@/app/context/EmotionContext";
 import { useSearchParams, useRouter } from 'next/navigation'
+import { ToastCustom } from '../../utils/ToastCustom'
 
 export default function Generator() {
+    const [ toImageLoader, setToImageLoader ] = useState(false)
 
     const { emotion } = useEmotion()
 
@@ -143,6 +145,10 @@ export default function Generator() {
     };
 
     const downloadToImage = async () => {
+        setToImageLoader(true)
+        setTimeout(function () {
+            setToImageLoader(false)
+          }, 1000); // 1000 milisegundos = 1 segundo
         const element = document.getElementById('elementToDownload');
         if (element) {
             try {
@@ -202,6 +208,7 @@ export default function Generator() {
 
 
     const onCopyUrl = () => {
+        ToastCustom({text: 'URL copiada correctamente!'})
         const currentURL = window.location.href;
         navigator.clipboard.writeText(currentURL + `&text=${textToWithout()}`)
     }
@@ -209,10 +216,11 @@ export default function Generator() {
     const copyToClipboard = () => {
         if (textFocus !== 'Por favor selecciona un mood') {
             if (!navigator.clipboard) {
-                alert("Your browser doesn't support this feature.")
+                ToastCustom({text: 'Tu navegador no es compatible con esta funcion :('})
             } else {
                 try {
                     navigator.clipboard.writeText(textFocus);
+                    ToastCustom({text: 'Texto copiado correctamente!'})
                 } catch (err) {
                     console.error('Async: Could not copy text: ', err);
                 }
@@ -248,7 +256,7 @@ export default function Generator() {
                                 <Popover.Portal >
                                     <Popover.Content className="flex divide-y flex-col gap-2 items-center bg-white p-2 rounded-lg" sideOffset={5}>
                                         <div className="text-center items-center">
-                                            <a className={stylesToolsGen.shareButtons} href={`https://twitter.com/intent/tweet?text=${textFocus}`} target="_blank">Twitter<i class="ri-twitter-x-line"></i></a>
+                                            <a className={stylesToolsGen.shareButtons}  href={`https://twitter.com/intent/tweet?text=${textFocus}`} target="_blank">Twitter<i class="ri-twitter-x-line"></i></a>
                                         </div>
 
                                         <div>
@@ -261,7 +269,9 @@ export default function Generator() {
                                     </Popover.Content>
                                 </Popover.Portal>
                             </Popover.Root></button>
-                        <button className={stylesToolsGen.common} onClick={downloadToImage}><i className="ri-download-line"></i></button>
+                        {
+                            toImageLoader ? <button className={stylesToolsGen.disable} onClick={downloadToImage}><i className="ri-download-line"></i></button> : <button className={stylesToolsGen.common} onClick={downloadToImage}><i className="ri-download-line"></i></button>
+                        }
                     </div>
                 </div>
             </div>

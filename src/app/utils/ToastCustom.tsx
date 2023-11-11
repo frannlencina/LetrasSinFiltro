@@ -1,6 +1,10 @@
 import toast from 'react-hot-toast';
 
-export const selectTemplate = () => {
+type ToastProps = {
+    text: string;
+};
+
+export const ToastCustom: React.FC<ToastProps> = ({ text }) => {
     toast.custom((t) => (
         <div
             className={`${t.visible ? 'animate-enter' : 'animate-leave'
@@ -23,7 +27,7 @@ export const selectTemplate = () => {
                             @frannlencina
                         </p>
                         <p className="mt-1 text-sm text-black w-fit">
-                            Template cambiada correctamente!
+                            {text}
                         </p>
                     </div>
                 </div>

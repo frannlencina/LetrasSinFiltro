@@ -6,8 +6,8 @@ export const stylesNavFooter = {
 
 export const stylesToolsGen = {
     common: "hover:scale-110 px-2 py-1 rounded-xl transition-all duration-200",
-    disable: "opacity-20 pointer-events-none",
-    shareButtons: "cursor-pointer  hover:bg-stone-200 text-stone-500 transition-all py-1 px-2 rounded-lg flex items-center gap-2 active:ring-4 active:ring-stone-300"
+    disable: "opacity-20 py-1 px-2 pointer-events-none ",
+    shareButtons: "cursor-pointer hover:bg-stone-200 text-stone-500 transition-all py-1 px-2 rounded-lg flex items-center gap-2 active:ring-4 active:ring-stone-300"
 }
 
 // Radix Ui Component

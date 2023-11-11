@@ -4,8 +4,8 @@ import * as Dialog from '@radix-ui/react-dialog';
 import { stylesMenuBar } from '@/app/utils/styles';
 import Badge from '../Badge';
 import Image from 'next/image';
+import { ToastCustom } from '../../utils/ToastCustom'
 
-import { selectTemplate } from '../../utils/ToastCustom'
 export default function MenubarGen() {
 
     {/* Simulacion temporal  almacenamiento de plantillas. Proximamente utilizacion JSONS y BD */ }
@@ -50,7 +50,7 @@ export default function MenubarGen() {
                                     {plantillas.map((item, index) => (
                                         <div>
                                             <div className='relative group rounded-lg'>
-                                                <div onClick={selectTemplate} className='hidden absolute w-full h-full group-hover:flex items-center justify-center bg-blue-600 bg-opacity-70 rounded-lg cursor-pointer hover:ring-4 focus:ring-blue-800'>
+                                                <div onClick={ () => { ToastCustom({text: 'Template cambiada correctamente!'}) }  } className='hidden absolute w-full h-full group-hover:flex items-center justify-center bg-blue-600 bg-opacity-70 rounded-lg cursor-pointer hover:ring-4 focus:ring-blue-800'>
                                                     <div className='font-bold text-white select-none text-4xl'><i class="ri-check-line"></i></div>
                                                 </div>
                                                 <Image
