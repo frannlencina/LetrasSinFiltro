@@ -23,7 +23,6 @@ const EmotionButtons = () => {
     };
 
     useEffect(() => {
-        console.log(focus);
         if (focus) {
             // Validación para permitir solo ciertos valores
             const allowedEmotions = ['Triste', 'Enamorado', 'Feliz', 'Enojado', 'Loco'];

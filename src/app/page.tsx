@@ -7,7 +7,6 @@ import MenubarGen from './components/blocks/MenubarGen'
 import { Toaster } from 'react-hot-toast';
 
 export default function Home() {
-
   return (
     <>
       <EmotionProvider>

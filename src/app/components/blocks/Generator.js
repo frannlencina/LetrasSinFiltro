@@ -2,30 +2,30 @@
 import CardTemplate from "../CardTemplate";
 import * as Popover from '@radix-ui/react-popover';
 import * as htmlToImage from 'html-to-image';
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { stylesToolsGen } from "@/app/utils/styles";
 import { useEmotion } from "@/app/context/EmotionContext";
-
+import { useSearchParams, useRouter } from 'next/navigation'
 
 export default function Generator() {
 
     const { emotion } = useEmotion()
-    const downloadToImage = async () => {
-        const element = document.getElementById('elementToDownload');
-        if (element) {
-            try {
-                const dataUrl = await htmlToImage.toPng(element);
-                const link = document.createElement('a');
-                link.download = 'frase.png';
-                link.href = dataUrl;
-                link.click();
-            } catch (error) {
-                console.error('Error al descargar la imagen:', error);
-            }
+
+    const router = useRouter();
+
+    const searchParams = useSearchParams()
+    const text = searchParams.get('text')
+
+    useEffect(() => {
+        // Validación para saber si trae texto la URL
+        if (text) {
+            setTextFocus(textReverse(text))
+            // Eliminamos parametro text de la URL para evitar conflictos y estetica.
+            router.replace(`/?focus=${emotion}`, undefined, { shallow: false });
         } else {
-            console.error('Elemento no encontrado');
+            console.log('No hay text');
         }
-    }
+    }, [emotion]);
 
     {/* Simulacion temporal  almacenamiento de frases. Proximamente utilizacion de API en IA */ }
 
@@ -142,6 +142,23 @@ export default function Generator() {
         ]
     };
 
+    const downloadToImage = async () => {
+        const element = document.getElementById('elementToDownload');
+        if (element) {
+            try {
+                const dataUrl = await htmlToImage.toPng(element);
+                const link = document.createElement('a');
+                link.download = 'frase.png';
+                link.href = dataUrl;
+                link.click();
+            } catch (error) {
+                console.error('Error al descargar la imagen:', error);
+            }
+        } else {
+            console.error('Elemento no encontrado');
+        }
+    }
+
     const [fraseFocus, setFraseFocus] = useState([]);
     const [textFocus, setTextFocus] = useState('');
 
@@ -171,9 +188,22 @@ export default function Generator() {
         setTextFocus(fraseSeleccionada);
     };
 
+    const textToWithout = () => {
+        // Eliminar espacios y reemplazarlos con guiones
+        const fraseProcesada = textFocus.replace(/\s+/g, '-');
+        return fraseProcesada;
+    }
+
+    function textReverse(fraseProcesada) {
+        // Reemplazar guiones con espacios
+        const fraseOriginal = fraseProcesada.replace(/-/g, ' ');
+        return fraseOriginal;
+    }
+
+
     const onCopyUrl = () => {
         const currentURL = window.location.href;
-        navigator.clipboard.writeText(currentURL)
+        navigator.clipboard.writeText(currentURL + `&text=${textToWithout()}`)
     }
 
     const copyToClipboard = () => {
@@ -191,8 +221,6 @@ export default function Generator() {
             alert('No hay ninguna frase')
         }
     }
-
-    const textTwit = 'hola como estas'
 
     return (
         <div>
@@ -220,9 +248,9 @@ export default function Generator() {
                                 <Popover.Portal >
                                     <Popover.Content className="flex divide-y flex-col gap-2 items-center bg-white p-2 rounded-lg" sideOffset={5}>
                                         <div className="text-center items-center">
-                                            <a className={stylesToolsGen.shareButtons} href={`https://twitter.com/intent/tweet?text=${textFocus}`} target="_blank"><i class="ri-twitter-x-line"></i></a>
+                                            <a className={stylesToolsGen.shareButtons} href={`https://twitter.com/intent/tweet?text=${textFocus}`} target="_blank">Twitter<i class="ri-twitter-x-line"></i></a>
                                         </div>
-                                        
+
                                         <div>
                                             <button className={stylesToolsGen.shareButtons} onClick={onCopyUrl}>Copiar Url</button>
                                         </div>
