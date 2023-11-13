@@ -4,9 +4,13 @@ import Image from 'next/image';
 import { useEmotion } from '../context/EmotionContext';
 import { useSearchParams, useRouter } from 'next/navigation'
 import Tooltip from './Tooltip';
+import useEmblaCarousel from 'embla-carousel-react'
+
 const EmotionButtons = () => {
     const router = useRouter();
 
+    // Carousel Ref
+    const [emblaRef] = useEmblaCarousel()
 
     const searchParams = useSearchParams()
     const focus = searchParams.get('focus')
@@ -18,7 +22,7 @@ const EmotionButtons = () => {
 
         // Verificación de router para uso en el cliente
         if (router) {
-            router.push(`/?focus=${newEmotion}`, {shallow: true, scroll: false });
+            router.push(`/?focus=${newEmotion}`, { shallow: true, scroll: false });
         }
     };
 
@@ -35,7 +39,7 @@ const EmotionButtons = () => {
             console.log('No hay focus');
         }
     }, []);
-    
+
     const images = [
         { src: "/memoji-triste.png", alt: "Memoji triste", emotion: "Triste" },
         { src: "/memoji-enamorado.png", alt: "Memoji enamorado", emotion: "Enamorado" },
@@ -50,7 +54,7 @@ const EmotionButtons = () => {
                 <div className="flex gap-4 items-center">
                     <h4 className="font-black text-black text-2xl ">Mood</h4>
                     <div className='relative group'>
-                        <Tooltip text={'focus'}/>
+                        <Tooltip text={'focus'} />
                         <svg className="icon icon-tabler icon-tabler-target opacity-10" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" fill="none" strokeLinecap="round" strokeLinejoin="round">
                             <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
                             <path d="M12 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"></path>
@@ -62,18 +66,24 @@ const EmotionButtons = () => {
                 </div>
             </div>
             <hr />
-            <div className='flex gap-4'>
-                {images.map((image, index) => (
-                    <button key={index} onClick={() => handleButtonClick(image.emotion)}>
-                        <Image
-                            className={image.emotion === emotion ? 'rounded-lg cursor-pointer bg-blue-500 scale-110' : 'rounded-lg cursor-pointer hover:scale-110 transition-all hover:bg-blue-500 '}
-                            src={image.src}
-                            width={80}
-                            height={80}
-                            alt={image.alt}
-                        />
-                    </button>
-                ))}
+            <div>
+                <div className="embla overflow-hidden" ref={emblaRef}>
+                    <div className="embla__container flex min-w-0">
+                        {images.map((image, index) => (
+                            <div className='flex flex-shrink-0 w-1/2 sm:w-1/5 min-w-0 mx-auto'>
+                                <button key={index} className='embla__slide flex-shrink-0 mx-auto min-w-0 h-full p-2' onClick={() => handleButtonClick(image.emotion)}>
+                                    <Image
+                                        className={image.emotion === emotion ? 'rounded-lg cursor-pointer bg-blue-500 scale-110' : 'rounded-lg cursor-pointer hover:scale-110 transition-all hover:bg-blue-500 '}
+                                        src={image.src}
+                                        width={80}
+                                        height={80}
+                                        alt={image.alt}
+                                    />
+                                </button>
+                            </div>
+                        ))}
+                    </div>
+                </div>
             </div>
         </>
     );

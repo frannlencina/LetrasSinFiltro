@@ -1,0 +1,20 @@
+{
+    "cards": {
+        "name": "",
+        "config": {
+            "background": {
+                "type": "",
+                "colors": ""
+            },
+            "text": {
+                "font": "",
+                "size": "",
+                "colorType": {
+                    "type": "",
+                    "color": "",
+                    "urlImage": ""
+                }
+            }
+        }
+    }
+}

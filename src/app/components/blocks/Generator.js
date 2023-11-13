@@ -230,13 +230,31 @@ export default function Generator() {
         }
     }
 
+    const cardData = {
+        name: 'Magnum',
+        config: {
+          background: {
+            type: 'gradient',
+            colors: 'bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500',
+          },
+          text: {
+            font: 'Arial',
+            size: '24px',
+            colorType: {
+              type: 'gradient',
+              color: '#f2ff00, #0015ff',
+            },
+          },
+        },
+      };
+
     return (
         <div>
             <div id="mainCard" className="pb-32">
                 <div className="min-w-[450px] min-h-[450px] flex justify-center items-center">
                     <div className="mt-32">
                         <div id="elementToDownload" className="transition-all duration-200">
-                            <CardTemplate text={textFocus ? textFocus : 'Por favor selecciona un mood'} />
+                            <CardTemplate cardData={ cardData  }  text={textFocus ? textFocus : 'Por favor selecciona un mood'} />
                         </div>
                     </div>
                 </div>
@@ -253,7 +271,8 @@ export default function Generator() {
                         <button className={stylesToolsGen.common} >
                             <Popover.Root >
                                 <Popover.Trigger asChild>
-                                    <button className="IconButton" aria-label="Update dimensions">
+                                    <button clas
+                                    sName="IconButton" aria-label="Update dimensions">
                                         <i className="ri-share-forward-line"></i>
                                     </button>
                                 </Popover.Trigger>
