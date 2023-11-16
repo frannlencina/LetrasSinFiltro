@@ -3,15 +3,22 @@ import Badge from "./components/Badge";
 import Generator from "./components/blocks/Generator";
 import EmotionButtons from './components/EmotionButtons'
 import { EmotionProvider } from "./context/EmotionContext";
-import MenubarGen from './components/blocks/MenubarGen'
 import { Toaster } from 'react-hot-toast';
+import { stylesMenuBar } from "./utils/styles";
+import GenTab from './components/blocks/GenTab'
+import { useState } from "react";
 
 export default function Home() {
+
+  const [ chooseGen, setChooseGen ] = useState(1)
+  const changeChoose = () => {
+
+  }
   return (
     <>
       <EmotionProvider>
         <main className="flex min-h-screen flex-col items-center justify-center max-w-6xl mx-auto">
-                <Toaster />
+          <Toaster />
           <div className="flex flex-col items-center justify-center pt-48 pb-12">
             <Badge text="Alpha v1.0" type="yellow" icon={true} />
             <div className="flex flex-col justify-center items-start gap-4 p-4">
@@ -19,13 +26,13 @@ export default function Home() {
               <h4 className="text-center font-medium opacity-50 max-w-lg mx-auto ">Tu desahogo emocional tiene un espacio en nuestras frases. Cada palabra es un portal para expresar tus emociones, brindándote un refugio en el vasto mundo digital.</h4>
             </div>
           </div>
-          <div className="flex flex-col gap-6 justify-center mt-16">
-            <EmotionButtons />
-          </div>
-          <div className="flex justify-center items-center translate-y-24">
-            <MenubarGen />
-          </div>
-          <Generator />
+          <div className="flex gap-2 justify-end mt-12">
+                <button onClick={()=> setChooseGen(1)} className={ chooseGen === 1  ? 'text-lg cursor-pointer font-medium text-blue-500 bg-opacity-50 transition-all py-1 px-2 rounded-lg flex items-center gap-4' : 'hover:text-blue-500 cursor-pointer font-medium text-stone-500 bg-opacity-50 transition-all py-1 px-2 rounded-lg flex items-center gap-4' } >Generador</button>
+                <button onClick={()=> setChooseGen(2)} className={ chooseGen === 2  ? 'text-lg cursor-pointer font-medium text-yellow-500 bg-opacity-50 transition-all py-1 px-2 rounded-lg flex items-center gap-4' : 'hover:text-yellow-500 cursor-pointer font-medium text-stone-500 bg-opacity-50 transition-all py-1 px-2 rounded-lg flex items-center gap-4' } >Favoritos</button>
+              </div>
+          <section className="flex flex-col gap-6 justify-center mt-16 max-w-4xl">
+              <GenTab select={chooseGen} />
+            </section>
         </main>
       </ EmotionProvider>
     </>

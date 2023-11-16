@@ -65,15 +65,15 @@ const EmotionButtons = () => {
                     <p className="opacity-100  select-none  bg-blue-200 text-blue-500  rounded-lg px-2 py-[2px] text-center text-md">{emotion}</p>
                 </div>
             </div>
-            <hr />
+            <hr className='my-8' />
             <div>
-                <div className="embla overflow-hidden" ref={emblaRef}>
-                    <div className="embla__container flex min-w-0">
+                <div className="embla overflow-hidden py-2 md:px-6" ref={emblaRef} >
+                    <div className="embla__container flex min-w-0 md:gap-2">
                         {images.map((image, index) => (
-                            <div className='flex flex-shrink-0 w-1/2 sm:w-1/5 min-w-0 mx-auto'>
-                                <button key={index} className='embla__slide flex-shrink-0 mx-auto min-w-0 h-full p-2' onClick={() => handleButtonClick(image.emotion)}>
+                            <div className='flex flex-shrink-0 w-1/2 sm:w-1/5 min-w-0 mx-auto '>
+                                <button key={index} className='embla__slide flex-shrink-0 mx-auto min-w-0 h-full ' onClick={() => handleButtonClick(image.emotion)}>
                                     <Image
-                                        className={image.emotion === emotion ? 'rounded-lg cursor-pointer bg-blue-500 scale-110' : 'rounded-lg cursor-pointer hover:scale-110 transition-all hover:bg-blue-500 '}
+                                        className={image.emotion === emotion ? 'rounded-lg  cursor-pointer bg-blue-500 scale-110' : 'rounded-lg cursor-pointer hover:scale-110 transition-all hover:bg-blue-500 '}
                                         src={image.src}
                                         width={80}
                                         height={80}

@@ -1,15 +1,20 @@
 'use client'
+
 import CardTemplate from "../CardTemplate";
 import * as Popover from '@radix-ui/react-popover';
 import * as htmlToImage from 'html-to-image';
 import { useState, useEffect } from "react";
-import { stylesToolsGen } from "@/app/utils/styles";
+import { stylesMenuBar, stylesToolsGen } from "@/app/utils/styles";
 import { useEmotion } from "@/app/context/EmotionContext";
 import { useSearchParams, useRouter } from 'next/navigation'
 import { ToastCustom } from '../../utils/ToastCustom'
 import Tooltip from "../Tooltip";
+import Badge from "../Badge";
+
+
 export default function Generator() {
-    const [ toImageLoader, setToImageLoader ] = useState(false)
+
+    const [toImageLoader, setToImageLoader] = useState(false)
 
     const { emotion } = useEmotion()
 
@@ -17,6 +22,9 @@ export default function Generator() {
 
     const searchParams = useSearchParams()
     const text = searchParams.get('text')
+
+    // Constante mensaje cuando no hay un mood seleccionado.
+    const noTextFocus = 'Por favor selecciona un mood';
 
     useEffect(() => {
         // Validación para saber si trae texto la URL
@@ -145,28 +153,32 @@ export default function Generator() {
     };
 
     const downloadToImage = async () => {
-        setToImageLoader(true)
-        setTimeout(function () {
-            setToImageLoader(false)
-          }, 1000); // 1000 milisegundos = 1 segundo
-        const element = document.getElementById('elementToDownload');
-        if (element) {
-            try {
-                const dataUrl = await htmlToImage.toPng(element);
-                const link = document.createElement('a');
-                link.download = 'frase.png';
-                link.href = dataUrl;
-                link.click();
-            } catch (error) {
-                console.error('Error al descargar la imagen:', error);
+        if (textFocus !== noTextFocus) {
+            setToImageLoader(true)
+            setTimeout(function () {
+                setToImageLoader(false)
+            }, 1000); // 1000 milisegundos = 1 segundo
+            const element = document.getElementById('elementToDownload');
+            if (element) {
+                try {
+                    const dataUrl = await htmlToImage.toPng(element);
+                    const link = document.createElement('a');
+                    link.download = 'frase.png';
+                    link.href = dataUrl;
+                    link.click();
+                } catch (error) {
+                    console.error('Error al descargar la imagen:', error);
+                }
+            } else {
+                console.error('Elemento no encontrado');
             }
         } else {
-            console.error('Elemento no encontrado');
+            ToastCustom({ text: noTextFocus })
         }
     }
 
     const [fraseFocus, setFraseFocus] = useState([]);
-    const [textFocus, setTextFocus] = useState('');
+    const [textFocus, setTextFocus] = useState(noTextFocus);
 
     const reloadTextFocus = () => {
         switch (emotion) {
@@ -187,106 +199,143 @@ export default function Generator() {
                 break;
             default:
                 setFraseFocus(['Por favor selecciona un mood']);
+                ToastCustom({ text: 'No hay mood seleccionado.' })
                 break;
         }
         const randomIndex = Math.floor(Math.random() * fraseFocus.length);
         const fraseSeleccionada = fraseFocus[randomIndex];
         setTextFocus(fraseSeleccionada);
+        console.log(fraseFocus)
     };
 
+    // Pasar frase a los espacios con guiones para la url
     const textToWithout = () => {
         // Eliminar espacios y reemplazarlos con guiones
         const fraseProcesada = textFocus.replace(/\s+/g, '-');
         return fraseProcesada;
     }
 
+    // Pasar frase de URL  a frase Normal 
     function textReverse(fraseProcesada) {
         // Reemplazar guiones con espacios
         const fraseOriginal = fraseProcesada.replace(/-/g, ' ');
         return fraseOriginal;
     }
 
-
+    // Copiar URl
     const onCopyUrl = () => {
-        ToastCustom({text: 'URL copiada correctamente!'})
-        const currentURL = window.location.href;
-        navigator.clipboard.writeText(currentURL + `&text=${textToWithout()}`)
+        if (textFocus !== noTextFocus) {
+            ToastCustom({ text: 'URL copiada correctamente!' })
+            const currentURL = window.location.href;
+            navigator.clipboard.writeText(currentURL + `&text=${textToWithout()}`)
+        } else {
+            ToastCustom({ text: noTextFocus });
+        }
     }
 
+    // Copiar Texto a porta papeles.
     const copyToClipboard = () => {
-        if (textFocus !== 'Por favor selecciona un mood') {
+        if (textFocus !== noTextFocus) {
             if (!navigator.clipboard) {
-                ToastCustom({text: 'Tu navegador no es compatible con esta funcion :('})
+                ToastCustom({ text: 'Tu navegador no es compatible con esta funcion :(' })
             } else {
                 try {
                     navigator.clipboard.writeText(textFocus);
-                    ToastCustom({text: 'Texto copiado correctamente!'})
+                    ToastCustom({ text: 'Texto copiado correctamente!' })
                 } catch (err) {
                     console.error('Async: Could not copy text: ', err);
                 }
             }
         } else {
-            alert('No hay ninguna frase')
+            ToastCustom({ text: noTextFocus });
         }
     }
 
     const cardData = {
-        name: 'Magnum',
+        name: 'Default',
         config: {
-          background: {
-            type: 'gradient',
-            colors: 'bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500',
-          },
-          text: {
-            font: 'Arial',
-            size: '24px',
-            colorType: {
-              type: 'gradient',
-              color: '#f2ff00, #0015ff',
+            background: {
+                type: 'gradient',
+                colors: 'bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500',
             },
-          },
+            text: {
+                font: 'Arial',
+                size: '24px',
+                colorType: {
+                    type: 'gradient',
+                    color: '#f2ff00, #0015ff',
+                },
+            },
         },
+    };
+
+    const [favoriteCards, setFavoriteCards] = useState([]);
+
+    const addToFavorites = (card) => {
+        // Obtener los datos de localStorage y convertirlos de nuevo a un array
+        const storedFavoriteCards = JSON.parse(localStorage.getItem('favoriteCards')) || [];
+      
+        // Verificar si la tarjeta ya está en la lista de favoritos
+        const isCardAlreadyAdded = storedFavoriteCards.some((favoriteCard) => (
+          favoriteCard.name === card.name && favoriteCard.text === card.text
+        ));
+      
+        if (!isCardAlreadyAdded) {
+          // Añadir una nueva card a la lista de favoritos
+          const newFavoriteCards = [...storedFavoriteCards, card];
+      
+          // Guardar la nueva lista en localStorage
+          localStorage.setItem('favoriteCards', JSON.stringify(newFavoriteCards));
+      
+          // Actualizar el estado del componente
+          setFavoriteCards(newFavoriteCards);
+        } else {
+          ToastCustom({ text: 'La tarjeta ya está en favoritos' });
+        }
       };
+      
 
     return (
         <div>
-            <div id="mainCard" className="pb-32">
+            <div id="mainCard" className="flex flex-col pb-16">
                 <div className="min-w-[450px] min-h-[450px] flex justify-center items-center">
-                    <div className="mt-32">
+                    <div className="mt-16">
+                        <div className="mb-4">
+                            <Badge text={cardData.name} type="" icon={false} />
+                        </div>
                         <div id="elementToDownload" className="transition-all duration-200">
-                            <CardTemplate cardData={ cardData  }  text={textFocus ? textFocus : 'Por favor selecciona un mood'} />
+                            <CardTemplate cardData={cardData} text={textFocus ? textFocus : noTextFocus} />
                         </div>
                     </div>
                 </div>
-                <div className="flex justify-between max-w-[50%] mx-auto text-2xl translate-y-4">
-                    <div className="flex gap-4 items-center">
+                <div className="flex justify-between sm:w-[50%] mx-auto text-2xl translate-y-4">
+                    <div className="flex items-center">
                         <button onClick={reloadTextFocus} className='text-blue-500 hover:scale-110 hover:rotate-180  px-2 py-1 rounded-xl transition-all duration-200'><i className="ri-loop-left-line"></i></button>
                         <div className="relative group">
-                        <Tooltip text={'proximamente'}/>
-                            <button className={stylesToolsGen.disable}><i className="ri-star-line"></i></button>
+                            <button onClick={() => addToFavorites({ name: cardData.name, text: textFocus })} className='text-yellow-500 hover:scale-110 hover:skew-y-12 px-2 py-1 rounded-xl transition-all duration-200'><i className="ri-star-line"></i></button>
                         </div>
-                        
+
                     </div>
-                    <div className="flex gap-4 opacity-50 items-center">
+                    <div className="flex opacity-50 items-center">
                         <button className={stylesToolsGen.common} >
                             <Popover.Root >
                                 <Popover.Trigger asChild>
                                     <button clas
-                                    sName="IconButton" aria-label="Update dimensions">
+                                        sName="IconButton" aria-label="Update dimensions">
                                         <i className="ri-share-forward-line"></i>
                                     </button>
                                 </Popover.Trigger>
                                 <Popover.Portal >
                                     <Popover.Content className="flex divide-y flex-col gap-2 items-center bg-white p-2 rounded-lg" sideOffset={5}>
                                         <div className="text-center items-center">
-                                            <a className={stylesToolsGen.shareButtons}  href={`https://twitter.com/intent/tweet?text=${textFocus}`} target="_blank">Twitter<i class="ri-twitter-x-line"></i></a>
+                                            <a className={stylesToolsGen.shareButtons} href={textFocus !== noTextFocus ? `https://twitter.com/intent/tweet?text=${textFocus}` : null} target="_blank"><i class="ri-twitter-x-line"></i>Twitter</a>
                                         </div>
 
                                         <div>
-                                            <button className={stylesToolsGen.shareButtons} onClick={onCopyUrl}>Copiar Url</button>
+                                            <button className={stylesToolsGen.shareButtons} onClick={onCopyUrl}><i class="ri-link"></i> Copiar enlace</button>
                                         </div>
                                         <div>
-                                            <button className={stylesToolsGen.shareButtons} onClick={() => copyToClipboard()}>Copiar Txt</button>
+                                            <button className={stylesToolsGen.shareButtons} onClick={() => copyToClipboard()}><i class="ri-file-list-3-line"></i> Copiar Txt</button>
                                         </div>
                                         <Popover.Arrow className="opacity-30" />
                                     </Popover.Content>

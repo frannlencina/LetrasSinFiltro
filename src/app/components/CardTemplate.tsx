@@ -1,9 +1,7 @@
-import Badge from "./Badge";
-
 type CardConfig = {
     background: {
         type: 'gradient' | 'solid' | 'image';
-        colors?: string; // Puedes añadir más propiedades según el tipo de fondo
+        colors?: string;
     };
     text: {
         font: string;
@@ -64,16 +62,13 @@ const CardTemplate: React.FC<CardTemplateProps> = ({ cardData, text }) => {
 
     return (
         <div className="flex flex-col gap-3">
-            <div>
-            <Badge text={name} type="" icon={false} />
-            </div>
             <div
                 className={`flex flex-col justify-center items-center text-center text-2xl p-4 font-black rounded-3xl text-white w-[360px] h-[360px] ` + backgroundConfig()}>
                 {
                     config.text.colorType.type === 'gradient' ?  <p style={textConfig()} >{text}</p> : <p style={textConfig()}>{ text }</p>
                 }
-
             </div>
+            
         </div>
     );
 };
