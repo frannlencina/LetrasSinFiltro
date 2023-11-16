@@ -8,7 +8,7 @@ import { stylesMenuBar, stylesToolsGen } from "@/app/utils/styles";
 import { useEmotion } from "@/app/context/EmotionContext";
 import { useSearchParams, useRouter } from 'next/navigation'
 import { ToastCustom } from '../../utils/ToastCustom'
-import Tooltip from "../Tooltip";
+import { v4 as uuidv4 } from 'uuid';
 import Badge from "../Badge";
 
 
@@ -25,6 +25,12 @@ export default function Generator() {
 
     // Constante mensaje cuando no hay un mood seleccionado.
     const noTextFocus = 'Por favor selecciona un mood';
+    
+    // Funcion para asegurar el retorno del mensaje noTextFocus y el estado del textFocus
+    const  noTextFocusReturn = () => {
+        setTextFocus(noTextFocus);
+        return noTextFocus
+    }
 
     useEffect(() => {
         // Validación para saber si trae texto la URL
@@ -153,7 +159,7 @@ export default function Generator() {
     };
 
     const downloadToImage = async () => {
-        if (textFocus !== noTextFocus) {
+        if (textFocus !== noTextFocus || textFocus === null) {
             setToImageLoader(true)
             setTimeout(function () {
                 setToImageLoader(false)
@@ -205,7 +211,6 @@ export default function Generator() {
         const randomIndex = Math.floor(Math.random() * fraseFocus.length);
         const fraseSeleccionada = fraseFocus[randomIndex];
         setTextFocus(fraseSeleccionada);
-        console.log(fraseFocus)
     };
 
     // Pasar frase a los espacios con guiones para la url
@@ -272,28 +277,34 @@ export default function Generator() {
     const [favoriteCards, setFavoriteCards] = useState([]);
 
     const addToFavorites = (card) => {
-        // Obtener los datos de localStorage y convertirlos de nuevo a un array
-        const storedFavoriteCards = JSON.parse(localStorage.getItem('favoriteCards')) || [];
-      
-        // Verificar si la tarjeta ya está en la lista de favoritos
-        const isCardAlreadyAdded = storedFavoriteCards.some((favoriteCard) => (
-          favoriteCard.name === card.name && favoriteCard.text === card.text
-        ));
-      
-        if (!isCardAlreadyAdded) {
-          // Añadir una nueva card a la lista de favoritos
-          const newFavoriteCards = [...storedFavoriteCards, card];
-      
-          // Guardar la nueva lista en localStorage
-          localStorage.setItem('favoriteCards', JSON.stringify(newFavoriteCards));
-      
-          // Actualizar el estado del componente
-          setFavoriteCards(newFavoriteCards);
-        } else {
-          ToastCustom({ text: 'La tarjeta ya está en favoritos' });
+        if (textFocus !== noTextFocus) {
+            // Obtener los datos de localStorage y convertirlos de nuevo a un array
+            const storedFavoriteCards = JSON.parse(localStorage.getItem('favoriteCards')) || [];
+
+            // Verificar si la tarjeta ya está en la lista de favoritos
+            const isCardAlreadyAdded = storedFavoriteCards.some((favoriteCard) => (
+                favoriteCard.name === card.name && favoriteCard.text === card.text
+            ));
+
+            if (!isCardAlreadyAdded) {
+                // Añadir una nueva card a la lista de favoritos
+                const cardId = uuidv4(); // Generar un identificador único
+                const newFavoriteCard = { id: cardId, ...card }; // Agregar el identificador a la tarjeta
+                const newFavoriteCards = [...storedFavoriteCards, newFavoriteCard];
+
+                // Guardar la nueva lista en localStorage
+                localStorage.setItem('favoriteCards', JSON.stringify(newFavoriteCards));
+
+                // Actualizar el estado del componente
+                setFavoriteCards(newFavoriteCards);
+            } else {
+                ToastCustom({ text: 'La tarjeta ya está en favoritos' });
+            }
+        }else{
+            ToastCustom({text: noTextFocus})
         }
-      };
-      
+    };
+
 
     return (
         <div>
@@ -304,7 +315,7 @@ export default function Generator() {
                             <Badge text={cardData.name} type="" icon={false} />
                         </div>
                         <div id="elementToDownload" className="transition-all duration-200">
-                            <CardTemplate cardData={cardData} text={textFocus ? textFocus : noTextFocus} />
+                            <CardTemplate cardData={cardData} text={textFocus ? textFocus : noTextFocusReturn()} />
                         </div>
                     </div>
                 </div>
