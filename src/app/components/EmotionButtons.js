@@ -62,7 +62,7 @@ const EmotionButtons = () => {
                             <path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0"></path>
                         </svg>
                     </div>
-                    <p className="opacity-100  select-none  bg-blue-200 text-blue-500  rounded-lg px-2 py-[2px] text-center text-md">{emotion}</p>
+                    <p className="opacity-100  select-none  bg-blue-800 text-blue-300  rounded-lg px-2 py-[2px] text-center text-md">{emotion}</p>
                 </div>
             </div>
             <hr className='my-8' />

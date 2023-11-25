@@ -11,9 +11,6 @@ import { useState } from "react";
 export default function Home() {
 
   const [chooseGen, setChooseGen] = useState(1)
-  const changeChoose = () => {
-
-  }
   return (
     <>
       <EmotionProvider>
@@ -27,8 +24,8 @@ export default function Home() {
             </div>
           </div>
           <div className="flex gap-2 justify-end mt-12">
-            <button onClick={() => setChooseGen(1)} className={chooseGen === 1 ? 'text-lg cursor-pointer font-medium text-blue-500 bg-opacity-50 transition-all py-1 px-2 rounded-lg flex items-center gap-4' : 'hover:text-blue-500 cursor-pointer font-medium text-stone-500 bg-opacity-50 transition-all py-1 px-2 rounded-lg flex items-center gap-4'} >Generador</button>
-            <button onClick={() => setChooseGen(2)} className={chooseGen === 2 ? 'text-lg cursor-pointer font-medium text-yellow-500 bg-opacity-50 transition-all py-1 px-2 rounded-lg flex items-center gap-4' : 'hover:text-yellow-500 cursor-pointer font-medium text-stone-500 bg-opacity-50 transition-all py-1 px-2 rounded-lg flex items-center gap-4'} >Favoritos</button>
+            <button onClick={() => setChooseGen(1)} className={chooseGen === 1 ? 'text-lg bg-blue-200 cursor-pointer font-medium text-blue-500 bg-opacity-50 transition-all py-1 px-2 rounded-lg flex items-center gap-4' : 'hover:text-blue-500 bg-stone-200 cursor-pointer font-medium text-stone-500 bg-opacity-50 transition-all py-1 px-2 rounded-lg flex items-center gap-4'} >Generador</button>
+            <button onClick={() => setChooseGen(2)} className={chooseGen === 2 ? 'text-lg cursor-pointer font-medium bg-green-200 text-green-500 bg-opacity-50 transition-all py-1 px-2 rounded-lg flex items-center gap-4' : 'hover:text-green-500 cursor-pointer bg-stone-200 font-medium text-stone-500 bg-opacity-50 transition-all py-1 px-2 rounded-lg flex items-center gap-4'} >Favoritos</button>
           </div>
           <section className="flex flex-col gap-6 justify-center mt-16 max-w-4xl">
             <GenTab select={chooseGen} />

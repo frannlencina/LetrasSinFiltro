@@ -25,9 +25,9 @@ export default function Generator() {
 
     // Constante mensaje cuando no hay un mood seleccionado.
     const noTextFocus = 'Por favor selecciona un mood';
-    
+
     // Funcion para asegurar el retorno del mensaje noTextFocus y el estado del textFocus
-    const  noTextFocusReturn = () => {
+    const noTextFocusReturn = () => {
         setTextFocus(noTextFocus);
         return noTextFocus
     }
@@ -300,8 +300,8 @@ export default function Generator() {
             } else {
                 ToastCustom({ text: 'La tarjeta ya está en favoritos' });
             }
-        }else{
-            ToastCustom({text: noTextFocus})
+        } else {
+            ToastCustom({ text: noTextFocus })
         }
     };
 
@@ -325,7 +325,6 @@ export default function Generator() {
                         <div className="relative group">
                             <button onClick={() => addToFavorites({ name: cardData.name, text: textFocus })} className='text-yellow-500 hover:scale-110 hover:skew-y-12 px-2 py-1 rounded-xl transition-all duration-200'><i className="ri-star-line"></i></button>
                         </div>
-
                     </div>
                     <div className="flex opacity-50 items-center">
                         <button className={stylesToolsGen.common} >
@@ -337,8 +336,8 @@ export default function Generator() {
                                     </button>
                                 </Popover.Trigger>
                                 <Popover.Portal >
-                                    <Popover.Content className="flex divide-y flex-col gap-2 items-center bg-white p-2 rounded-lg" sideOffset={5}>
-                                        <div className="text-center items-center">
+                                    <Popover.Content className="flex divide-y flex-col gap-2 items-start bg-white py-2 px-4 rounded-lg" sideOffset={5}>
+                                        <div className="text-center">
                                             <a className={stylesToolsGen.shareButtons} href={textFocus !== noTextFocus ? `https://twitter.com/intent/tweet?text=${textFocus}` : null} target="_blank"><i class="ri-twitter-x-line"></i>Twitter</a>
                                         </div>
 
