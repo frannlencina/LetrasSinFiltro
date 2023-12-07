@@ -42,9 +42,9 @@ export default function Footer() {
                 ))}
             </div>
             <div className="flex gap-5 mb-4">
-                <Link className={stylesNavFooter.common} href="#">Plantillas</Link>
+                <Link className={stylesNavFooter.common} href="#">Registrarse</Link>
+                <Link className={stylesNavFooter.common} href="#">Entrar</Link>
                 <Link className={stylesNavFooter.common} href="#">Acerca de</Link>
-                <Link className={stylesNavFooter.common} href="#">Generador</Link>
             </div>
             <p className="flex items-center gap-2 text-medium text-stone-500">Desarrollado con <span> <Image src="/iphone-hearthh.png" width={20} height={20} alt="Corazon" /> </span> por <Link href="https://www.linkedin.com/in/francisco-lencina/"  className="text-blue-500 hover:text-blue-300" target="_blank">@francisco.lencina</Link></p>
         </footer>

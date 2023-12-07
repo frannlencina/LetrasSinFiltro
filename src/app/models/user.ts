@@ -2,34 +2,36 @@ import { Schema, model, models } from "mongoose";
 
 const UserSchema = new Schema(
     {
-        token: {
-            type: String,
-            unique: true,
-            required: [true, "Token is required"],
-        },
         password: {
             type: String,
             required: [true, "Password is required"],
             select: false,
         },
+        email: {
+            type: String,
+            required: [true, "Email is required"],
+            unique: true,
+        },
         name: {
             type: String,
-            require: false
+            required: false
         },
         last_name: {
             type: String,
-            require: false
+            required: false
         },
         username: {
             type: String,
             unique: true,
-            require: false
+            required: [true, "Username is required"],
         },
         rank: {
             type: String,
+            required: false
         },
         pp_image: {
             type: String,
+            required: false
         },
     },
     {

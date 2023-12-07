@@ -337,14 +337,14 @@ export default function Generator() {
                                 </Popover.Trigger>
                                 <Popover.Portal >
                                     <Popover.Content className="flex divide-y flex-col gap-2 items-start bg-white py-2 px-4 rounded-lg" sideOffset={5}>
-                                        <div className="text-center">
+                                        <div className="text-center w-full">
                                             <a className={stylesToolsGen.shareButtons} href={textFocus !== noTextFocus ? `https://twitter.com/intent/tweet?text=${textFocus}` : null} target="_blank"><i class="ri-twitter-x-line"></i>Twitter</a>
                                         </div>
 
-                                        <div>
+                                        <div className="w-full">
                                             <button className={stylesToolsGen.shareButtons} onClick={onCopyUrl}><i class="ri-link"></i> Copiar enlace</button>
                                         </div>
-                                        <div>
+                                        <div className="w-full">
                                             <button className={stylesToolsGen.shareButtons} onClick={() => copyToClipboard()}><i class="ri-file-list-3-line"></i> Copiar Txt</button>
                                         </div>
                                         <Popover.Arrow className="opacity-30" />

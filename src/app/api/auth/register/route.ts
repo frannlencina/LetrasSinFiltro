@@ -8,28 +8,27 @@ export async function POST(request: Request) {
   try {
     await connectDB();
 
-    const { token, password, name, last_name, username, pp_image, rank } = await request.json();
-    const body = { token, password, name, last_name, username, pp_image, rank };
+    const { token, password, name, email, last_name, username, pp_image, rank } = await request.json();
+    const body = { token, password, name, email, last_name, username, pp_image, rank };
     console.log(body)
     const resultado = await User.findOne({ username: body.username });
 
-    if (resultado && resultado.username) {
-
+    if (resultado && (resultado.username || resultado.email)) {
       console.log('El usuario ya existe => :', resultado);
-      return NextResponse.json({ resultado });
+      return NextResponse.json({ "error": "Usuario registrado" }, { status: 500 });
     } else {
-
-      User.create({
+      const nuevoUsuario = await User.create({
         name: name,
+        email: email,
         last_name: last_name,
         username: username,
         password: password,
         pp_image: pp_image,
         rank: rank,
+      });
 
-      })
-      console.log('Noticia creada exitosamente => :', resultado);
-      return NextResponse.json({ resultado });
+      console.log('Usuario creado exitosamente => :', nuevoUsuario);
+      return NextResponse.json({ nuevoUsuario });
     }
   } catch (err) {
     console.error(err);

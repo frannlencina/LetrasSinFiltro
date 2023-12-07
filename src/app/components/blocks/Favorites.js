@@ -150,13 +150,13 @@ export default function Favorites() {
                     </Popover.Trigger>
                     <Popover.Portal >
                       <Popover.Content className="flex divide-y flex-col gap-2 items-center bg-white p-2 rounded-lg" sideOffset={5}>
-                        <div className="text-center items-center">
+                        <div className="items-center w-full">
                           <a className={stylesToolsGen.shareButtons} href={'https://twitter.com/intent/tweet?text=' + card.text} target="_blank"><i class="ri-twitter-x-line"></i>Twitter</a>
                         </div>
-                        <div>
+                        <div className="w-full">
                           <button className={stylesToolsGen.shareButtons} onClick={() => onCopyUrl(card.text)}><i class="ri-link"></i> Copiar enlace</button>
                         </div>
-                        <div>
+                        <div className="w-full">
                           <button className={stylesToolsGen.shareButtons} onClick={() => copyToClipboard({ cardText: card.text })}><i class="ri-file-list-3-line"></i> Copiar Txt</button>
                         </div>
                         <Popover.Arrow className="opacity-30" />

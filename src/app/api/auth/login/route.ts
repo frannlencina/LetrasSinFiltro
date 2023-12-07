@@ -10,8 +10,8 @@ export async function POST(request: Request) {
   try {
     await connectDB();
 
-    const { token, password, name, last_name, username, pp_image, rank } = await request.json();
-    const body = { token, password, name, last_name, username, pp_image, rank };
+    const { token, password, name, last_name, username, email, pp_image, rank } = await request.json();
+    const body = { token, password, name, last_name, username, email, pp_image, rank };
 
     const resultado = await User.findOne({ username: body.username, password: body.password });
 
@@ -20,7 +20,6 @@ export async function POST(request: Request) {
       const tokenJWT = jwt.sign(datosToken, JSONWKEY, { expiresIn: '1h' });
 
       console.log('Datos encontrados:', resultado);
-      console.log(tokenJWT);
 
       return NextResponse.json({ tokenJWT, resultado });
     } else {
