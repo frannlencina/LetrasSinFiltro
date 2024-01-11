@@ -10,6 +10,7 @@ import { LoggedProvider } from '../context/LoggedContext'
 import { useLogged } from "@/app/context/LoggedContext";
 
 export default function Navbar() {
+
     const [showMenu, setShowMenu] = useState(false);
     const [userData, setUserData] = useState(null);
     const [isLoged, setIsLoged] = useState(undefined);
@@ -18,10 +19,11 @@ export default function Navbar() {
 
     useEffect(() => {
         const user_data = Cookies.get('user_data');
-        alert(logged)
+
         if (user_data) {
-            
-            setIsLoged(true);
+            changeLogged(true) // Cambio el context global de Loggeo
+            setIsLoged(true); // Cambio variable local de Loggeo
+
             const userDataFromCookie = JSON.parse(user_data);
             setUserData(userDataFromCookie);
 
@@ -55,7 +57,7 @@ export default function Navbar() {
                                     <Popover.Portal >
                                         <Popover.Content className="flex divide-y flex-col mt-6 gap-2 items-start bg-white py-2 px-4 rounded-lg" sideOffset={5}>
                                             <div className="text-center w-full">
-                                                <a className={stylesToolsGen.shareButtons} href='/' target="_blank">Perfil</a>
+                                                <Link className={stylesToolsGen.shareButtons} href={`/Profile/`+userData.username}>Perfil</Link>
                                             </div>
                                             <Popover.Arrow className="opacity-30" />
                                         </Popover.Content>

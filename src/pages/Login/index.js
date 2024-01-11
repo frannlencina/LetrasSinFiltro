@@ -6,6 +6,8 @@ import Cookies from "js-cookie";
 import { Toaster } from "react-hot-toast";
 import { useRouter } from "next/router";
 import { ToastCustom } from "../../app/utils/ToastCustom";
+import { useLogged } from "../../app/context/LoggedContext";
+
 export default function Login() {
     
 
@@ -14,6 +16,8 @@ export default function Login() {
     const preventFormDefault = (e) => {
         event.preventDefault();
     }
+
+    const { changeLogged, logged } = useLogged()
 
     const [body, setBody] = useState({ username: '', password: '' });
 
@@ -53,6 +57,8 @@ export default function Login() {
                 Cookies.set('user_data', JSON.stringify(response.data.resultado), { expires: 1 / 24 })
                 //console.log('Token JWT almacenado en la cookie:', tokenJWT),
                 ToastCustom({text: "Bienvenido de vuelta :)"})
+                // Cambiamos estado de loggeo 
+                changeLogged(true)
                 Redirect()
             })
             .catch(error => {

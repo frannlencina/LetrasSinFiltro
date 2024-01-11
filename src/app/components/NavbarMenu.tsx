@@ -1,24 +1,18 @@
 'use client'
 import Link from "next/link"
 import { stylesNavFooter } from '../utils/styles'
-import { useState, useEffect } from "react"
-import Cookies from "js-cookie"
 
 interface UserData {
     username: boolean;
     // Add other properties as needed
 }
 
-
-
-export default function NabvarMenu({ userData }: { userData: UserData }) {
-
-    const isLoged = true
+export default function NabvarMenu({ userData, logged }: { userData: UserData }) {
 
     return (
         <div className="sm:hidden w-full h-screen fixed z-30 left-0 top-20 bg-black bg-opacity-80 flex justify-center items-center">
             {
-                isLoged ?
+                logged ?
                     <div>
                         <div className="relative z-20 bg-white w-full h-full opacity-100 p-4 flex flex-col justify-center items-center text-3xl gap-12 ">
                             <div>
@@ -40,6 +34,7 @@ export default function NabvarMenu({ userData }: { userData: UserData }) {
                                 <Link className={stylesNavFooter.callToAction} href="#">Login</Link>
                             </div>
                         </div>
+                        
                     </div>
             }
         </div>
