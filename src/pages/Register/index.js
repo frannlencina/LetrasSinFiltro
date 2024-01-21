@@ -25,12 +25,11 @@ export default function Register() {
         console.log(body)
     }
 
-    const [ buttonState, setButtonState ] = useState(true)
+    const [buttonState, setButtonState] = useState(true)
 
     const Redirect = () => {
         const timeout = setTimeout(() => {
-            // Redirije a /admindashboard
-            router.push('/Login');
+            router.push('/login');
         }, 200);
         return () => clearTimeout(timeout);
     }
@@ -38,27 +37,33 @@ export default function Register() {
     const baseURL = 'http://localhost:3000/api/auth/register';
 
     const handleSubmit = async () => {
-        
+
+        // Validar el formato del correo electrónico
+        const emailFormatValido = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(body.email);
+
+        if (!emailFormatValido) {
+            ToastCustom({ text: "Formato de correo electrónico inválido" });
+            return;
+        }
+
         setButtonState(false)
         event.preventDefault();
         // Cambiar username por email y en el backend tambien
         const data = { username: `${body.username}`, email: `${body.email}`, password: `${body.password}`, };
-        
+
         axios.post(baseURL, data)
             .then(response => {
-                console.log(response.data.resultado)
-                
-                ToastCustom({text: "Registrado correctamente"})
-                Redirect()
+                ToastCustom({ text: "Registrado correctamente" })
+                Redirect();
             })
             .catch(error => {
-                ToastCustom({ text: 'Usuario o Email ya registrados' })
+                ToastCustom({ text: error.response.data.error })
                 console.log('Error al iniciar sesión:', error);
                 setButtonState(true)
             });
     }
 
-    
+
 
     return (
         <div className="flex items-center justify-center h-screen w-full bg-[#D0E4FF] bg-gradient-to-t from-[#f9f9f9] to-[#335D98]">
@@ -76,7 +81,7 @@ export default function Register() {
                     </div>
                     <form onSubmit={preventFormDefault} className="flex flex-col gap-4 pb-6">
                         <label>
-                            <input onChange={inputChange} value={body.email} className="min-w-full placeholder:text-black font-semibold placeholder:opacity-30 focus:ring-4 focus:ring-stone-300 py-2 px-4 bg-opacity-40 bg-[#D9D9D9] outline outline-2 outline-[#1e1e1e25] rounded-lg transition-all duration-200" type="text" name="email" placeholder="Ingresa tu email" />
+                            <input onChange={inputChange} value={body.email} className="min-w-full placeholder:text-black font-semibold placeholder:opacity-30 focus:ring-4 focus:ring-stone-300 py-2 px-4 bg-opacity-40 bg-[#D9D9D9] outline outline-2 outline-[#1e1e1e25] rounded-lg transition-all duration-200" type="email" required name="email" placeholder="Ingresa tu email" />
                         </label>
                         <label>
                             <input onChange={inputChange} value={body.username} className="min-w-full placeholder:text-black font-semibold placeholder:opacity-30 focus:ring-4 focus:ring-stone-300 py-2 px-4 bg-opacity-40 bg-[#D9D9D9] outline outline-2 outline-[#1e1e1e25] rounded-lg transition-all duration-200" type="text" name="username" placeholder="Ingresa tu username" />

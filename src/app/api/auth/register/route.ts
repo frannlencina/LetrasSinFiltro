@@ -10,18 +10,22 @@ export async function POST(request: Request) {
 
     const { token, password, name, email, last_name, username, pp_image, rank } = await request.json();
     const body = { token, password, name, email, last_name, username, pp_image, rank };
-    console.log(body)
-    const resultado = await User.findOne({ username: body.username });
+    
+    const usuarioExistente = await User.findOne({ username: body.username });
+    const emailExistente = await User.findOne({ "account.email": body.email });
 
     const todayDate = new Date();
     const day = todayDate.getDate().toString().padStart(2, '0');
-    const month = (todayDate.getMonth() + 1).toString().padStart(2, '0'); 
+    const month = (todayDate.getMonth() + 1).toString().padStart(2, '0');
     const year = todayDate.getFullYear();
-    const dateString = `${day}/${month}/${year}`; 
+    const dateString = `${day}/${month}/${year}`;
 
-    if (resultado && (resultado.username || resultado.account.email)) {
-      console.log('El usuario ya existe => :', resultado);
-      return NextResponse.json({ "error": "Usuario registrado" }, { status: 500 });
+    if (usuarioExistente) {
+      console.log('El usuario ya existe');
+      return NextResponse.json({ "error": "Usuario ya registrado" }, { status: 500 });
+    } else if (emailExistente) {
+      console.log('El correo electrónico ya está registrado');
+      return NextResponse.json({ "error": "Correo electrónico ya registrado" }, { status: 500 });
     } else {
       const nuevoUsuario = await User.create({
         username: username,
@@ -37,7 +41,7 @@ export async function POST(request: Request) {
       });
 
       console.log('Usuario creado exitosamente => :', nuevoUsuario);
-      return NextResponse.json({ nuevoUsuario });
+      return NextResponse.json({ nuevoUsuario }, { status: 200 });
     }
   } catch (err) {
     console.error(err);
