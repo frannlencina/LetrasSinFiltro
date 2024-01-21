@@ -51,13 +51,15 @@ export default function Login() {
         
         axios.post(baseURL, data)
             .then(response => {
+
                 console.log(response.data.resultado)
                 const tokenJWT = response.data.tokenJWT
                 Cookies.set('tokenFirmado', tokenJWT, { expires: 1 / 24 })
                 Cookies.set('user_data', JSON.stringify(response.data.resultado), { expires: 1 / 24 })
-                //console.log('Token JWT almacenado en la cookie:', tokenJWT),
+
                 ToastCustom({text: "Bienvenido de vuelta :)"})
-                // Cambiamos estado de loggeo 
+
+                // Cambiamos estado global de loggeo 
                 changeLogged(true)
                 Redirect()
             })

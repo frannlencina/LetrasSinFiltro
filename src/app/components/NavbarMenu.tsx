@@ -16,7 +16,7 @@ export default function NabvarMenu({ userData, logged }: { userData: UserData })
                     <div>
                         <div className="relative z-20 bg-white w-full h-full opacity-100 p-4 flex flex-col justify-center items-center text-3xl gap-12 ">
                             <div>
-                                <Link className={stylesNavFooter.common} href="#">LetrasSinFiltro</Link>
+                                <Link className={stylesNavFooter.common} href="/">LetrasSinFiltro</Link>
                             </div>
                             <div className=" flex flex-col gap-2 sm:flex sm:gap-5">
                                 <p>{userData.username}</p>
@@ -27,11 +27,11 @@ export default function NabvarMenu({ userData, logged }: { userData: UserData })
                     <div>
                         <div className="relative z-20 bg-white w-full h-full opacity-100 p-4 flex flex-col justify-center items-center text-3xl gap-12 ">
                             <div>
-                                <Link className={stylesNavFooter.common} href="#">LetrasSinFiltro</Link>
+                                <Link className={stylesNavFooter.common} href="/">LetrasSinFiltro</Link>
                             </div>
                             <div className=" flex flex-col gap-2 sm:flex sm:gap-5">
-                                <Link className={stylesNavFooter.callToAction} href="#">Register</Link>
-                                <Link className={stylesNavFooter.callToAction} href="#">Login</Link>
+                                <Link className={stylesNavFooter.callToAction} href="/register">Register</Link>
+                                <Link className={stylesNavFooter.callToAction} href="/login">Login</Link>
                             </div>
                         </div>
                         

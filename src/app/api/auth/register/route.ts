@@ -13,18 +13,27 @@ export async function POST(request: Request) {
     console.log(body)
     const resultado = await User.findOne({ username: body.username });
 
-    if (resultado && (resultado.username || resultado.email)) {
+    const todayDate = new Date();
+    const day = todayDate.getDate().toString().padStart(2, '0');
+    const month = (todayDate.getMonth() + 1).toString().padStart(2, '0'); 
+    const year = todayDate.getFullYear();
+    const dateString = `${day}/${month}/${year}`; 
+
+    if (resultado && (resultado.username || resultado.account.email)) {
       console.log('El usuario ya existe => :', resultado);
       return NextResponse.json({ "error": "Usuario registrado" }, { status: 500 });
     } else {
       const nuevoUsuario = await User.create({
-        name: name,
-        email: email,
-        last_name: last_name,
         username: username,
-        password: password,
-        pp_image: pp_image,
+        avatar: "default",
         rank: rank,
+        last_connection: dateString,
+        account: {
+          email: email,
+          password: password,
+          name: name,
+          last_name: last_name,
+        },
       });
 
       console.log('Usuario creado exitosamente => :', nuevoUsuario);
@@ -38,20 +47,27 @@ export async function POST(request: Request) {
 
 // Agarrar cuentas
 export async function GET(request: Request) {
+
   try {
-    await connectDB();  // Asegurarse de que connectDB() funcione correctamente
+    await connectDB();
 
-    const allSearch = await User.find({});
+    const { username } = await request.json();
 
-    if (allSearch) {
-      console.log('Cuentas encontradas => :' + allSearch);
-      return NextResponse.json(allSearch);
+    const body = { username };
+
+    console.log(body);
+
+    const search = await User.findOne({ username: body.username });
+
+    if (search) {
+      console.log('Cuentas encontradas => :' + search);
+      return NextResponse.json(search);
     } else {
       return NextResponse.json({ "error": "No se encontraron datos" });
     }
   } catch (err) {
     console.error(err);
-    return NextResponse.json({ "error": "Internal Server Error" });
+    return NextResponse.json({ "error": "Error interno del servidor" });
   }
 }
 
