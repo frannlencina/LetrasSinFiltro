@@ -10,7 +10,8 @@ import { useSearchParams, useRouter } from 'next/navigation'
 import { ToastCustom } from '../../utils/ToastCustom'
 import { v4 as uuidv4 } from 'uuid';
 import Badge from "../Badge";
-
+import AuthButton from '../../utils/AuthButton'
+import { useLogged } from "@/app/context/LoggedContext";
 
 export default function Generator() {
 
@@ -158,6 +159,8 @@ export default function Generator() {
         ]
     };
 
+    const { logged } = useLogged()
+
     const downloadToImage = async () => {
         if (textFocus !== noTextFocus || textFocus === null) {
             setToImageLoader(true)
@@ -179,7 +182,10 @@ export default function Generator() {
                 console.error('Elemento no encontrado');
             }
         } else {
-            ToastCustom({ text: noTextFocus })
+            if (logged == true) {
+                console.log('hola')
+                ToastCustom({ text: noTextFocus })
+            }
         }
     }
 
@@ -229,6 +235,7 @@ export default function Generator() {
 
     // Copiar URl
     const onCopyUrl = () => {
+
         if (textFocus !== noTextFocus) {
             ToastCustom({ text: 'URL copiada correctamente!' })
             const currentURL = window.location.href;
@@ -240,6 +247,8 @@ export default function Generator() {
 
     // Copiar Texto a porta papeles.
     const copyToClipboard = () => {
+
+        // Utiliza LoggedChecker como un componente de React
         if (textFocus !== noTextFocus) {
             if (!navigator.clipboard) {
                 ToastCustom({ text: 'Tu navegador no es compatible con esta funcion :(' })
@@ -254,6 +263,8 @@ export default function Generator() {
         } else {
             ToastCustom({ text: noTextFocus });
         }
+
+
     }
 
     const cardData = {
@@ -306,6 +317,9 @@ export default function Generator() {
     };
 
 
+
+
+
     return (
         <div>
             <div id="mainCard" className="flex flex-col pb-16">
@@ -323,7 +337,8 @@ export default function Generator() {
                     <div className="flex items-center">
                         <button onClick={reloadTextFocus} className='text-blue-500 hover:scale-110 hover:rotate-180  px-2 py-1 rounded-xl transition-all duration-200'><i className="ri-loop-left-line"></i></button>
                         <div className="relative group">
-                            <button onClick={() => addToFavorites({ name: cardData.name, text: textFocus })} className='text-yellow-500 hover:scale-110 hover:skew-y-12 px-2 py-1 rounded-xl transition-all duration-200'><i className="ri-star-line"></i></button>
+                            <AuthButton onClick={() => addToFavorites({ name: cardData.name, text: textFocus })}><button className='text-yellow-500 hover:scale-110 hover:skew-y-12 px-2 py-1 rounded-xl transition-all duration-200'><i className="ri-star-line"></i></button></AuthButton>
+
                         </div>
                     </div>
                     <div className="flex opacity-50 items-center">
@@ -336,23 +351,30 @@ export default function Generator() {
                                     </button>
                                 </Popover.Trigger>
                                 <Popover.Portal >
-                                    <Popover.Content className="flex divide-y flex-col gap-2 items-start bg-white py-2 px-4 rounded-lg" sideOffset={5}>
-                                        <div className="text-center w-full">
-                                            <a className={stylesToolsGen.shareButtons} href={textFocus !== noTextFocus ? `https://twitter.com/intent/tweet?text=${textFocus}` : null} target="_blank"><i class="ri-twitter-x-line"></i>Twitter</a>
+                                    <Popover.Content className="flex divide-y flex-col gap-2 items-start justify-start bg-white py-2 px-4 rounded-lg" sideOffset={5}>
+                                        <div className=" w-full">
+                                            <AuthButton onClick={() => copyToClipboard()}><a className={stylesToolsGen.shareButtons} href={textFocus !== noTextFocus && logged ? `https://twitter.com/intent/tweet?text=${textFocus}` : null} target="_blank">
+                                                <i class="ri-twitter-x-line"></i>Twitter
+                                            </a></AuthButton>
+                                        </div>
+                                        <div className="w-full">
+                                            <AuthButton onClick={onCopyUrl}><span className={stylesToolsGen.shareButtons}>
+                                                <i class="ri-link"></i> Compartir enlace
+                                            </span></AuthButton>
                                         </div>
 
                                         <div className="w-full">
-                                            <button className={stylesToolsGen.shareButtons} onClick={onCopyUrl}><i class="ri-link"></i> Copiar enlace</button>
-                                        </div>
-                                        <div className="w-full">
-                                            <button className={stylesToolsGen.shareButtons} onClick={() => copyToClipboard()}><i class="ri-file-list-3-line"></i> Copiar Txt</button>
+                                            <AuthButton onClick={() => copyToClipboard()}><span className={stylesToolsGen.shareButtons}>
+                                                <i class="ri-file-list-3-line"></i> Copiar Txt
+                                            </span></AuthButton>
                                         </div>
                                         <Popover.Arrow className="opacity-30" />
                                     </Popover.Content>
                                 </Popover.Portal>
                             </Popover.Root></button>
                         {
-                            toImageLoader ? <button className={stylesToolsGen.disable} onClick={downloadToImage}><i className="ri-download-line"></i></button> : <button className={stylesToolsGen.common} onClick={downloadToImage}><i className="ri-download-line"></i></button>
+                            toImageLoader ? <AuthButton onClick={onCopyUrl}><button className={stylesToolsGen.disable} onClick={() => downloadToImage}><i className="ri-download-line"></i></button></AuthButton> :
+                                <AuthButton onClick={onCopyUrl}><button className={stylesToolsGen.common} onClick={() => downloadToImage}><i className="ri-download-line"></i></button></AuthButton>
                         }
                     </div>
                 </div>
