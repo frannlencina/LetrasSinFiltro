@@ -70,9 +70,9 @@ export default function Login() {
     }
     
     return (
-        <div className="flex items-center justify-center h-screen w-full bg-[#D0E4FF] bg-gradient-to-t from-[#f9f9f9] to-blue-200">
+        <div className="flex items-center justify-center h-screen w-full bg-white">
             <Toaster />
-            <div className="grid grid-cols-2 rounded-xl">
+            <div className="grid gridcols-1 sm:grid-cols-2 rounded-xl">
                 <div className="bg-[#5596F1] px-12 rounded-l-xl flex items-center justify-center ">
                     <Image src="/memojis-login.png" width={350} height={350} />
                 </div>

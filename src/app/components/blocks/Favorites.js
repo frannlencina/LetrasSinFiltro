@@ -1,10 +1,11 @@
 import CardTemplate from "../CardTemplate";
 import { useEffect, useState } from 'react';
-import { stylesMenuBar, stylesToolsGen } from "@/app/utils/styles";
+import { stylesToolsGen } from "@/app/utils/styles";
 import * as Popover from '@radix-ui/react-popover';
 import { ToastCustom } from "@/app/utils/ToastCustom";
 import * as htmlToImage from 'html-to-image';
 import Badge from "../Badge";
+
 export default function Favorites() {
 
   const noTextFocus = 'Por favor selecciona un mood';
@@ -35,7 +36,6 @@ export default function Favorites() {
     // Obtener los datos de localStorage y convertirlos de nuevo a un array
     const storedFavoriteCards = JSON.parse(localStorage.getItem('favoriteCards')) || [];
     setFavoriteCards(storedFavoriteCards);
-    console.log(storedFavoriteCards)
   }, []);
 
 
@@ -67,7 +67,7 @@ export default function Favorites() {
   }
 
   const [showModal, setShowModal] = useState(false)
-  const [ cardToDeleteId, setCardToDeleteId ] = useState(null)
+  const [cardToDeleteId, setCardToDeleteId] = useState(null)
 
   const openModal = (id) => {
     setShowModal(true)
@@ -127,7 +127,7 @@ export default function Favorites() {
             </div>
           </div> : ''
       }
-      <div className="mt-6">
+      <div className="mt-6 p-6 sm:p-0">
         <h1 className="text-4xl font-black text-blue-500">Favoritos</h1>
         <p className="font-medium opacity-50">Recuerda, mira, comparte y elimina tus frases favoritas generadas</p>
       </div>
@@ -135,29 +135,28 @@ export default function Favorites() {
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
         {
           favoriteCards.map((card, index) => (
-            <div className="flex flex-col justify-center items-center gap-4  scale-75 select-none">
+            <div className="flex flex-col justify-center items-center gap-4  scale-75 select-none" key={index}>
               <div id={`elementToDownload-` + card.id} className="scale-100 hover:scale-105 transition-all hover:ring-[15px] ring-stone-200 hover:outline-stone-100 hover:outline outline-8 rounded-3xl">
-                <CardTemplate key={index} cardData={cardData} text={card.text} />
+                <CardTemplate cardData={cardData} text={card.text} />
               </div>
               <div className="flex justify-center gap-8 items-center text-3xl">
                 <button className=' opacity-50 hover:scale-110 transition-all' >
                   <Popover.Root >
                     <Popover.Trigger asChild>
-                      <button clas
-                        sName="IconButton" aria-label="Update dimensions">
+                      <span className="IconButton" aria-label="Update dimensions">
                         <i className="ri-share-forward-line"></i>
-                      </button>
+                      </span>
                     </Popover.Trigger>
                     <Popover.Portal >
                       <Popover.Content className="flex divide-y flex-col gap-2 items-center bg-white p-2 rounded-lg" sideOffset={5}>
                         <div className="items-center w-full">
-                          <a className={stylesToolsGen.shareButtons} href={'https://twitter.com/intent/tweet?text=' + card.text} target="_blank"><i class="ri-twitter-x-line"></i>Twitter</a>
+                          <a className={stylesToolsGen.shareButtons} href={'https://twitter.com/intent/tweet?text=' + card.text} target="_blank"><i className="ri-twitter-x-line"></i>Twitter</a>
                         </div>
                         <div className="w-full">
-                          <button className={stylesToolsGen.shareButtons} onClick={() => onCopyUrl(card.text)}><i class="ri-link"></i> Copiar enlace</button>
+                          <button className={stylesToolsGen.shareButtons} onClick={() => onCopyUrl(card.text)}><i className="ri-link"></i> Copiar enlace</button>
                         </div>
                         <div className="w-full">
-                          <button className={stylesToolsGen.shareButtons} onClick={() => copyToClipboard({ cardText: card.text })}><i class="ri-file-list-3-line"></i> Copiar Txt</button>
+                          <button className={stylesToolsGen.shareButtons} onClick={() => copyToClipboard({ cardText: card.text })}><i className="ri-file-list-3-line"></i> Copiar Txt</button>
                         </div>
                         <Popover.Arrow className="opacity-30" />
                       </Popover.Content>
@@ -166,8 +165,8 @@ export default function Favorites() {
 
                 <button className={stylesToolsGen.common + ' opacity-50'} onClick={() => { downloadToImage({ cardId: card.id }) }}><i className="ri-download-line "></i></button>
 
-                <button onClick={ () => { openModal(card.id) }} className="text-red-600 opacity-50 hover:opacity-100 transition-all">
-                  <i class="ri-delete-bin-line"></i>
+                <button onClick={() => { openModal(card.id) }} className="text-red-600 opacity-50 hover:opacity-100 transition-all">
+                  <i className="ri-delete-bin-line"></i>
                 </button>
               </div>
             </div>

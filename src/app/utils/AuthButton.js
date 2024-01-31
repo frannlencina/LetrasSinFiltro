@@ -1,6 +1,9 @@
+'use client'
 import { useState } from 'react';
 import { useLogged } from '../context/LoggedContext';
 import LoginModal from '../components/LoginModal';
+
+
 
 const AuthButton = ({ onClick, children }) => {
   const { logged } = useLogged();

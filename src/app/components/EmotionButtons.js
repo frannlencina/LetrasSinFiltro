@@ -1,5 +1,5 @@
 'use client'
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { useEmotion } from '../context/EmotionContext';
 import { useSearchParams, useRouter } from 'next/navigation'
@@ -19,14 +19,16 @@ const EmotionButtons = () => {
 
     const handleButtonClick = (newEmotion) => {
         changeEmotion(newEmotion);
-
         // Verificación de router para uso en el cliente
         if (router) {
             router.push(`/?focus=${newEmotion}`, { shallow: true, scroll: false });
         }
-    };
+    };  
+
 
     useEffect(() => {
+        // Obtener el valor actual del contexto
+
         if (focus) {
             // Validación para permitir solo ciertos valores
             const allowedEmotions = ['Triste', 'Enamorado', 'Feliz', 'Enojado', 'Loco'];
@@ -51,7 +53,7 @@ const EmotionButtons = () => {
     return (
         <>
             <div className='max-w-6xl'>
-                <div className="flex gap-4 items-center">
+                <div className="flex gap-4 items-center justify-center sm:justify-start">
                     <h4 className="font-black text-black text-2xl ">Mood</h4>
                     <div className='relative group'>
                         <Tooltip text={'focus'} />
@@ -70,8 +72,8 @@ const EmotionButtons = () => {
                 <div className="embla overflow-hidden py-2 md:px-6" ref={emblaRef} >
                     <div className="embla__container flex min-w-0 md:gap-2">
                         {images.map((image, index) => (
-                            <div className='flex flex-shrink-0 w-1/2 sm:w-1/5 min-w-0 mx-auto '>
-                                <button key={index} className='embla__slide flex-shrink-0 mx-auto min-w-0 h-full ' onClick={() => handleButtonClick(image.emotion)}>
+                            <div className='flex flex-shrink-0 w-1/2 sm:w-1/5 min-w-0 mx-auto ' key={index}>
+                                <button className='embla__slide flex-shrink-0 mx-auto min-w-0 h-full ' onClick={() => handleButtonClick(image.emotion)}>
                                     <Image
                                         className={image.emotion === emotion ? 'rounded-lg  cursor-pointer bg-blue-500 scale-110' : 'rounded-lg cursor-pointer hover:scale-110 transition-all hover:bg-blue-500 '}
                                         src={image.src}

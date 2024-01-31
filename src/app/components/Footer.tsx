@@ -1,3 +1,4 @@
+'use client'
 import Link from "next/link"
 import { stylesNavFooter } from "../utils/styles"
 import CardSocial from "./CardSocial"

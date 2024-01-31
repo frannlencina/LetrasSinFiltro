@@ -1,10 +1,7 @@
 'use client'
 import Badge from "./components/Badge";
-import Generator from "./components/blocks/Generator";
-import EmotionButtons from './components/EmotionButtons'
 import { EmotionProvider } from "./context/EmotionContext";
 import { Toaster } from 'react-hot-toast';
-import { stylesMenuBar } from "./utils/styles";
 import GenTab from './components/blocks/GenTab'
 import { useState } from "react";
 
@@ -14,7 +11,7 @@ export default function Home() {
   return (
     <>
       <EmotionProvider>
-        <main className="flex min-h-screen flex-col items-center justify-center max-w-6xl mx-auto">
+        <div className="flex min-h-screen flex-col items-center justify-center max-w-6xl mx-auto">
           <Toaster />
           <div className="flex flex-col items-center justify-center pt-48 pb-12">
             <Badge text="Alpha v1.0" type="yellow" icon={true} />
@@ -30,7 +27,7 @@ export default function Home() {
           <section className="flex flex-col gap-6 justify-center mt-16 max-w-4xl">
             <GenTab select={chooseGen} />
           </section>
-        </main>
+        </div>
       </ EmotionProvider>
     </>
   )

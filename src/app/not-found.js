@@ -12,7 +12,7 @@ export default function NotFound() {
           <h1 className='text-[#004AAD] text-5xl'>Ooops!</h1>
           <h2 className='text-[#004AAD] text-5xl sm:ml-2 mt-1'>error 404</h2>
           <h4 className='text-[#106BEB] opacity-70 text-3xl'>pagina no encontrada</h4>
-          <Link className='inline-flex items-center px-4 py-2 rounded-lg text-white bg-[#004AAD] mt-4 gap-2 hover:scale-105 text-sm' href="/"><i class="ri-arrow-left-line"></i> Volver al inicio</Link>
+          <Link className='inline-flex items-center px-4 py-2 rounded-lg text-white bg-[#004AAD] mt-4 gap-2 hover:scale-105 text-sm' href="/"><i className="ri-arrow-left-line"></i> Volver al inicio</Link>
         </div>
       </div>
     </div>

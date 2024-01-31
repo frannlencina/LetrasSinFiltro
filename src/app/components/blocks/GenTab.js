@@ -1,6 +1,9 @@
-import Generator from './Generator'
 import Favorites from "./Favorites";
 import EmotionButtons from '../EmotionButtons'
+
+import dynamic from 'next/dynamic'
+const Generator = dynamic(() => import('./Generator'), { ssr: false })
+
 export default function GenTab({ select }) {
 
     return (

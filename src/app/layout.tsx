@@ -28,10 +28,19 @@ export default function RootLayout({
           <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet" />
         </head>
 
-        <Navbar />
 
-        <body className={inter.className}>{children}</body>
-        <Footer />
+
+        <body className={inter.className}>
+          <header>
+            <Navbar />
+          </header>
+          <main>
+            {children}
+          </main>
+          <footer>
+            <Footer />
+          </footer>
+        </body>
       </LoggedProvider>
     </html>
   )

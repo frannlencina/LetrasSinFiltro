@@ -10,8 +10,11 @@ import { useSearchParams, useRouter } from 'next/navigation'
 import { ToastCustom } from '../../utils/ToastCustom'
 import { v4 as uuidv4 } from 'uuid';
 import Badge from "../Badge";
-import AuthButton from '../../utils/AuthButton'
 import { useLogged } from "@/app/context/LoggedContext";
+
+
+import dynamic from 'next/dynamic'
+const AuthButton = dynamic(() => import('../../utils/AuthButton'), { ssr: false })
 
 export default function Generator() {
 
@@ -40,7 +43,7 @@ export default function Generator() {
             // Eliminamos parametro text de la URL para evitar conflictos y estetica.
             router.replace(`/?focus=${emotion}`, undefined, { shallow: false });
         } else {
-            console.log('No hay text');
+            
         }
     }, [emotion]);
 
@@ -183,7 +186,6 @@ export default function Generator() {
             }
         } else {
             if (logged == true) {
-                console.log('hola')
                 ToastCustom({ text: noTextFocus })
             }
         }
@@ -337,7 +339,7 @@ export default function Generator() {
                     <div className="flex items-center">
                         <button onClick={reloadTextFocus} className='text-blue-500 hover:scale-110 hover:rotate-180  px-2 py-1 rounded-xl transition-all duration-200'><i className="ri-loop-left-line"></i></button>
                         <div className="relative group">
-                            <AuthButton onClick={() => addToFavorites({ name: cardData.name, text: textFocus })}><button className='text-yellow-500 hover:scale-110 hover:skew-y-12 px-2 py-1 rounded-xl transition-all duration-200'><i className="ri-star-line"></i></button></AuthButton>
+                            <AuthButton onClick={() => addToFavorites({ name: cardData.name, text: textFocus })}><span className='text-yellow-500 hover:scale-110 hover:skew-y-12 px-2 py-1 rounded-xl transition-all duration-200'><i className="ri-star-line"></i></span></AuthButton>
 
                         </div>
                     </div>
@@ -345,27 +347,26 @@ export default function Generator() {
                         <button className={stylesToolsGen.common} >
                             <Popover.Root >
                                 <Popover.Trigger asChild>
-                                    <button clas
-                                        sName="IconButton" aria-label="Update dimensions">
+                                    <span className="IconButton" aria-label="Update dimensions">
                                         <i className="ri-share-forward-line"></i>
-                                    </button>
+                                    </span>
                                 </Popover.Trigger>
                                 <Popover.Portal >
                                     <Popover.Content className="flex divide-y flex-col gap-2 items-start justify-start bg-white py-2 px-4 rounded-lg" sideOffset={5}>
-                                        <div className=" w-full">
+                                        <div className="w-full">
                                             <AuthButton onClick={() => copyToClipboard()}><a className={stylesToolsGen.shareButtons} href={textFocus !== noTextFocus && logged ? `https://twitter.com/intent/tweet?text=${textFocus}` : null} target="_blank">
-                                                <i class="ri-twitter-x-line"></i>Twitter
+                                                <i className="ri-twitter-x-line"></i>Twitter
                                             </a></AuthButton>
                                         </div>
                                         <div className="w-full">
                                             <AuthButton onClick={onCopyUrl}><span className={stylesToolsGen.shareButtons}>
-                                                <i class="ri-link"></i> Compartir enlace
+                                                <i className="ri-link"></i> Compartir enlace
                                             </span></AuthButton>
                                         </div>
 
                                         <div className="w-full">
                                             <AuthButton onClick={() => copyToClipboard()}><span className={stylesToolsGen.shareButtons}>
-                                                <i class="ri-file-list-3-line"></i> Copiar Txt
+                                                <i className="ri-file-list-3-line"></i> Copiar Txt
                                             </span></AuthButton>
                                         </div>
                                         <Popover.Arrow className="opacity-30" />
@@ -373,8 +374,8 @@ export default function Generator() {
                                 </Popover.Portal>
                             </Popover.Root></button>
                         {
-                            toImageLoader ? <AuthButton onClick={onCopyUrl}><button className={stylesToolsGen.disable} onClick={() => downloadToImage}><i className="ri-download-line"></i></button></AuthButton> :
-                                <AuthButton onClick={onCopyUrl}><button className={stylesToolsGen.common} onClick={() => downloadToImage}><i className="ri-download-line"></i></button></AuthButton>
+                            toImageLoader ? <AuthButton onClick={onCopyUrl}><span className={stylesToolsGen.disable} onClick={() => downloadToImage}><i className="ri-download-line"></i></span></AuthButton> :
+                                <AuthButton onClick={onCopyUrl}><span className={stylesToolsGen.common} onClick={() => downloadToImage}><i className="ri-download-line"></i></span></AuthButton>
                         }
                     </div>
                 </div>

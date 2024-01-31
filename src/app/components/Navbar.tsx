@@ -6,9 +6,11 @@ import { stylesNavFooter } from "../utils/styles";
 import NavbarMenu from "./NavbarMenu";
 import Cookies from "js-cookie";
 import { stylesToolsGen } from "../utils/styles";
-import { LoggedProvider } from '../context/LoggedContext'
 import { useLogged } from "@/app/context/LoggedContext";
 import Badge from "./Badge";
+
+import { LoggedProvider } from '../context/LoggedContext'
+// const LoggedProvider  = dynamic(() => import('../context/LoggedContext'), { ssr: false })
 
 export default function Navbar() {
 
@@ -41,7 +43,7 @@ export default function Navbar() {
 
     }
 
-    const [ showModal, setShowModal ] = useState(false)
+    const [showModal, setShowModal] = useState(false)
 
     // Muestra la Navbar solo cuando isLoged es verdadero
     return isLoged === undefined ? null : (
@@ -75,16 +77,16 @@ export default function Navbar() {
                                 <Popover.Root >
                                     <Popover.Trigger asChild>
                                         <button className="IconButton text-blue-600 hover:text-white hover:bg-blue-600 rounded-md px-2 transition-all duration-300" aria-label="Update dimensions">
-                                            {userData.username}
+                                            { userData ? userData.username : ''}
                                         </button>
                                     </Popover.Trigger>
                                     <Popover.Portal >
                                         <Popover.Content className="flex flex-col mt-6 gap-2 items-start bg-white py-2 px-4 rounded-lg" sideOffset={5}>
                                             <div className="text-center w-full">
-                                                <Link className={stylesToolsGen.shareButtons} href={`/p/` + userData.username}>Perfil</Link>
+                                                <Link className={stylesToolsGen.shareButtons} href={isLoged ? `/p/` + userData.username : ''}>Perfil</Link>
                                             </div>
                                             <div className="text-center w-full">
-                                                <button onClick={ () => { setShowModal(true) } } className="cursor-pointer hover:bg-red-200 text-red-500 w-[100%] transition-all py-1 px-2 rounded-lg flex items-center gap-2 active:ring-4 active:ring-red-300">Cerrar sesion</button>
+                                                <button onClick={() => { setShowModal(true) }} className="cursor-pointer hover:bg-red-200 text-red-500 w-[100%] transition-all py-1 px-2 rounded-lg flex items-center gap-2 active:ring-4 active:ring-red-300">Cerrar sesion</button>
                                             </div>
                                             <Popover.Arrow className="opacity-30" />
                                         </Popover.Content>

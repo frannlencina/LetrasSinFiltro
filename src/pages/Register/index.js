@@ -3,7 +3,6 @@ import Image from "next/image"
 import { useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/router";
-
 import { ToastCustom } from '../../app/utils/ToastCustom.tsx'
 import { Toaster } from 'react-hot-toast';
 export default function Register() {
@@ -63,12 +62,10 @@ export default function Register() {
             });
     }
 
-
-
     return (
-        <div className="flex items-center justify-center h-screen w-full bg-[#D0E4FF] bg-gradient-to-t from-[#f9f9f9] to-[#335D98]">
+        <div className="flex items-center justify-center h-screen w-fullbg-white ">
             <Toaster />
-            <div className="grid grid-cols-2">
+            <div className="grid grid-cols-1 sm:grid-cols-2">
                 <div className="bg-[#355E99] px-12 rounded-l-xl flex items-center justify-center ">
                     <Image src="/memojis-register.png" width={350} height={350} />
                 </div>
