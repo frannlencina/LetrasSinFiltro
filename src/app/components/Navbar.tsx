@@ -10,7 +10,6 @@ import { useLogged } from "@/app/context/LoggedContext";
 import Badge from "./Badge";
 
 import { LoggedProvider } from '../context/LoggedContext'
-// const LoggedProvider  = dynamic(() => import('../context/LoggedContext'), { ssr: false })
 
 export default function Navbar() {
 
@@ -43,6 +42,11 @@ export default function Navbar() {
 
     }
 
+
+    const toggleMenu = () => {
+        setShowMenu(!showMenu)
+    }
+
     const [showModal, setShowModal] = useState(false)
 
     // Muestra la Navbar solo cuando isLoged es verdadero
@@ -63,9 +67,14 @@ export default function Navbar() {
             }
             <div className="fixed z-20 top-6 left-1/2 transform -translate-x-1/2 -translate-y-1/2 mx-auto text-medium text-lg mt-6 font-semibold w-full py-4">
                 <div className="p-4 rounded-lg min-h-[70px] max-w-5xl mx-auto text-lg bg-white backdrop-blur-md bg-opacity-30 shadow-[1px_2px_20px_0px_rgba(0,0,0,0.03)]">
-                    <button onClick={() => setShowMenu(!showMenu)} className="sm:hidden text-3xl opacity-50 transition-all">
-                        <i className="ri-menu-line"></i>
-                    </button>
+                    <div className="flex justify-between items-center w-full">
+                        <Link className={stylesNavFooter.common + ' sm:hidden'} href="/">
+                            LetrasSinFiltro
+                        </Link>
+                        <button onClick={() => toggleMenu() } className="sm:hidden text-3xl opacity-50 transition-all float-right">
+                            {showMenu ? <i className="ri-close-fill"></i> : <i className="ri-menu-line"></i>}
+                        </button>
+                    </div>
                     <div className="hidden sm:flex items-center justify-between">
                         <div>
                             <Link className={stylesNavFooter.common} href="/">
@@ -77,7 +86,7 @@ export default function Navbar() {
                                 <Popover.Root >
                                     <Popover.Trigger asChild>
                                         <button className="IconButton text-blue-600 hover:text-white hover:bg-blue-600 rounded-md px-2 transition-all duration-300" aria-label="Update dimensions">
-                                            { userData ? userData.username : ''}
+                                            {userData ? userData.username : ''}
                                         </button>
                                     </Popover.Trigger>
                                     <Popover.Portal >
@@ -105,7 +114,7 @@ export default function Navbar() {
                             </div>
                         )}
                     </div>
-                    {showMenu && <NavbarMenu userData={userData} logged={logged} />}
+                    {showMenu && <NavbarMenu toggleMenu={toggleMenu} userData={userData} logged={logged} />}
                 </div>
             </div>
         </LoggedProvider>

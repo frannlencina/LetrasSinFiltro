@@ -63,7 +63,7 @@ export default function Register() {
     }
 
     return (
-        <div className="flex items-center justify-center h-screen w-fullbg-white ">
+        <div className="flex items-center justify-center h-screen w-full bg-white ">
             <Toaster />
             <div className="grid grid-cols-1 sm:grid-cols-2">
                 <div className="bg-[#355E99] px-12 rounded-l-xl flex items-center justify-center ">

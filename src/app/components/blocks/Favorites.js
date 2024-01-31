@@ -133,9 +133,9 @@ export default function Favorites() {
       </div>
       <hr className="mb-24 mt-6 max-w-4xl mx-auto" />
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
-        {
+      {
           favoriteCards.map((card, index) => (
-            <div className="flex flex-col justify-center items-center gap-4  scale-75 select-none" key={index}>
+            <div className="flex flex-col justify-center items-center gap-4 scale-[.65] sm:scale-75 select-none" key={index}>
               <div id={`elementToDownload-` + card.id} className="scale-100 hover:scale-105 transition-all hover:ring-[15px] ring-stone-200 hover:outline-stone-100 hover:outline outline-8 rounded-3xl">
                 <CardTemplate cardData={cardData} text={card.text} />
               </div>

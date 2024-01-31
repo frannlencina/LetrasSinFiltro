@@ -2,74 +2,80 @@
 import * as Popover from '@radix-ui/react-popover';
 import Link from "next/link"
 import { stylesNavFooter } from '../utils/styles'
-import { stylesToolsGen } from '../utils/styles'
 import { useState } from "react";
 import Image from 'next/image';
+import Cookies from 'js-cookie';
+import { useLogged } from '../context/LoggedContext';
+import Badge from './Badge';
 
 interface UserData {
     username: boolean;
-    // Add other properties as needed
 }
 
-export default function NabvarMenu({ userData, logged }: { userData: UserData }) {
+interface Logged {
+    isLogged: boolean;
+}
 
-    const [showMenu, setShowMenu] = useState(true);
-    const [isLoged, setIsLoged] = useState(undefined);
+interface Props {
+    userData: UserData;
+    logged: Logged;
+    toggleMenu: () => void;
+}
+
+export default function NabvarMenu({ userData, logged, toggleMenu }: Props) {
+
+    const { changeLogged } = useLogged()
+
+    const [showModal, setShowModal] = useState(false);
+
+    const logout = () => {
+        toggleMenu();
+        changeLogged(false)
+        Cookies.remove("user_data");
+        window.location.reload();
+
+    }
 
     return (
-        <div className="sm:hidden w-full h-screen fixed z-30 left-0 top-20 bg-black bg-opacity-80 flex justify-center items-center">
+        <div className="sm:hidden w-full h-screen fixed z-30 left-0 top-20 bg-white bg-opacity-100 flex justify-center items-center">
             {
                 logged ?
                     <div>
-                        <div className="relative z-20 bg-white w-full h-full opacity-100 p-4 flex flex-col justify-center items-center text-3xl gap-12 ">
-                            <div>
-                                <Link className={stylesNavFooter.common} href="/">LetrasSinFiltro</Link>
+                        {
+                            showModal ?
+                                <div className="bg-black bg-opacity-80 w-screen h-screen fixed z-50  top-0 left-0 flex justify-center items-center">
+                                    <div className="min-w-[400px] min-h-[200px] bg-stone-100 rounded-lg p-6 flex justify-between flex-col">
+                                        <span className="scale-115"><Badge text="Seguro que quieres cerrar sesion?" icon={true} /></span>
+                                        <p className="max-w-md mb-8 px-2 mt-4 font-medium opacity-70">Si cierras sesion tendras que volver iniciar sesion para utilizar las funcionalidades</p>
+                                        <div className="flex gap-4 justify-center">
+                                            <button onClick={() => { logout() }} className="bg-blue-500 text-white rounded-md px-2 py-1 text-md hover:scale-105 focus:ring-4 focus:ring-blue-200">Confirmar</button>
+                                            <button onClick={() => { setShowModal(false) }} className="bg-stone-500 text-white rounded-md px-2 py-1 text-md hover:scale-105 focus:ring-4 focus:ring-stone-200">Cancelar</button>
+                                        </div>
+                                    </div>
+                                </div> : ''
+                        }
+
+                        <div className="flex flex-col gap-4 items-center justify-center">
+                            <div className="text-center ">
+                                <Link onClick={ () => toggleMenu() } className='cursor-pointer text-blue-500 text-2xl hover:text-blue-300 w-[100%] transition-all py-1 px-2 rounded-lg flex items-center gap-2' href={`/p/` + userData.username}>Perfil</Link>
                             </div>
-                            <div className="flex flex-col gap-2 sm:flex sm:gap-5">
-                                <button className='text-blue-600 hover:text-white hover:bg-blue-600 rounded-md px-2 transition-all duration-300'>{userData.username}</button>
+                            <div className="text-center">
+                                <button onClick={() => { logout() }} className="cursor-pointer hover:bg-red-500 hover:text-white text-2xl text-red-500 w-[100%] transition-all py-1 px-2 rounded-lg flex items-center gap-2 active:ring-4 active:ring-red-300">Cerrar sesion</button>
                             </div>
                         </div>
                     </div>
                     :
                     <div>
-                        <div className="relative z-20 bg-white w-full h-full opacity-100 p-8 flex flex-col justify-center items-center text-3xl gap-12 rounded-2xl ">
-                            <div>
-                                <Link className={stylesNavFooter.common} href="/">LetrasSinFiltro</Link>
-                            </div>
-                            {logged ? 
-                                <div className="flex gap-2 items-center">
-                                    <Popover.Root >
-                                        <Popover.Trigger asChild>
-                                            <button className="IconButton text-blue-600 hover:text-white hover:bg-blue-600 rounded-md px-2 transition-all duration-300" aria-label="Update dimensions">
-                                            <Image width={50} height={50} src="/navbar-avatar.png" alt=''/> {userData.username}
-                                            </button>
-                                        </Popover.Trigger>
-                                        <Popover.Portal >
-                                            <Popover.Content className="flex flex-col mt-6 gap-2 items-start bg-white py-2 px-4 rounded-lg" sideOffset={5}>
-                                                <div className="text-center w-full">
-                                                    <Link className={stylesToolsGen.shareButtons} href={`/p/` + userData.username}>Perfil</Link>
-                                                </div>
-                                                <div className="text-center w-full">
-                                                    <button onClick={() => { setShowMenu(true) }} className="cursor-pointer hover:bg-red-200 text-red-500 w-[100%] transition-all py-1 px-2 rounded-lg flex items-center gap-2 active:ring-4 active:ring-red-300">Cerrar sesion</button>
-                                                </div>
-                                                <Popover.Arrow className="opacity-30" />
-                                            </Popover.Content>
-                                        </Popover.Portal>
-                                    </Popover.Root>
-                                </div>
-                            
-                            :
-                                <div className="flex gap-2 items-center">
-                                    <Link className={stylesNavFooter.callToAction} href="/register">
-                                        Registrarse
-                                    </Link>
-                                    <Link className={stylesNavFooter.callToAction} href="/login">
-                                        Entrar
-                                    </Link>
-                                </div>
-                            }
-                        </div>
 
+                        <div className="flex flex-col sm:flex-row gap-4 items-center">
+                            <Link onClick={ () =>  toggleMenu() } className='text-2xl text-blue-600 hover:text-blue-400' href="/login">
+                                Entrar
+                            </Link>
+                            <Link onClick={ () => toggleMenu() } className='text-2xl text-blue-600 hover:text-blue-400' href="/register">
+                                Registrarse
+                            </Link>
+
+                        </div>
                     </div>
             }
         </div>

@@ -28,7 +28,7 @@ export default function Footer() {
     return (
         <footer className="w-full flex flex-col items-center justify-center font-medium text-lg pb-12 mt-48">
             <div className="text-center">
-                <h4 className="text-stone-800 text-5xl font-black mb-2">Comunidad</h4>
+                <h4 className="text-stone-800 text-4xl sm:text-5xl font-black mb-2">Comunidad</h4>
                 <p className="font-medium text-stone-400">Expresa tus pensamientos con un toque de misterio.</p>
             </div>
             <div className="flex flex-col sm:flex-row gap-4 my-24">
@@ -42,12 +42,12 @@ export default function Footer() {
                     />
                 ))}
             </div>
-            <div className="flex gap-5 mb-4">
+            <div className="flex flex-col text-center sm:flex-row gap-5 mb-12 sm:mb-4">
                 <Link className={stylesNavFooter.common} href="#">Registrarse</Link>
                 <Link className={stylesNavFooter.common} href="#">Entrar</Link>
                 <Link className={stylesNavFooter.common} href="#">Acerca de</Link>
             </div>
-            <p className="flex items-center gap-2 text-medium text-stone-500">Desarrollado con <span> <Image src="/iphone-hearthh.png" width={20} height={20} alt="Corazon" /> </span> por <Link href="https://www.linkedin.com/in/francisco-lencina/"  className="text-blue-500 hover:text-blue-300" target="_blank">@francisco.lencina</Link></p>
+            <p className="flex flex-col sm:flex-row items-center gap-2 text-medium text-stone-500">Desarrollado con <span className="flex items-center justify-center gap-2"> <Image className="w-5 h-5" src="/iphone-hearthh.png" width={20} height={20} alt="Corazon" />  por </span> <Link href="https://www.linkedin.com/in/francisco-lencina/"  className="text-blue-500 hover:text-blue-300" target="_blank">@francisco.lencina</Link></p>
         </footer>
     )
 }
