@@ -6,6 +6,9 @@ import { ToastCustom } from "@/app/utils/ToastCustom";
 import * as htmlToImage from 'html-to-image';
 import Badge from "../Badge";
 
+import dynamic from 'next/dynamic'
+const AuthButton = dynamic(() => import('../../utils/AuthButton'), { ssr: false })
+
 export default function Favorites() {
 
   const noTextFocus = 'Por favor selecciona un mood';
@@ -133,7 +136,7 @@ export default function Favorites() {
       </div>
       <hr className="mb-24 mt-6 max-w-4xl mx-auto" />
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
-      {
+        {
           favoriteCards.map((card, index) => (
             <div className="flex flex-col justify-center items-center gap-4 scale-[.65] sm:scale-75 select-none" key={index}>
               <div id={`elementToDownload-` + card.id} className="scale-100 hover:scale-105 transition-all hover:ring-[15px] ring-stone-200 hover:outline-stone-100 hover:outline outline-8 rounded-3xl">
@@ -150,24 +153,25 @@ export default function Favorites() {
                     <Popover.Portal >
                       <Popover.Content className="flex divide-y flex-col gap-2 items-center bg-white p-2 rounded-lg" sideOffset={5}>
                         <div className="items-center w-full">
-                          <a className={stylesToolsGen.shareButtons} href={'https://twitter.com/intent/tweet?text=' + card.text} target="_blank"><i className="ri-twitter-x-line"></i>Twitter</a>
+                          <AuthButton onClick={() => copyToClipboard()}><a className={stylesToolsGen.shareButtons} href={textFocus !== noTextFocus && logged ? `https://twitter.com/intent/tweet?text=${textFocus}` : null} target="_blank">
+                            <i className="ri-twitter-x-line"></i>Twitter
+                          </a></AuthButton>
                         </div>
                         <div className="w-full">
-                          <button className={stylesToolsGen.shareButtons} onClick={() => onCopyUrl(card.text)}><i className="ri-link"></i> Copiar enlace</button>
+                          <AuthButton onClick={() => onCopyUrl(card.text)}><span className={stylesToolsGen.shareButtons}><i className="ri-link"></i> Copiar enlace</span></AuthButton>
                         </div>
                         <div className="w-full">
-                          <button className={stylesToolsGen.shareButtons} onClick={() => copyToClipboard({ cardText: card.text })}><i className="ri-file-list-3-line"></i> Copiar Txt</button>
+                          <AuthButton onClick={() => copyToClipboard({ cardText: card.text })}><span className={stylesToolsGen.shareButtons}><i className="ri-file-list-3-line"></i> Copiar Txt</span></AuthButton>
                         </div>
                         <Popover.Arrow className="opacity-30" />
                       </Popover.Content>
                     </Popover.Portal>
                   </Popover.Root></button>
 
-                <button className={stylesToolsGen.common + ' opacity-50'} onClick={() => { downloadToImage({ cardId: card.id }) }}><i className="ri-download-line "></i></button>
-
-                <button onClick={() => { openModal(card.id) }} className="text-red-600 opacity-50 hover:opacity-100 transition-all">
+                <AuthButton onClick={() => { downloadToImage({ cardId: card.id }) }}><span className={stylesToolsGen.common + ' opacity-50'}><i className="ri-download-line "></i></span> </AuthButton>
+                <AuthButton onClick={() => { openModal(card.id) }}><span className="text-red-600 opacity-50 hover:opacity-100 transition-all">
                   <i className="ri-delete-bin-line"></i>
-                </button>
+                </span> </AuthButton>
               </div>
             </div>
           ))

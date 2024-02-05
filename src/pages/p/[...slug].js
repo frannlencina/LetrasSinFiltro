@@ -4,6 +4,10 @@ import Image from 'next/image'
 import { MoonLoader } from 'react-spinners'
 import axios from 'axios'
 
+import TimeAgo from 'react-timeago'
+import esStrings from 'react-timeago/lib/language-strings/es'
+import buildFormatter from 'react-timeago/lib/formatters/buildFormatter'
+
 export default function Profile() {
 
     const [loading, setLoading] = useState(true)
@@ -30,6 +34,7 @@ export default function Profile() {
             })
     }, [router.query.slug])
 
+    const formatter = buildFormatter(esStrings)
 
     return (
         <div className='h-full w-full flex justify-center items-center'>
@@ -52,9 +57,9 @@ export default function Profile() {
                             <div>
                                 <h2 className='text-4xl md:text-7xl lg:text-8xl font-black bg-clip-text text-transparent bg-gradient-to-t from-blue-200 via-blue-400 to-blue-600'>{userData.username}</h2>
                             </div>
-                            <div className='inline-flex items-center gap-2 opacity-50 bg-stone-200 px-4 py-2 rounded-lg w-fit text-xs'>
-                                Ultima conexion
-                                <span>{userData.last_connection}</span>
+                            <div className='inline-flex flex-col items-start gap-2 opacity-50 px-4 py-2 rounded-lg w-fit text-xs'>
+                                <span>Ultima conexion</span>
+                                <span className='bg-stone-200 px-4 py-2 rounded-lg'><TimeAgo date={userData.last_connection} formatter={formatter} /></span>
                             </div>
                             <div className='grid grid-cols-1 md:grid-cols-2 gap-y-8 m-6'>
                                 <div>

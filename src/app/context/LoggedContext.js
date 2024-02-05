@@ -2,8 +2,8 @@
 import React, { createContext, useState, useContext } from 'react';
 
 const LoggedContext = createContext({
-  logged: null,
-  changeLogged: () => {}, // No recibe parámetros aquí
+  logged: false,
+  changeLogged: () => {},
 });
 
 export function useLogged() {
@@ -15,10 +15,9 @@ export function useLogged() {
 }
 
 const LoggedProvider = ({ children }) => {
-  const [logged, setLogged] = useState(null);
+  const [logged, setLogged] = useState(false);
 
   const changeLogged = (newLogged) => { 
-    console.log(newLogged)
     setLogged(newLogged);
   };
 
