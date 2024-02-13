@@ -3,8 +3,7 @@ import { NextResponse } from "next/server";
 import { connectDB } from "@/app/libs/mongodb";
 import User from '@/app/models/user'
 
-const jwt = require('jsonwebtoken');
-const JSONWKEY = process.env.JSONWKEY;
+const bcrypt = require('bcryptjs');
 
 const todayDate = new Date();
 
@@ -23,17 +22,14 @@ export async function POST(request: Request) {
 
     const { token, password, username  } = await request.json();
     const body = { token, password, username };
-    
-    const resultado = await User.findOne({ username: body.username });
 
+    const resultado = await User.findOne({ username: body.username });
     console.log(resultado.account.password)
 
     const usernameUpdate = await body.username;
-    
-    if (resultado.account.password == body.password ) {
+    const isPasswordMatch = await bcrypt.compare(password, resultado.account.password);
 
-      const datosToken = { datosToken: resultado.username };
-      const tokenJWT = jwt.sign(datosToken, JSONWKEY, { expiresIn: '1h' });
+    if (isPasswordMatch) {
       
       // Actualizar ultima conexion del usuario. 
       const doc = await User.updateOne(
@@ -41,18 +37,12 @@ export async function POST(request: Request) {
         { $set: { last_connection: dateString } }
       );
 
-      console.log(doc)
-
-      // console.log('Datos encontrados:', resultado);
-
-      return NextResponse.json({ tokenJWT, resultado });
+      return NextResponse.json({ resultado });
     } else {
-      console.log('TOKEN UNDEFINED');
-      return NextResponse.json({ "error": "TOKEN UNDEFINED" }, { status: 500 });
+      return NextResponse.json({ "error": "Contraseña incorrecta" }, { status: 500 });
     }
    
   } catch (err) {
-    console.error(err);
     return NextResponse.json({ "error": "Internal Server Error" }, { status: 500 });
   }
 }

@@ -8,8 +8,11 @@ import { useRouter } from "next/router";
 import { ToastCustom } from "../../app/utils/ToastCustom";
 import { useLogged } from "../../app/context/LoggedContext";
 
+import jwt from 'jsonwebtoken';
+
 export default function Login() {
-    
+
+    const JSONWKEY = process.env.JSONWKEY;
 
     const router = useRouter();
 
@@ -40,39 +43,41 @@ export default function Login() {
         return () => clearTimeout(timeout);
     }
 
-    const [ buttonState, setButtonState ] = useState(true)
+    const [buttonState, setButtonState] = useState(true)
 
     const handleSubmit = async () => {
-        
+
         setButtonState(false)
         event.preventDefault();
         // Cambiar username por email y en el backend tambien
         const data = { username: `${body.username}`, password: `${body.password}`, };
-        
+
         axios.post(baseURL, data)
             .then(response => {
-
                 console.log(response.data.resultado)
-                const tokenJWT = response.data.tokenJWT
-                Cookies.set('tokenFirmado', tokenJWT, { expires: 1 / 24 })
-                Cookies.set('user_data', JSON.stringify(response.data.resultado), { expires: 1 / 24 })
 
-                ToastCustom({text: "Bienvenido de vuelta :)"})
+                const tokenInfo = response.data.resultado
+                // Generar un token JWT firmado y encriptado
+                
+                const token = jwt.sign(tokenInfo, JSONWKEY, { algorithm: 'HS256', expiresIn: '1h'} );
+                Cookies.set('tokenFirmado', token, { expires: 1 / 24, secure: true, sameSite: 'strict' })
+
+                ToastCustom({ text: "Bienvenido de vuelta :)" })
 
                 // Cambiamos estado global de loggeo 
                 changeLogged(true)
                 Redirect()
             })
             .catch(error => {
-                console.log('Error al iniciar sesión:', error);
+                ToastCustom({ text: error.response.data.error })
                 setButtonState(true)
             });
     }
-    
+
     return (
 
 
-<div className="flex items-center justify-center h-screen w-full bg-white ">
+        <div className="flex items-center justify-center h-screen w-full bg-white ">
             <Toaster />
             <div className="grid grid-cols-1 sm:grid-cols-2">
                 <div className="bg-[#5596F1] px-12 rounded-l-xl flex items-center justify-center ">
@@ -100,5 +105,4 @@ export default function Login() {
         </div>
     )
 }
-
 

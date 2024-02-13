@@ -10,6 +10,7 @@ import { useLogged } from "@/app/context/LoggedContext";
 import Badge from "./Badge";
 
 import { LoggedProvider } from '../context/LoggedContext'
+import { verifyAndDecodeJWT } from "../utils/VerifyAndDecodeJSWT";
 
 export default function Navbar() {
 
@@ -19,15 +20,20 @@ export default function Navbar() {
 
     const { changeLogged, logged } = useLogged()
 
-    useEffect(() => {
-        const user_data = Cookies.get('user_data');
+     useEffect( ()  =>  {
+        const tokenJWT  = Cookies.get('tokenFirmado');
+        if (tokenJWT) {
+            
+            // Verificar y decodificar el token JWT utilizando la función reutilizable
+            const decodedToken = verifyAndDecodeJWT(tokenJWT);
+            // Si el token JWT es válido, establece userData con los datos del usuario
+            if (decodedToken) {
+                setUserData(decodedToken);
 
-        if (user_data) {
-            changeLogged(true) // Cambio el context global de Loggeo
-            setIsLoged(true); // Cambio variable local de Loggeo
+                changeLogged(true) // Cambio el context global de Loggeo
+                setIsLoged(true); // Cambio variable local de Loggeo
 
-            const userDataFromCookie = JSON.parse(user_data);
-            setUserData(userDataFromCookie);
+            }
 
         } else {
             setIsLoged(false);
@@ -37,11 +43,10 @@ export default function Navbar() {
     const logout = () => {
         changeLogged(false)
         setUserData(null)
-        Cookies.remove("user_data");
+        Cookies.remove('tokenFirmado');
         window.location.reload();
 
     }
-
 
     const toggleMenu = () => {
         setShowMenu(!showMenu)
@@ -71,7 +76,7 @@ export default function Navbar() {
                         <Link className={stylesNavFooter.common + ' sm:hidden'} href="/">
                             LetrasSinFiltro
                         </Link>
-                        <button onClick={() => toggleMenu() } className="sm:hidden text-3xl opacity-50 transition-all float-right">
+                        <button onClick={() => toggleMenu()} className="sm:hidden text-3xl opacity-50 transition-all float-right">
                             {showMenu ? <i className="ri-close-fill"></i> : <i className="ri-menu-line"></i>}
                         </button>
                     </div>

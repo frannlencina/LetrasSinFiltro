@@ -1,10 +1,13 @@
+'use client'
 import Link from "next/link"
 import Image from "next/image"
 import { useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/router";
-import { ToastCustom } from '../../app/utils/ToastCustom.tsx'
 import { Toaster } from 'react-hot-toast';
+import { ToastCustom } from "../../app/utils/ToastCustom";
+const bcrypt = require('bcryptjs');
+
 export default function Register() {
 
     const router = useRouter();
@@ -37,6 +40,11 @@ export default function Register() {
 
     const handleSubmit = async () => {
 
+        event.preventDefault();
+        // Hashear la contraseña antes de enviarla al servidor
+        const salt = await bcrypt.genSalt(10);
+        const hashedPassword = await bcrypt.hash(body.password, salt);
+
         // Validar el formato del correo electrónico
         const emailFormatValido = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(body.email);
 
@@ -46,9 +54,9 @@ export default function Register() {
         }
 
         setButtonState(false)
-        event.preventDefault();
+
         // Cambiar username por email y en el backend tambien
-        const data = { username: `${body.username}`, email: `${body.email}`, password: `${body.password}`, };
+        const data = { username: `${body.username}`, email: `${body.email}`, password: hashedPassword, };
 
         axios.post(baseURL, data)
             .then(response => {
@@ -88,6 +96,7 @@ export default function Register() {
                         </label>
                         <button onClick={handleSubmit} className="bg-[#004AAD] text-white px-4 py-2 my-4 rounded-lg hover:scale-105 focus:ring-4 focus:ring-blue-300 transition-all duration-200">Registrarse</button>
                         <p className="text-black opacity-70 text-center">Ya tienes cuenta? <span className="text-blue-500 hover:text-blue-300"><Link href='/Login'>Ingresa aqui</Link></span></p>
+                      
                     </form>
                 </div>
             </div>

@@ -22,6 +22,6 @@
       "@/*": ["./src/*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/app/components/EmotionButtons.js", "src/app/components/blocks/Generator.js", "src/app/components/blocks/MenubarGen.js", "src/app/components/Slider.js", "src/app/api/auth/[...nextauth]/route.ts", "src/app/utils/AuthButton.js", "src/app/components/PrivateRoute.js"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/app/components/EmotionButtons.js", "src/app/components/blocks/Generator.js", "src/app/components/blocks/MenubarGen.js", "src/app/components/Slider.js", "src/app/api/auth/[...nextauth]/route.ts", "src/app/utils/AuthButton.js", "src/app/components/PrivateRoute.js", "src/app/[[...login]]/index.js", "src/app/utils/VerifyAndDecodeJSWT.js"],
   "exclude": ["node_modules"]
 }

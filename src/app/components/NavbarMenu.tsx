@@ -23,7 +23,7 @@ interface Props {
 }
 
 export default function NabvarMenu({ userData, logged, toggleMenu }: Props) {
-
+    
     const { changeLogged } = useLogged()
 
     const [showModal, setShowModal] = useState(false);

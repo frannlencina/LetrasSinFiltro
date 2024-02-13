@@ -9,7 +9,7 @@ export async function GET(request: Request) {
         const { searchParams } = new URL(request.url)
         const usernamee = searchParams.get('username')
 
-        const search = await User.findOne({ username: usernamee });
+        const search = await User.findOne({ username: usernamee }).select('-account.password');;
 
         if (search) {
             console.log('Cuentas encontradas => :' + search);
@@ -22,4 +22,3 @@ export async function GET(request: Request) {
         return NextResponse.json({ "error": "Error interno del servidor" });
     }
 }
-
