@@ -63,7 +63,7 @@ const CardTemplate: React.FC<CardTemplateProps> = ({ cardData, text }) => {
     return (
         <div className="flex flex-col gap-3">
             <div
-                className={`flex flex-col justify-center items-center text-center text-2xl p-4 font-black rounded-3xl text-white w-[360px] h-[360px] ` + backgroundConfig()}>
+                className={`flex flex-col justify-center items-center text-center text-2xl p-4 font-black rounded-3xl text-white w-screen max-w-[360px] sm:w-[360px] h-[360px]  ` + backgroundConfig()}>
                 {
                     config.text.colorType.type === 'gradient' ?  <p style={textConfig()} >{text}</p> : <p style={textConfig()}>{ text }</p>
                 }

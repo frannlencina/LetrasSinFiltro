@@ -1,10 +1,9 @@
 'use client'
-
 import CardTemplate from "../CardTemplate";
 import * as Popover from '@radix-ui/react-popover';
 import * as htmlToImage from 'html-to-image';
 import { useState, useEffect } from "react";
-import { stylesMenuBar, stylesToolsGen } from "@/app/utils/styles";
+import { stylesToolsGen } from "@/app/utils/styles";
 import { useEmotion } from "@/app/context/EmotionContext";
 import { useSearchParams, useRouter } from 'next/navigation'
 import { ToastCustom } from '../../utils/ToastCustom'
@@ -25,7 +24,7 @@ export default function Generator() {
     const router = useRouter();
 
     const searchParams = useSearchParams()
-    const text = searchParams.get('text')
+    const paramText = searchParams.get('paramText')
 
     // Constante mensaje cuando no hay un mood seleccionado.
     const noTextFocus = 'Por favor selecciona un mood';
@@ -38,8 +37,8 @@ export default function Generator() {
 
     useEffect(() => {
         // Validación para saber si trae texto la URL
-        if (text) {
-            setTextFocus(textReverse(text))
+        if (paramText) {
+            setTextFocus(textReverse(paramText))
             // Eliminamos parametro text de la URL para evitar conflictos y estetica.
             router.replace(`/?focus=${emotion}`, undefined, { shallow: false });
         } else {
@@ -92,7 +91,6 @@ export default function Generator() {
             });
     }, [emotion]);
 
-    // const [textFocus, setTextFocus] = useState([]);
     const [textFocus, setTextFocus] = useState([]);
 
     const reloadTextFocus = () => {
@@ -106,17 +104,25 @@ export default function Generator() {
 
     function getRandomFrase(arr) {
 
-        // get random index value
-        const randomIndex = Math.floor(Math.random() * arr.length);
+        if (textFocus.length < 1) {
+            // get random index value
+            const randomIndex = Math.floor(Math.random() * arr.length);
 
-        // get random item
-        const item = arr[randomIndex];
-        return item.frase;
+            // get random item
+            const item = arr[randomIndex];
+            return item.frase;
+        }else{
+            ToastCustom({text: noTextFocus})
+        }
     }
 
     useEffect(() => {
-        if (Object.keys(frases).length !== 0) {
+        if (paramText) {
+            alert('url encontrada')
+        } else if (Object.keys(frases).length !== 0) {
             reloadTextFocus();
+        }
+        {
         }
     }, [frases]);
 
@@ -219,63 +225,61 @@ export default function Generator() {
 
 
     return (
-        <div>
-            <div id="mainCard" className="flex flex-col pb-16">
-                <div className="min-w-[450px] min-h-[450px] flex justify-center items-center">
-                    <div className="mt-16">
-                        <div className="mb-4">
-                            <Badge text={cardData.name} type="" icon={false} />
-                        </div>
-                        <div id="elementToDownload" className="transition-all duration-200">
-                            <CardTemplate cardData={cardData} text={textFocus ? textFocus : noTextFocusReturn()} />
-                        </div>
+        <div id="mainCard" className="flex flex-col pb-16  ">
+            <div className="flex justify-center items-center ">
+                <div className="mt-16 ">
+                    <div className="mb-4">
+                        <Badge text={cardData.name} type="" icon={false} />
                     </div>
-                </div>
-                <div className="flex justify-between sm:w-[50%] mx-auto text-2xl translate-y-4">
-                    <div className="flex items-center">
-                        <button onClick={reloadTextFocus} className='text-blue-500 hover:scale-110 hover:rotate-180  px-2 py-1 rounded-xl transition-all duration-200'><i className="ri-loop-left-line"></i></button>
-                        <div className="relative group">
-                            <AuthButton onClick={() => addToFavorites({ name: cardData.name, text: textFocus })}><span className='text-yellow-500 hover:scale-110 hover:skew-y-12 px-2 py-1 rounded-xl transition-all duration-200'><i className="ri-star-line"></i></span></AuthButton>
-
-                        </div>
-                    </div>
-                    <div className="flex opacity-50 items-center">
-                        <button className={stylesToolsGen.common} >
-                            <Popover.Root >
-                                <Popover.Trigger asChild>
-                                    <span className="IconButton" aria-label="Update dimensions">
-                                        <i className="ri-share-forward-line"></i>
-                                    </span>
-                                </Popover.Trigger>
-                                <Popover.Portal >
-                                    <Popover.Content className="flex divide-y flex-col gap-2 items-start justify-start bg-white py-2 px-4 rounded-lg" sideOffset={5}>
-                                        <div className="w-full">
-                                            <AuthButton onClick={() => copyToClipboard()}><a className={stylesToolsGen.shareButtons} href={textFocus !== noTextFocus && logged ? `https://twitter.com/intent/tweet?text=${textFocus}` : null} target="_blank">
-                                                <i className="ri-twitter-x-line"></i>Twitter
-                                            </a></AuthButton>
-                                        </div>
-                                        <div className="w-full">
-                                            <AuthButton onClick={onCopyUrl}><span className={stylesToolsGen.shareButtons}>
-                                                <i className="ri-link"></i> Compartir enlace
-                                            </span></AuthButton>
-                                        </div>
-
-                                        <div className="w-full">
-                                            <AuthButton onClick={() => copyToClipboard()}><span className={stylesToolsGen.shareButtons}>
-                                                <i className="ri-file-list-3-line"></i> Copiar Txt
-                                            </span></AuthButton>
-                                        </div>
-                                        <Popover.Arrow className="opacity-30" />
-                                    </Popover.Content>
-                                </Popover.Portal>
-                            </Popover.Root></button>
-                        {
-                            toImageLoader ? <AuthButton onClick={downloadToImage}><span className={stylesToolsGen.disable} ><i className="ri-download-line"></i></span></AuthButton> :
-                                <AuthButton onClick={downloadToImage}><span className={stylesToolsGen.common} ><i className="ri-download-line"></i></span></AuthButton>
-                        }
+                    <div id="elementToDownload" className="transition-all duration-200 mx-auto ">
+                        <CardTemplate cardData={cardData} text={textFocus ? textFocus : noTextFocusReturn()} />
                     </div>
                 </div>
             </div>
-        </div >
+            <div className="flex justify-between sm:w-[50%] mx-auto text-2xl translate-y-4">
+                <div className="flex items-center">
+                    <button onClick={reloadTextFocus} className='text-blue-500 hover:scale-110 hover:rotate-180  px-2 py-1 rounded-xl transition-all duration-200'><i className="ri-loop-left-line"></i></button>
+                    <div className="relative group">
+                        <AuthButton onClick={() => addToFavorites({ name: cardData.name, text: textFocus })}><span className='text-yellow-500 hover:scale-110 hover:skew-y-12 px-2 py-1 rounded-xl transition-all duration-200'><i className="ri-star-line"></i></span></AuthButton>
+
+                    </div>
+                </div>
+                <div className="flex opacity-50 items-center">
+                    <button className={stylesToolsGen.common} >
+                        <Popover.Root >
+                            <Popover.Trigger asChild>
+                                <span className="IconButton" aria-label="Update dimensions">
+                                    <i className="ri-share-forward-line"></i>
+                                </span>
+                            </Popover.Trigger>
+                            <Popover.Portal >
+                                <Popover.Content className="flex divide-y flex-col gap-2 items-start justify-start bg-white py-2 px-4 rounded-lg" sideOffset={5}>
+                                    <div className="w-full">
+                                        <AuthButton onClick={() => copyToClipboard()}><a className={stylesToolsGen.shareButtons} href={textFocus !== noTextFocus && logged ? `https://twitter.com/intent/tweet?text=${textFocus}` : null} target="_blank">
+                                            <i className="ri-twitter-x-line"></i>Twitter
+                                        </a></AuthButton>
+                                    </div>
+                                    <div className="w-full">
+                                        <AuthButton onClick={onCopyUrl}><span className={stylesToolsGen.shareButtons}>
+                                            <i className="ri-link"></i> Compartir enlace
+                                        </span></AuthButton>
+                                    </div>
+
+                                    <div className="w-full">
+                                        <AuthButton onClick={() => copyToClipboard()}><span className={stylesToolsGen.shareButtons}>
+                                            <i className="ri-file-list-3-line"></i> Copiar Txt
+                                        </span></AuthButton>
+                                    </div>
+                                    <Popover.Arrow className="opacity-30" />
+                                </Popover.Content>
+                            </Popover.Portal>
+                        </Popover.Root></button>
+                    {
+                        toImageLoader ? <AuthButton onClick={downloadToImage}><span className={stylesToolsGen.disable} ><i className="ri-download-line"></i></span></AuthButton> :
+                            <AuthButton onClick={downloadToImage}><span className={stylesToolsGen.common} ><i className="ri-download-line"></i></span></AuthButton>
+                    }
+                </div>
+            </div>
+        </div>
     )
 }

@@ -3,9 +3,8 @@ import { useState } from 'react';
 import { useLogged } from '../context/LoggedContext';
 import LoginModal from '../components/LoginModal';
 
-
-
 const AuthButton = ({ onClick, children }) => {
+  
   const { logged } = useLogged();
   const [showModal, setShowModal] = useState(false);
 
@@ -22,7 +21,7 @@ const AuthButton = ({ onClick, children }) => {
   };
 
   return (
-    <div>
+    <>
       {showModal ?
         <>
           <button onClick={handleClick}>{children}</button>
@@ -31,7 +30,7 @@ const AuthButton = ({ onClick, children }) => {
         :
         <button onClick={handleClick}>{children}</button>
       }
-    </div>
+    </>
   )
 };
 

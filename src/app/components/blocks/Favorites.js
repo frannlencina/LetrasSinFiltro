@@ -9,7 +9,11 @@ import Badge from "../Badge";
 import dynamic from 'next/dynamic'
 const AuthButton = dynamic(() => import('../../utils/AuthButton'), { ssr: false })
 
+import { useLogged } from "@/app/context/LoggedContext";
+
 export default function Favorites() {
+
+  const { logged } = useLogged();
 
   const noTextFocus = 'Por favor selecciona un mood';
   const [toImageLoader, setToImageLoader] = useState(false)
@@ -49,14 +53,14 @@ export default function Favorites() {
   }
 
   // Copiar URl
-  const onCopyUrl = (cardText) => {
+  const onCopyUrl = ({cardText}) => {
     ToastCustom({ text: 'URL copiada correctamente!' })
     const currentURL = window.location.href;
-    navigator.clipboard.writeText(currentURL + `&text=${textToWithout(cardText)}`)
+    navigator.clipboard.writeText(currentURL + `?text=${textToWithout(cardText)}`)
   }
 
   // Copiar Texto a porta papeles.
-  const copyToClipboard = ({ cardText }) => {
+  const copyToClipboard = ({cardText}) => {
     if (!navigator.clipboard) {
       ToastCustom({ text: 'Tu navegador no es compatible con esta funcion :(' })
     } else {
@@ -153,12 +157,12 @@ export default function Favorites() {
                     <Popover.Portal >
                       <Popover.Content className="flex divide-y flex-col gap-2 items-center bg-white p-2 rounded-lg" sideOffset={5}>
                         <div className="items-center w-full">
-                          <AuthButton onClick={() => copyToClipboard()}><a className={stylesToolsGen.shareButtons} href={textFocus !== noTextFocus && logged ? `https://twitter.com/intent/tweet?text=${textFocus}` : null} target="_blank">
+                          <AuthButton><a className={stylesToolsGen.shareButtons} href={ logged ? `https://twitter.com/intent/tweet?text=${card.text}` : null} target="_blank">
                             <i className="ri-twitter-x-line"></i>Twitter
                           </a></AuthButton>
                         </div>
                         <div className="w-full">
-                          <AuthButton onClick={() => onCopyUrl(card.text)}><span className={stylesToolsGen.shareButtons}><i className="ri-link"></i> Copiar enlace</span></AuthButton>
+                          <AuthButton onClick={() => onCopyUrl({ cardText: card.text })}><span className={stylesToolsGen.shareButtons}><i className="ri-link"></i> Copiar enlace</span></AuthButton>
                         </div>
                         <div className="w-full">
                           <AuthButton onClick={() => copyToClipboard({ cardText: card.text })}><span className={stylesToolsGen.shareButtons}><i className="ri-file-list-3-line"></i> Copiar Txt</span></AuthButton>

@@ -1,9 +1,6 @@
 'use client'
-import * as Popover from '@radix-ui/react-popover';
 import Link from "next/link"
-import { stylesNavFooter } from '../utils/styles'
 import { useState } from "react";
-import Image from 'next/image';
 import Cookies from 'js-cookie';
 import { useLogged } from '../context/LoggedContext';
 import Badge from './Badge';
