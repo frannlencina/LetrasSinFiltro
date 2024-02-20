@@ -3,7 +3,7 @@ import Image from 'next/image';
 import { stylesNavFooter } from '@/app/utils/styles' 
 import Link from 'next/link';
 
-export default function LoginModal({ onClose }) {
+export default function LoginModal({ onClose }: { onClose: () => void }) {
     return ReactDOM.createPortal(
         <div className='fixed flex justify-center items-center w-screen h-screen top-0 left-0 bg-black bg-opacity-80 z-40'>
             

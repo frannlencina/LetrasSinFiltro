@@ -64,7 +64,7 @@ export default function Register() {
                 Redirect();
             })
             .catch(error => {
-                ToastCustom({ text: error.response.data.error })
+                // ToastCustom({ text: error.response.data.error })
                 console.log('Error al iniciar sesión:', error);
                 setButtonState(true)
             });

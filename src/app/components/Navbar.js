@@ -6,10 +6,10 @@ import { stylesNavFooter } from "../utils/styles";
 import NavbarMenu from "./NavbarMenu";
 import Cookies from "js-cookie";
 import { stylesToolsGen } from "../utils/styles";
-import { useLogged } from "@/app/context/LoggedContext";
+import { useLogged } from "../context/LoggedContext";
 import Badge from "./Badge";
 
-import { LoggedProvider } from '../context/LoggedContext'
+import { LoggedProvider } from "../context/LoggedContext";
 import { verifyAndDecodeJWT } from "../utils/VerifyAndDecodeJSWT";
 
 export default function Navbar() {
@@ -61,7 +61,7 @@ export default function Navbar() {
                 showModal ?
                     <div className="bg-black bg-opacity-80 w-screen h-screen fixed z-50  top-0 left-0 flex justify-center items-center">
                         <div className="min-w-[400px] min-h-[200px] bg-stone-100 rounded-lg p-6 flex justify-between flex-col">
-                            <span className="scale-115"><Badge text="Seguro que quieres cerrar sesion?" icon={true} /></span>
+                            <span className="scale-115"><Badge text="Seguro que quieres cerrar sesion?" icon={true} type="" /></span>
                             <p className="max-w-md mb-8 px-2 mt-4 font-medium opacity-70">Si cierras sesion tendras que volver iniciar sesion para utilizar las funcionalidades</p>
                             <div className="flex gap-4 justify-center">
                                 <button onClick={() => { logout() }} className="bg-blue-500 text-white rounded-md px-2 py-1 text-md hover:scale-105 focus:ring-4 focus:ring-blue-200">Confirmar</button>
@@ -96,9 +96,6 @@ export default function Navbar() {
                                     </Popover.Trigger>
                                     <Popover.Portal >
                                         <Popover.Content className="flex flex-col mt-6 gap-2 items-start bg-white py-2 px-4 rounded-lg" sideOffset={5}>
-                                            <div className="text-center w-full">
-                                                <Link className={stylesToolsGen.shareButtons} href={isLoged ? `/p/` + userData.username : ''}>Perfil</Link>
-                                            </div>
                                             <div className="text-center w-full">
                                                 <button onClick={() => { setShowModal(true) }} className="cursor-pointer hover:bg-red-200 text-red-500 w-[100%] transition-all py-1 px-2 rounded-lg flex items-center gap-2 active:ring-4 active:ring-red-300">Cerrar sesion</button>
                                             </div>

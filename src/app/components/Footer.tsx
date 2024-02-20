@@ -43,9 +43,9 @@ export default function Footer() {
                 ))}
             </div>
             <div className="flex flex-col text-center sm:flex-row gap-5 mb-12 sm:mb-4">
-                <Link className={stylesNavFooter.common} href="#">Registrarse</Link>
-                <Link className={stylesNavFooter.common} href="#">Entrar</Link>
-                <Link className={stylesNavFooter.common} href="#">Acerca de</Link>
+                <Link className={stylesNavFooter.common} href="/register">Registrarse</Link>
+                <Link className={stylesNavFooter.common} href="/login">Entrar</Link>
+                <Link className={stylesNavFooter.common} href="/about-us">Acerca de</Link>
             </div>
             <p className="flex flex-col sm:flex-row items-center gap-2 text-medium text-stone-500">Desarrollado con <span className="flex items-center justify-center gap-2"> <Image className="w-5 h-5" src="/iphone-hearthh.png" width={20} height={20} alt="Corazon" />  por </span> <Link href="https://www.linkedin.com/in/francisco-lencina/"  className="text-blue-500 hover:text-blue-300" target="_blank">@francisco.lencina</Link></p>
         </footer>

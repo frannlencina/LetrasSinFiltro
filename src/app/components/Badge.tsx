@@ -1,8 +1,8 @@
-type BadgeProps = {
+interface BadgeProps {
     text: string;
-    type: string;
     icon: boolean;
-};
+    type: string; // Add the type property
+}
 
 const Badge: React.FC<BadgeProps> = ({ text, type, icon }) => {
     return (

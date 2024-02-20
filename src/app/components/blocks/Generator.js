@@ -103,28 +103,26 @@ export default function Generator() {
     };
 
     function getRandomFrase(arr) {
-
-        if (textFocus.length < 1) {
-            // get random index value
-            const randomIndex = Math.floor(Math.random() * arr.length);
-
-            // get random item
-            const item = arr[randomIndex];
-            return item.frase;
-        }else{
-            ToastCustom({text: noTextFocus})
-        }
+        console.log(arr)
+        // if (Array.isArray(arr) && textFocus.length > 1) {
+        //     // get random index value
+        //     const randomIndex = Math.floor(Math.random() * arr.length);
+    
+        //     // get random item
+        //     const item = arr[randomIndex];
+        //     return item.frase;
+        // }
     }
+    
 
     useEffect(() => {
         if (paramText) {
-            alert('url encontrada')
-        } else if (Object.keys(frases).length !== 0) {
+            // Hacer algo si paramText existe
+        } else if (frases && Object.keys(frases).length !== 0) {
             reloadTextFocus();
         }
-        {
-        }
     }, [frases]);
+
 
     // Pasar frase a los espacios con guiones para la url
     const textToWithout = () => {
@@ -195,7 +193,7 @@ export default function Generator() {
     const [favoriteCards, setFavoriteCards] = useState([]);
 
     const addToFavorites = (card) => {
-        if (textFocus !== noTextFocus) {
+        if (textFocus !== noTextFocus && textFocus.length > 1) {
             // Obtener los datos de localStorage y convertirlos de nuevo a un array
             const storedFavoriteCards = JSON.parse(localStorage.getItem('favoriteCards')) || [];
 
@@ -232,7 +230,7 @@ export default function Generator() {
                         <Badge text={cardData.name} type="" icon={false} />
                     </div>
                     <div id="elementToDownload" className="transition-all duration-200 mx-auto ">
-                        <CardTemplate cardData={cardData} text={textFocus ? textFocus : noTextFocusReturn()} />
+                        <CardTemplate cardData={cardData} text={textFocus.length > 1 ? textFocus : noTextFocusReturn()} />
                     </div>
                 </div>
             </div>

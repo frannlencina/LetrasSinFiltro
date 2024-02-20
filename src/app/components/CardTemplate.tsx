@@ -1,28 +1,28 @@
 type CardConfig = {
     background: {
         type: 'gradient' | 'solid' | 'image';
-        colors?: string;
+        colors?: String;
     };
     text: {
-        font: string;
-        size: string;
+        font: String;
+        size: String;
         colorType: {
             solid: 'solid' | 'gradient';
-            type: string;
+            type: String;
             color: String;
-            urlImage: string;
+            urlImage: String;
         };
     };
 };
 
 type CardData = {
-    name: string;
+    name: String;
     config: CardConfig;
 };
 
 type CardTemplateProps = {
     cardData: CardData;
-    text: string
+    text: String
 };
 
 const CardTemplate: React.FC<CardTemplateProps> = ({ cardData, text }) => {
@@ -48,11 +48,11 @@ const CardTemplate: React.FC<CardTemplateProps> = ({ cardData, text }) => {
 
     const textConfig = () => {
         const textStyle = {
-            fontFamily: config.text.font, fontSize: config.text.size, color: ''
+            fontFamily: config.text.font as string, fontSize: config.text.size as string, color: ''
         };
 
         if (config.text.colorType.type === 'solid') {
-            textStyle.color = config.text.colorType.color;
+            textStyle.color = config.text.colorType.color as string;
         } else if (config.text.colorType.solid === 'gradient') {
             textStyle.color = `#0000`
         }

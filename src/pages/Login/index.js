@@ -69,13 +69,12 @@ export default function Login() {
                 Redirect()
             })
             .catch(error => {
-                ToastCustom({ text: error.response.data.error })
+                // ToastCustom({ text: error.response.data.error })
                 setButtonState(true)
             });
     }
 
     return (
-
 
         <div className="flex items-center justify-center h-screen w-full bg-white ">
             <Toaster />

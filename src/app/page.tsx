@@ -8,6 +8,7 @@ import { useState } from "react";
 export default function Home() {
 
   const [chooseGen, setChooseGen] = useState(1)
+
   return (
     <>
       <EmotionProvider>
@@ -28,7 +29,7 @@ export default function Home() {
             <GenTab select={chooseGen} />
           </section>
         </div>
-      </ EmotionProvider>
+      </EmotionProvider>
     </>
   )
 }

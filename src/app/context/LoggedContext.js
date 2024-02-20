@@ -3,7 +3,7 @@ import React, { createContext, useState, useContext } from 'react';
 
 const LoggedContext = createContext({
   logged: false,
-  changeLogged: () => {},
+  changeLogged: (props) => {props},
 });
 
 export function useLogged() {

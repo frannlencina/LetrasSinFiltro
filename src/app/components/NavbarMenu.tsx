@@ -42,7 +42,7 @@ export default function NabvarMenu({ userData, logged, toggleMenu }: Props) {
                             showModal ?
                                 <div className="bg-black bg-opacity-80 w-screen h-screen fixed z-50  top-0 left-0 flex justify-center items-center">
                                     <div className="min-w-[400px] min-h-[200px] bg-stone-100 rounded-lg p-6 flex justify-between flex-col">
-                                        <span className="scale-115"><Badge text="Seguro que quieres cerrar sesion?" icon={true} /></span>
+                                        <span className="scale-115"><Badge text="Seguro que quieres cerrar sesion?" icon={true} type="" /></span>
                                         <p className="max-w-md mb-8 px-2 mt-4 font-medium opacity-70">Si cierras sesion tendras que volver iniciar sesion para utilizar las funcionalidades</p>
                                         <div className="flex gap-4 justify-center">
                                             <button onClick={() => { logout() }} className="bg-blue-500 text-white rounded-md px-2 py-1 text-md hover:scale-105 focus:ring-4 focus:ring-blue-200">Confirmar</button>
@@ -53,9 +53,6 @@ export default function NabvarMenu({ userData, logged, toggleMenu }: Props) {
                         }
 
                         <div className="flex flex-col gap-4 items-center justify-center">
-                            <div className="text-center ">
-                                <Link onClick={ () => toggleMenu() } className='cursor-pointer text-blue-500 text-2xl hover:text-blue-300 w-[100%] transition-all py-1 px-2 rounded-lg flex items-center gap-2' href={`/p/` + userData.username}>Perfil</Link>
-                            </div>
                             <div className="text-center">
                                 <button onClick={() => { logout() }} className="cursor-pointer hover:bg-red-500 hover:text-white text-2xl text-red-500 w-[100%] transition-all py-1 px-2 rounded-lg flex items-center gap-2 active:ring-4 active:ring-red-300">Cerrar sesion</button>
                             </div>
