@@ -4,7 +4,7 @@ import { useLogged } from "@/app/context/LoggedContext";
 import Link from "next/link";
 import Image from "next/image";
 import { stylesNavFooter } from '../../utils/styles'
-
+import { Suspense } from "react";
 import dynamic from 'next/dynamic'
 const Generator = dynamic(() => import('./Generator'), { ssr: false })
 
@@ -16,10 +16,14 @@ export default function GenTab({ select }) {
             {select === 1 ? (
                 <div className="flex flex-col justify-center items-center ">
                     <div className='pb-32'>
-                        <EmotionButtons />
+                        <Suspense fallback={<div>Cargando...</div>}>
+                            <EmotionButtons />
+                        </Suspense>
                     </div>
                     <div className="max-w-fit">
-                        <Generator />
+                        <Suspense fallback={<div>Cargando...</div>}>
+                            <Generator />
+                        </Suspense>
                     </div>
                 </div>
             ) : (

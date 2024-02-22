@@ -17,6 +17,8 @@ const AuthButton = dynamic(() => import('../../utils/AuthButton'), { ssr: false 
 
 export default function Generator() {
 
+    const BASE_URL = process.env.BASE_URL
+
     const [toImageLoader, setToImageLoader] = useState(false)
 
     const { emotion } = useEmotion()
@@ -24,7 +26,11 @@ export default function Generator() {
     const router = useRouter();
 
     const searchParams = useSearchParams()
-    const paramText = searchParams.get('paramText')
+
+
+    const [textFocus, setTextFocus] = useState([]);
+
+    const [frases, setFrases] = useState({})
 
     // Constante mensaje cuando no hay un mood seleccionado.
     const noTextFocus = 'Por favor selecciona un mood';
@@ -36,6 +42,7 @@ export default function Generator() {
     }
 
     useEffect(() => {
+        const paramText = searchParams.get('text')
         // Validación para saber si trae texto la URL
         if (paramText) {
             setTextFocus(textReverse(paramText))
@@ -75,23 +82,19 @@ export default function Generator() {
         }
     }
 
-    {/* Simulacion temporal  almacenamiento de frases. Proximamente utilizacion de API en IA */ }
-    const [frases, setFrases] = useState({})
-
     const baseURL = `http://localhost:3000/api/emotions?emotion=${emotion}`
-
 
     useEffect(() => {
         axios.get(baseURL)
             .then(res => {
+                console.log(res.data)
                 setFrases(res.data.frases);
+
             })
             .catch(err => {
                 console.error(`Error: ${err}`);
             });
     }, [emotion]);
-
-    const [textFocus, setTextFocus] = useState([]);
 
     const reloadTextFocus = () => {
         if (emotion) {
@@ -103,22 +106,24 @@ export default function Generator() {
     };
 
     function getRandomFrase(arr) {
-        console.log(arr)
-        // if (Array.isArray(arr) && textFocus.length > 1) {
-        //     // get random index value
-        //     const randomIndex = Math.floor(Math.random() * arr.length);
-    
-        //     // get random item
-        //     const item = arr[randomIndex];
-        //     return item.frase;
-        // }
+        if (textFocus.length > 1) {
+            // get random index value
+            const randomIndex = Math.floor(Math.random() * arr.length);
+
+            // get random item
+            const item = arr[randomIndex];
+            return item.frase;
+        } else {
+
+        }
     }
-    
 
     useEffect(() => {
+        const paramText = searchParams.get('text')
         if (paramText) {
             // Hacer algo si paramText existe
         } else if (frases && Object.keys(frases).length !== 0) {
+            console.log('use effect anda')
             reloadTextFocus();
         }
     }, [frases]);
@@ -143,8 +148,8 @@ export default function Generator() {
 
         if (textFocus !== noTextFocus) {
             ToastCustom({ text: 'URL copiada correctamente!' })
-            const currentURL = window.location.href;
-            navigator.clipboard.writeText(currentURL + `&text=${textToWithout()}`)
+            // const currentURL = window.location.href;
+            navigator.clipboard.writeText(BASE_URL + `?text=${textToWithout()}`)
         } else {
             ToastCustom({ text: noTextFocus });
         }
@@ -153,7 +158,6 @@ export default function Generator() {
     // Copiar Texto a porta papeles.
     const copyToClipboard = () => {
 
-        // Utiliza LoggedChecker como un componente de React
         if (textFocus !== noTextFocus) {
             if (!navigator.clipboard) {
                 ToastCustom({ text: 'Tu navegador no es compatible con esta funcion :(' })
@@ -230,7 +234,7 @@ export default function Generator() {
                         <Badge text={cardData.name} type="" icon={false} />
                     </div>
                     <div id="elementToDownload" className="transition-all duration-200 mx-auto ">
-                        <CardTemplate cardData={cardData} text={textFocus.length > 1 ? textFocus : noTextFocusReturn()} />
+                        <CardTemplate cardData={cardData} text={textFocus && textFocus.length > 1 ? textFocus : noTextFocusReturn()} />
                     </div>
                 </div>
             </div>

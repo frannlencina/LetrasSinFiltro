@@ -1,25 +1,22 @@
-import { NextResponse } from "next/server";
-import { connectDB } from "@/app/libs/mongodb";
 import Emotion from "@/app/models/emotion";
+import { connectDB } from "@/app/libs/mongodb";
+import { NextResponse, NextRequest } from 'next/server';
 
-export async function GET(request: Request) {
-    try {
-        await connectDB();
+export async function GET(request: NextRequest) {
+    await connectDB();
 
-        const { searchParams } = new URL(request.url)
-        const emotion = searchParams.get('emotion')
+    const queryParam = request.nextUrl.searchParams.get("emotion");
 
-        const search = await Emotion.findOne({ emotion: emotion });
+    if (!queryParam) {
+        return NextResponse.json({ "error": "El parámetro 'emotion' es requerido" }, { status: 400 });
+    }
 
-        if (search) {
-            console.log('Frases enviadas')
-            return NextResponse.json(search, {status: 200});
-        } else {
-            return NextResponse.json({ "error": "No se encontraron datos" }, {status: 500});
-        }
-    } catch (err) {
-        console.error(err);
-        return NextResponse.json({ "error": "Error interno del servidor" });
+    const search = await Emotion.findOne({ emotion: queryParam });
+
+    if (search) {
+        console.log('Frases enviadas');
+        return NextResponse.json(search, { status: 200 });
+    } else {
+        return NextResponse.json({ "error": "No se encontraron datos" }, { status: 500 });
     }
 }
-
