@@ -18,6 +18,7 @@ const dateString = `${year}/${month}/${day} ${hours}:${minutes}:${seconds}`;
 
 export async function POST(request: Request) {
   try {
+    await connectDB();
 
     const { token, password, username  } = await request.json();
     const body = { token, password, username };

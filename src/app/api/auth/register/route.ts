@@ -6,6 +6,7 @@ import User from "@/app/models/user";
 // Crear cuentas
 export async function POST(request: Request) {
   try {
+    await connectDB();
 
     const { token, password, name, email, last_name, username, pp_image, rank } = await request.json();
     const body = { token, password, name, email, last_name, username, pp_image, rank };
