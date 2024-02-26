@@ -5,6 +5,7 @@ module.exports = {
   env: {
     JSONWKEY: process.env.JSONWKEY,
     BASE_URL: process.env.BASE_URL,
+    MONGODB_URI: process.env.MONGODB_URI,
     GET_URL_EMOTIONS: process.env.GET_URL_EMOTIONS,
     POST_URL_LOGIN: process.env.POST_URL_LOGIN,
     POST_URL_REGISTER: process.env.POST_URL_REGISTER
