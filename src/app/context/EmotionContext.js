@@ -17,7 +17,6 @@ const EmotionProvider = ({ children }) => {
   const [emotion, setEmotion] = useState('');
 
   const changeEmotion = (newEmotion) => { 
-    console.log(newEmotion)
     setEmotion(newEmotion);
   };
 

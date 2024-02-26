@@ -87,7 +87,6 @@ export default function Generator() {
     useEffect(() => {
         axios.get(GET_URL_EMOTIONS + emotion)
             .then(res => {
-                console.log(res.data)
                 setFrases(res.data.frases);
 
             })
@@ -131,7 +130,6 @@ export default function Generator() {
         if (paramText) {
             // Hacer algo si paramText existe
         } else if (frases && Object.keys(frases).length !== 0) {
-            console.log('use effect anda')
             reloadTextFocus();
         }
     }, [frases]);

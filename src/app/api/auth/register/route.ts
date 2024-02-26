@@ -22,12 +22,10 @@ export async function POST(request: Request) {
 
     if (usuarioExistente) {
 
-      console.log('El usuario ya existe');
       return NextResponse.json({ "error": "Usuario ya registrado" }, { status: 500 });
 
     } else if (emailExistente) {
 
-      console.log('El correo electrónico ya está registrado');
       return NextResponse.json({ "error": "Correo electrónico ya registrado" }, { status: 500 });
 
     } else {
@@ -46,7 +44,6 @@ export async function POST(request: Request) {
         
       });
 
-      console.log('Usuario creado exitosamente => :', nuevoUsuario);
       return NextResponse.json({ nuevoUsuario }, { status: 200 });
     }
   } catch (err) {
@@ -65,12 +62,9 @@ export async function GET(request: Request) {
 
     const body = { username };
 
-    console.log(body);
-
     const search = await User.findOne({ username: body.username });
 
     if (search) {
-      console.log('Cuentas encontradas => :' + search);
       return NextResponse.json(search);
     } else {
       return NextResponse.json({ "error": "No se encontraron datos" });
@@ -91,7 +85,6 @@ export async function DELETE(request: Request) {
     const allSearch = await User.findByIdAndDelete(username);
 
     if (allSearch) {
-      console.log('Cuenta eliminada => :' + allSearch);
       return NextResponse.json(allSearch);
     } else {
       return NextResponse.json({ "error": "No se encontraron datos" });

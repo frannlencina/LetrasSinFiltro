@@ -23,7 +23,6 @@ export default function Register() {
             ...body,
             [name]: value
         });
-        console.log(body)
     }
 
     const [buttonState, setButtonState] = useState(true)
@@ -61,8 +60,6 @@ export default function Register() {
                 Redirect();
             })
             .catch(error => {
-                // ToastCustom({ text: error.response.data.error })
-                console.log('Error al iniciar sesión:', error);
                 setButtonState(true)
             });
     }

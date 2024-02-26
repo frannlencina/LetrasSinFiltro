@@ -37,10 +37,8 @@ const EmotionButtons = () => {
             if (allowedEmotions.includes(focus)) {
                 changeEmotion(focus);
             } else {
-                console.log('No es una emoción permitida');
             }
         } else {
-            console.log('No hay focus');
         }
     }, []);
 

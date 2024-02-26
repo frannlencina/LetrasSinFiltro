@@ -29,7 +29,6 @@ export default function Login() {
             ...body,
             [name]: value
         });
-        console.log(body)
     }
 
 
@@ -51,7 +50,6 @@ export default function Login() {
 
         axios.post(POST_URL_LOGIN, data)
             .then(response => {
-                console.log(response.data.resultado)
 
                 const tokenInfo = response.data.resultado
                 // Generar un token JWT firmado y encriptado

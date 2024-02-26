@@ -15,7 +15,6 @@ export async function GET(request: NextRequest) {
     const search = await User.findOne({ username: queryParam }).select('-account.password');
 
     if (search) {
-        console.log('Frases enviadas');
         return NextResponse.json(search, { status: 200 });
     } else {
         return NextResponse.json({ "error": "No se encontraron datos" }, { status: 500 });

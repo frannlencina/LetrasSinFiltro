@@ -24,7 +24,6 @@ export async function POST(request: Request) {
     const body = { token, password, username };
 
     const resultado = await User.findOne({ username: body.username });
-    console.log(resultado.account.password)
 
     const usernameUpdate = await body.username;
     const isPasswordMatch = await bcrypt.compare(password, resultado.account.password);
