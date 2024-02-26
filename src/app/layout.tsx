@@ -10,6 +10,11 @@ import './globals.css'
 
 const inter = Inter({ subsets: ['latin'] })
 
+import { SpeedInsights } from "@vercel/speed-insights/next"
+import { Analytics } from "@vercel/analytics/react"
+
+import Script from 'next/script'
+
 export const metadata: Metadata = {
   title: 'LetrasSinFiltro',
   description: 'Sitio oficial de LetrasSinFiltro',
@@ -43,11 +48,27 @@ export default function RootLayout({
     <html lang="en">
       <LoggedProvider>
         <head>
+
+          {/* Google tag (gtag.js) */}
+          <Script async src="https://www.googletagmanager.com/gtag/js?id=G-LQ7375CC8N"></Script>
+          <Script id='google-analytics'>
+            {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+
+            gtag('config', 'G-LQ7375CC8N');
+            
+            `}
+          </Script>
+
           <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet" />
         </head>
         <body className={inter.className}>
           <Navbar />
           {children}
+          <SpeedInsights />
+          <Analytics />
           <Footer />
         </body>
       </LoggedProvider>
