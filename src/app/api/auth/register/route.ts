@@ -6,7 +6,6 @@ import User from "@/app/models/user";
 // Crear cuentas
 export async function POST(request: Request) {
   try {
-    await connectDB();
 
     const { token, password, name, email, last_name, username, pp_image, rank } = await request.json();
     const body = { token, password, name, email, last_name, username, pp_image, rank };
@@ -21,12 +20,17 @@ export async function POST(request: Request) {
     const dateString = `${day}/${month}/${year}`;
 
     if (usuarioExistente) {
+
       console.log('El usuario ya existe');
       return NextResponse.json({ "error": "Usuario ya registrado" }, { status: 500 });
+
     } else if (emailExistente) {
+
       console.log('El correo electrónico ya está registrado');
       return NextResponse.json({ "error": "Correo electrónico ya registrado" }, { status: 500 });
+
     } else {
+
       const nuevoUsuario = await User.create({
         username: username,
         avatar: "default",
@@ -38,6 +42,7 @@ export async function POST(request: Request) {
           name: name,
           last_name: last_name,
         },
+        
       });
 
       console.log('Usuario creado exitosamente => :', nuevoUsuario);

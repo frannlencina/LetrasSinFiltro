@@ -5,6 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { stylesNavFooter } from '../../utils/styles'
 import { Suspense } from "react";
+
 import dynamic from 'next/dynamic'
 const Generator = dynamic(() => import('./Generator'), { ssr: false })
 

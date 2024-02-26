@@ -5,7 +5,6 @@ import Link from "next/link";
 import { stylesNavFooter } from "../utils/styles";
 import NavbarMenu from "./NavbarMenu";
 import Cookies from "js-cookie";
-import { stylesToolsGen } from "../utils/styles";
 import { useLogged } from "../context/LoggedContext";
 import Badge from "./Badge";
 
@@ -70,7 +69,7 @@ export default function Navbar() {
                         </div>
                     </div> : ''
             }
-            <div className="fixed z-20 top-6 left-1/2 transform -translate-x-1/2 -translate-y-1/2 mx-auto text-medium text-lg mt-6 font-semibold w-full py-4">
+            <header className="fixed z-20 top-6 left-1/2 transform -translate-x-1/2 -translate-y-1/2 mx-auto text-medium text-lg mt-6 font-semibold w-full py-4">
                 <div className="p-4 rounded-lg min-h-[70px] max-w-5xl mx-auto text-lg bg-white backdrop-blur-md bg-opacity-30 shadow-[1px_2px_20px_0px_rgba(0,0,0,0.03)]">
                     <div className="flex justify-between items-center w-full">
                         <Link className={stylesNavFooter.common + ' sm:hidden'} href="/">
@@ -118,7 +117,7 @@ export default function Navbar() {
                     </div>
                     {showMenu && <NavbarMenu toggleMenu={toggleMenu} userData={userData} logged={logged} />}
                 </div>
-            </div>
+            </header>
         </LoggedProvider>
     );
 }

@@ -18,6 +18,7 @@ const AuthButton = dynamic(() => import('../../utils/AuthButton'), { ssr: false 
 export default function Generator() {
 
     const BASE_URL = process.env.BASE_URL
+    const GET_URL_EMOTIONS = process.env.GET_URL_EMOTIONS
 
     const [toImageLoader, setToImageLoader] = useState(false)
 
@@ -27,10 +28,11 @@ export default function Generator() {
 
     const searchParams = useSearchParams()
 
-
     const [textFocus, setTextFocus] = useState([]);
 
     const [frases, setFrases] = useState({})
+
+    const [reloadButton, setReloadButton] = useState(true)
 
     // Constante mensaje cuando no hay un mood seleccionado.
     const noTextFocus = 'Por favor selecciona un mood';
@@ -82,10 +84,8 @@ export default function Generator() {
         }
     }
 
-    const baseURL = `http://localhost:3000/api/emotions?emotion=${emotion}`
-
     useEffect(() => {
-        axios.get(baseURL)
+        axios.get(GET_URL_EMOTIONS + emotion)
             .then(res => {
                 console.log(res.data)
                 setFrases(res.data.frases);
@@ -97,8 +97,16 @@ export default function Generator() {
     }, [emotion]);
 
     const reloadTextFocus = () => {
+        setReloadButton(false)
+
         if (emotion) {
             setTextFocus(getRandomFrase(frases))
+
+            const interval = setInterval(() => {
+                setReloadButton(true);
+                clearInterval(interval); // Detener el intervalo después de activar el botón
+            }, 2000);
+            
         } else {
             setTextFocus(['Por favor selecciona un mood']);
             ToastCustom({ text: 'No hay mood seleccionado.' });
@@ -240,7 +248,10 @@ export default function Generator() {
             </div>
             <div className="flex justify-between sm:w-[50%] mx-auto text-2xl translate-y-4">
                 <div className="flex items-center">
-                    <button onClick={reloadTextFocus} className='text-blue-500 hover:scale-110 hover:rotate-180  px-2 py-1 rounded-xl transition-all duration-200'><i className="ri-loop-left-line"></i></button>
+                    {
+                        reloadButton ? <button onClick={reloadTextFocus} className='text-blue-500 hover:scale-110 hover:rotate-180  px-2 py-1 rounded-xl transition-all duration-200'><i className="ri-loop-left-line"></i></button> : <button className='text-stone-500 hover:scale-110 hover:rotate-180  px-2 py-1 rounded-xl transition-all duration-200 pointer-events-none select-none opacity-50'><i className="ri-loop-left-line"></i></button>
+                    }
+
                     <div className="relative group">
                         <AuthButton onClick={() => addToFavorites({ name: cardData.name, text: textFocus })}><span className='text-yellow-500 hover:scale-110 hover:skew-y-12 px-2 py-1 rounded-xl transition-all duration-200'><i className="ri-star-line"></i></span></AuthButton>
 

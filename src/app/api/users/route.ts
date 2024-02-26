@@ -3,7 +3,6 @@ import { connectDB } from "@/app/libs/mongodb";
 import { NextResponse, NextRequest } from 'next/server';
 
 export async function GET(request: NextRequest) {
-    await connectDB();
 
     const queryParam = request.nextUrl.searchParams.get("username");
 

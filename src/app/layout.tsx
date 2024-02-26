@@ -13,6 +13,24 @@ const inter = Inter({ subsets: ['latin'] })
 export const metadata: Metadata = {
   title: 'LetrasSinFiltro',
   description: 'Sitio oficial de LetrasSinFiltro',
+  icons: {
+    icon: "/logos/favicon.ico",
+    shortcut: "/logos/favicon-16x16.png",
+    apple: "/logos/apple-touch-icon.png",
+  },
+  keywords: [
+    "LetrasSinFiltro",
+    "Letras",
+    "Filtro",
+    "Desahogo",
+    "Emocional",
+    "Indirectas",
+    "Frases",
+    "Generador",
+    "Dedicar",
+    "Generador con IA",
+    "Red Social Indirectas",
+  ],
 }
 
 export default function RootLayout({
@@ -27,19 +45,10 @@ export default function RootLayout({
         <head>
           <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet" />
         </head>
-
-
-
         <body className={inter.className}>
-          <header>
-            <Navbar />
-          </header>
-          <main>
-            {children}
-          </main>
-          <footer>
-            <Footer />
-          </footer>
+          <Navbar />
+          {children}
+          <Footer />
         </body>
       </LoggedProvider>
     </html>

@@ -1,23 +1,22 @@
+'use client'
 import Link from "next/link"
 import { useState } from "react";
 import Image from "next/image"
 import axios from "axios";
 import Cookies from "js-cookie";
 import { Toaster } from "react-hot-toast";
-import { useRouter } from "next/router";
-import { ToastCustom } from "../../app/utils/ToastCustom";
-import { useLogged } from "../../app/context/LoggedContext";
+import { ToastCustom } from "../../utils/ToastCustom";
+import { useLogged } from "../../context/LoggedContext";
 
 import jwt from 'jsonwebtoken';
 
 export default function Login() {
 
     const JSONWKEY = process.env.JSONWKEY;
-
-    const router = useRouter();
+    const POST_URL_LOGIN = process.env.POST_URL_LOGIN
 
     const preventFormDefault = (e) => {
-        event.preventDefault();
+        e.preventDefault();
     }
 
     const { changeLogged, logged } = useLogged()
@@ -33,12 +32,10 @@ export default function Login() {
         console.log(body)
     }
 
-    const baseURL = 'http://localhost:3000/api/auth/login';
 
     const Redirect = () => {
         const timeout = setTimeout(() => {
-            // Redirije a /admindashboard
-            router.push('/');
+            window.location.href = '/';
         }, 200);
         return () => clearTimeout(timeout);
     }
@@ -52,14 +49,14 @@ export default function Login() {
         // Cambiar username por email y en el backend tambien
         const data = { username: `${body.username}`, password: `${body.password}`, };
 
-        axios.post(baseURL, data)
+        axios.post(POST_URL_LOGIN, data)
             .then(response => {
                 console.log(response.data.resultado)
 
                 const tokenInfo = response.data.resultado
                 // Generar un token JWT firmado y encriptado
-                
-                const token = jwt.sign(tokenInfo, JSONWKEY, { algorithm: 'HS256', expiresIn: '1h'} );
+
+                const token = jwt.sign(tokenInfo, JSONWKEY, { algorithm: 'HS256', expiresIn: '1h' });
                 Cookies.set('tokenFirmado', token, { expires: 1 / 24, secure: true, sameSite: 'strict' })
 
                 ToastCustom({ text: "Bienvenido de vuelta :)" })
@@ -75,10 +72,9 @@ export default function Login() {
     }
 
     return (
-
-        <div className="flex items-center justify-center h-screen w-full bg-white ">
+        <main className="flex items-center justify-center h-screen w-full bg-white ">
             <Toaster />
-            <div className="grid grid-cols-1 sm:grid-cols-2">
+            <section className="grid grid-cols-1 sm:grid-cols-2">
                 <div className="bg-[#5596F1] px-12 rounded-l-xl flex items-center justify-center ">
                     <Image src="/memojis-login.png" width={350} height={350} />
                 </div>
@@ -97,11 +93,11 @@ export default function Login() {
                             <input onChange={inputChange} value={body.password} className="min-w-full placeholder:text-black font-semibold placeholder:opacity-30 focus:ring-4 focus:ring-stone-300 py-2 px-4 bg-opacity-40 bg-[#D9D9D9] outline outline-2 outline-[#1e1e1e25] rounded-lg transition-all duration-200" type="password" name="password" placeholder="Ingresa tu contraseña" />
                         </label>
                         <button onClick={handleSubmit} className="bg-[#5596F1] text-white px-4 py-2 my-4 rounded-lg hover:scale-105 focus:ring-4 focus:ring-blue-300 transition-all duration-200">Login</button>
-                        <p className="text-black opacity-70 text-center">No tienes cuenta? <span className="text-blue-500 hover:text-blue-300"><Link href='/Register'>Registrate aqui</Link></span></p>
+                        <p className="text-black opacity-70 text-center">No tienes cuenta? <span className="text-blue-500 hover:text-blue-300"><Link href='/register'>Registrate aqui</Link></span></p>
                     </form>
                 </div>
-            </div>
-        </div>
+            </section>
+        </main>
     )
 }
 
