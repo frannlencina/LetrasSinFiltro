@@ -85,7 +85,7 @@ export default function Generator() {
     }
 
     useEffect(() => {
-        axios.get(GET_URL_EMOTIONS + emotion)
+        axios.get('http://localhost:' + process.env.PORT + GET_URL_EMOTIONS + emotion)
             .then(res => {
                 console.log(res.data)
                 setFrases(res.data.frases);
@@ -106,7 +106,7 @@ export default function Generator() {
                 setReloadButton(true);
                 clearInterval(interval); // Detener el intervalo después de activar el botón
             }, 2000);
-            
+
         } else {
             setTextFocus(['Por favor selecciona un mood']);
             ToastCustom({ text: 'No hay mood seleccionado.' });

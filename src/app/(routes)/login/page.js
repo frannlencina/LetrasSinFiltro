@@ -49,7 +49,7 @@ export default function Login() {
         // Cambiar username por email y en el backend tambien
         const data = { username: `${body.username}`, password: `${body.password}`, };
 
-        axios.post(POST_URL_LOGIN, data)
+        axios.post('http://localhost:' + POST_URL_LOGIN, data)
             .then(response => {
                 console.log(response.data.resultado)
 
