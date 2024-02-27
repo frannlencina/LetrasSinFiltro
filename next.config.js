@@ -22,7 +22,8 @@ module.exports = {
     MONGODB_URI: process.env.MONGODB_URI,
     GET_URL_EMOTIONS: process.env.GET_URL_EMOTIONS,
     POST_URL_LOGIN: process.env.POST_URL_LOGIN,
-    POST_URL_REGISTER: process.env.POST_URL_REGISTER
+    POST_URL_REGISTER: process.env.POST_URL_REGISTER,
+    GOOGLE_ADS_CLIENT_ID: process.env.GOOGLE_ADS_CLIENT_ID
   },
   ...nextConfig
 }

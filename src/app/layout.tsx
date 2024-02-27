@@ -62,6 +62,15 @@ export default function RootLayout({
             `}
           </Script>
 
+          {/* Google Adsense */}
+
+          <Script
+            async
+            src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${process.env.GOOGLE_ADS_CLIENT_ID}`}
+            strategy="lazyOnload"
+            crossOrigin="anonymous"
+          />
+
           <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet" />
         </head>
         <body className={inter.className}>
