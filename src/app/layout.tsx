@@ -64,11 +64,11 @@ export default function RootLayout({
 
           {/* Google Adsense */}
 
-          <script
+          <Script
             async
             src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${process.env.NEXT_PUBLIC_GOOGLE_ADS_CLIENT_ID}`}
             crossOrigin="anonymous"
-          ></script>
+          ></Script>
 
           <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet" />
         </head>
