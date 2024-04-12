@@ -233,7 +233,7 @@ export default function Generator() {
 
 
     return (
-        <div id="mainCard" className="flex flex-col pb-16  ">
+        <div id="mainCard" className="mainCard flex flex-col pb-16 px-8 sm:px-12">
             <div className="flex justify-center items-center ">
                 <div className="mt-16 ">
                     <div className="mb-4">

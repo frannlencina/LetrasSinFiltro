@@ -21,10 +21,10 @@ export const ToastCustom: React.FC<ToastProps> = ({ text }) => {
                     </div>
                     <div className="ml-3  w-fit">
                         <p className="text-sm font-medium text-gray-900 w-fit">
-                            Francisco Lencina
+                            LetrasSinFiltro
                         </p>
                         <p className="text-xs opacity-70 font-medium text-gray-900 w-fit">
-                            @frannlencina
+                            @letrassinfiltro
                         </p>
                         <p className="mt-1 text-sm text-black w-fit">
                             {text}

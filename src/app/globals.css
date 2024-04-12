@@ -48,9 +48,9 @@ background-clip: text;
 -webkit-text-fill-color: transparent;
 }
 
-#mainCard{
-  background-image: url('/background-main-card.png');
-  background-size: contain;
+.mainCard{
+  background-image: url('/bg-main-card.png');
+  background-size: auto;
   background-repeat: no-repeat;
   background-position: center;
 }
