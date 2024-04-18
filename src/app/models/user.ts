@@ -58,6 +58,11 @@ const UserSchema = new Schema(
                 type: String,
                 default: ""
             },
+        },
+        terms_and_conditions: {
+            type: String,
+            required: true,
+            default: false
         }
     },
     {

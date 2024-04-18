@@ -1,6 +1,5 @@
 import { NextResponse } from "next/server";
 import { connectDB } from "@/app/libs/mongodb";
-import { NextApiRequest, NextApiResponse } from 'next';
 import User from "@/app/models/user";
 
 // Crear cuentas
@@ -8,9 +7,14 @@ export async function POST(request: Request) {
   try {
     await connectDB();
 
-    const { token, password, name, email, last_name, username, pp_image, rank } = await request.json();
-    const body = { token, password, name, email, last_name, username, pp_image, rank };
+    const { token, password, name, email, last_name, username, pp_image, rank, terms_and_conditions } = await request.json();
+    const body = { token, password, name, email, last_name, username, pp_image, rank, terms_and_conditions };
     
+    // Verificar si los términos y condiciones han sido aceptados
+    if (!terms_and_conditions) {
+      return NextResponse.json({ "error": "Los términos y condiciones no han sido aceptados" }, { status: 400 });
+    }
+
     const usuarioExistente = await User.findOne({ username: body.username });
     const emailExistente = await User.findOne({ "account.email": body.email });
 
@@ -41,7 +45,7 @@ export async function POST(request: Request) {
           name: name,
           last_name: last_name,
         },
-        
+        terms_and_conditions: terms_and_conditions,
       });
 
       return NextResponse.json({ nuevoUsuario }, { status: 200 });

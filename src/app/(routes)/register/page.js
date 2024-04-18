@@ -15,6 +15,12 @@ export default function Register() {
         event.preventDefault();
     }
 
+    const [isChecked, setIsChecked] = useState(false);
+
+    const handleCheckboxChange = (event) => {
+        setIsChecked(event.target.checked);
+    };
+
     const [body, setBody] = useState({ email: '', username: '', password: '' });
 
     const inputChange = ({ target }) => {
@@ -52,7 +58,7 @@ export default function Register() {
         setButtonState(false)
 
         // Cambiar username por email y en el backend tambien
-        const data = { username: `${body.username}`, email: `${body.email}`, password: hashedPassword, };
+        const data = { username: `${body.username}`, email: `${body.email}`, password: hashedPassword, terms_and_coditions: isChecked };
 
         axios.post(POST_URL_REGISTER, data)
             .then(response => {
@@ -88,7 +94,17 @@ export default function Register() {
                         <label className="mb-4">
                             <input onChange={inputChange} value={body.password} className="min-w-full placeholder:text-black font-semibold placeholder:opacity-30 focus:ring-4 focus:ring-stone-300 py-2 px-4 bg-opacity-40 bg-[#D9D9D9] outline outline-2 outline-[#1e1e1e25] rounded-lg transition-all duration-200" type="password" name="password" placeholder="Ingresa tu contraseña" />
                         </label>
-                        <button onClick={handleSubmit} className="bg-[#004AAD] text-white px-4 py-2 my-4 rounded-lg hover:scale-105 focus:ring-4 focus:ring-blue-300 transition-all duration-200">Registrarse</button>
+
+                        <label className="flex gap-2 text-sm">
+                            <input
+                                type="checkbox"
+                                checked={isChecked}
+                                onChange={handleCheckboxChange}
+                            />
+                            Acepto los términos y condiciones
+                        </label>
+                        <hr />
+                        <button disabled={!isChecked} onClick={handleSubmit} className="bg-[#004AAD] disabled:bg-stone-200 disabled:cursor-not-allowed disabled:hover:scale-100 text-white px-4 py-2 my-4 rounded-lg hover:scale-105 focus:ring-4 focus:ring-blue-300 transition-all duration-200">Registrarse</button>
                         <p className="text-black opacity-70 text-center">Ya tienes cuenta? <span className="text-blue-500 hover:text-blue-300"><Link href='/login'>Ingresa aqui</Link></span></p>
 
                     </form>
