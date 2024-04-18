@@ -60,7 +60,7 @@ const UserSchema = new Schema(
             },
         },
         terms_and_conditions: {
-            type: String,
+            type: Boolean,
             required: true,
             default: false
         }

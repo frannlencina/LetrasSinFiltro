@@ -58,7 +58,7 @@ export default function Register() {
         setButtonState(false)
 
         // Cambiar username por email y en el backend tambien
-        const data = { username: `${body.username}`, email: `${body.email}`, password: hashedPassword, terms_and_coditions: isChecked };
+        const data = { username: `${body.username}`, email: `${body.email}`, password: hashedPassword, terms_and_conditions: isChecked };
 
         axios.post(POST_URL_REGISTER, data)
             .then(response => {

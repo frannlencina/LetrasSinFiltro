@@ -48,25 +48,30 @@ export default function Login() {
         // Cambiar username por email y en el backend tambien
         const data = { username: `${body.username}`, password: `${body.password}`, };
 
-        axios.post(POST_URL_LOGIN, data)
-            .then(response => {
+        if (data.username.length < 1 || data.password.length < 1) {
+            ToastCustom({ text: "Datos invalidos" })
+        } else {
+            axios.post(POST_URL_LOGIN, data)
+                .then(response => {
 
-                const tokenInfo = response.data.resultado
-                // Generar un token JWT firmado y encriptado
+                    const tokenInfo = response.data.resultado
+                    // Generar un token JWT firmado y encriptado
 
-                const token = jwt.sign(tokenInfo, JSONWKEY, { algorithm: 'HS256', expiresIn: '1h' });
-                Cookies.set('tokenFirmado', token, { expires: 1 / 24, secure: true, sameSite: 'strict' })
+                    const token = jwt.sign(tokenInfo, JSONWKEY, { algorithm: 'HS256', expiresIn: '1h' });
+                    Cookies.set('tokenFirmado', token, { expires: 1 / 24, secure: true, sameSite: 'strict' })
 
-                ToastCustom({ text: "Bienvenido de vuelta :)" })
+                    ToastCustom({ text: "Bienvenido de vuelta :)" })
 
-                // Cambiamos estado global de loggeo 
-                changeLogged(true)
-                Redirect()
-            })
-            .catch(error => {
-                // ToastCustom({ text: error.response.data.error })
-                setButtonState(true)
-            });
+                    // Cambiamos estado global de loggeo 
+                    changeLogged(true)
+                    Redirect()
+                })
+                .catch(error => {
+                    // ToastCustom({ text: error.response.data.error })
+                    setButtonState(true)
+                });
+        }
+
     }
 
     return (
