@@ -16,11 +16,11 @@ interface Types {
 const types: Types = {
     defaultStyle: {
         style: ' bg-opacity-50 px-3 py-1 rounded-md text-xs font-medium ',
-        icon: ''
+        icon: 'arrow-right-s-line'
     },
     succes: {
-        style: '',
-        icon: ''
+        style: ' bg-green-200 text-green-600 ',
+        icon: 'shield-check-line'
     },
     information: {
         style: ' bg-blue-200 text-blue-600 ',
@@ -31,12 +31,12 @@ const types: Types = {
         icon: 'error-warning-line'
     },
     attention: {
-        style: '',
-        icon: ''
+        style: 'bg-stone-200 text-stone-600',
+        icon: 'honour-line'
     },
     error: {
         style: ' bg-red-200 text-red-600 ',
-        icon: 'arrow-up-circle-line'
+        icon: 'error-warning-fill'
     },
 }
 
