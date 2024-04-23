@@ -1,35 +1,25 @@
 'use client'
-import Badge from "./components/Badge";
-import { EmotionProvider } from "./context/EmotionContext";
-import { Toaster } from 'react-hot-toast';
-import GenTab from './components/blocks/GenTab'
-import { useState } from "react";
+import Badge from "./components/Badge"
+import Link from "next/link"
 
 export default function Home() {
-
-  const [chooseGen, setChooseGen] = useState(1)
-
   return (
-    <>
-      <EmotionProvider>
-        <main className="flex min-h-screen flex-col items-center justify-center max-w-6xl mx-auto">
-          <Toaster />
-          <section className="flex flex-col items-center justify-center pt-48 pb-12">
-            <Badge text="Alpha v1.0" type="yellow" icon={true} />
-            <div className="flex flex-col justify-center items-start gap-4 p-4">
-              <h1 id="heroTitle" className="font-black bg-clip-text text-transparent bg-gradient-to-r from-blue-200 via-blue-600 to-blue-200 text-3xl sm:text-6xl text-center max-w-3xl">Generá <span id="heroTitleMid" className="text-stone-800">frases que te</span> <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-blue-200 ">identifiquen</span></h1>
-              <h4 className="text-center font-medium opacity-50 max-w-lg mx-auto ">Tu desahogo emocional tiene un espacio en nuestras frases. Cada palabra es un portal para expresar tus emociones, brindándote un refugio en el vasto mundo digital.</h4>
-            </div>
-          </section>
-          <div className="flex gap-2 justify-end mt-12">
-            <button onClick={() => setChooseGen(1)} className={chooseGen === 1 ? 'text-lg bg-blue-200 cursor-pointer font-medium text-blue-500 bg-opacity-50 transition-all py-1 px-2 rounded-lg flex items-center gap-4' : 'hover:text-blue-500 bg-stone-200 cursor-pointer font-medium text-stone-500 bg-opacity-50 transition-all py-1 px-2 rounded-lg flex items-center gap-4'} >Generador</button>
-            <button onClick={() => setChooseGen(2)} className={chooseGen === 2 ? 'text-lg cursor-pointer font-medium bg-green-200 text-green-500 bg-opacity-50 transition-all py-1 px-2 rounded-lg flex items-center gap-4' : 'hover:text-green-500 cursor-pointer bg-stone-200 font-medium text-stone-500 bg-opacity-50 transition-all py-1 px-2 rounded-lg flex items-center gap-4'} >Favoritos</button>
+    <main className="flex min-h-screen flex-col items-center justify-center max-w-6xl mx-auto">
+      <section id="heroHome">
+        <div className="flex items-center justify-center">
+          <Badge text="Generador de indirectas ya disponible" icon={true} type="warning" />
+        </div>
+        <div className="flex flex-col max-w-2xl mx-auto text-center mt-8">
+          <h1 className="text-5xl font-bold">Tu historia, tus palabras, nuestro generador único.</h1>
+          <h4 className=" text-lg font-medium opacity-60">Crea frases que motiven y conecten. Tu historia merece ser contada. Únete a nosotros y comparte tu inspiración</h4>
+          <div className="flex justify-center items-center gap-4 mt-4">
+            <Link className="text-black bg-white border border-gray-500  py-2 px-4 rounded-lg" href="/generator">Generador</Link>
+            <Link className="text-white bg-blue-600 py-2 px-4 rounded-lg" href="/templates">Plantillas <i className="ri-arrow-right-line"></i> </Link>
           </div>
-          <section className="flex flex-col gap-6 justify-center mt-16 max-w-4xl">
-            <GenTab select={chooseGen} />
-          </section>
-        </main>
-      </EmotionProvider>
-    </>
+        </div>
+      </section>
+      <section id="heroTemplates"></section>
+      <section id="heroGenerator"></section>
+    </main>
   )
 }
