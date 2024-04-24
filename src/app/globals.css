@@ -60,6 +60,13 @@ body {
   background-position: bottom;
 }
 
+@media screen and (max-width: 767px) {
+  #heroHome {
+    height: 1400px;
+    background-image: none;
+  }
+}
+
 #heroTemplates {
   background-image: url('/assets/imgs/home/bgHeroTemplates.png');
   background-size: contain;
