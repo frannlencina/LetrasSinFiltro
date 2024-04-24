@@ -1,0 +1,15 @@
+[
+    {
+        "text": "Seleccionas la plantilla que mas te guste",
+        "img": "step1-img.png"
+        
+    },
+    {
+        "text": "Le cambias las palabras a tu gusto",
+        "img": "step2-img.png"
+    },
+    {
+        "text": "Descarga y comparte donde mas desees",
+        "img": "step3-img.png"
+    }
+]

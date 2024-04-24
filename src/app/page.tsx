@@ -1,25 +1,63 @@
 'use client'
 import Badge from "./components/Badge"
 import Link from "next/link"
+import GenTab from "./components/blocks/GenTab"
+import { EmotionProvider } from "./context/EmotionContext"
+import HomeSteps from './utils/HomeSteps.json'
 
 export default function Home() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center max-w-6xl mx-auto">
-      <section id="heroHome">
-        <div className="flex items-center justify-center">
-          <Badge text="Generador de indirectas ya disponible" icon={true} type="warning" />
-        </div>
-        <div className="flex flex-col max-w-2xl mx-auto text-center mt-8">
-          <h1 className="text-5xl font-bold">Tu historia, tus palabras, nuestro generador único.</h1>
-          <h4 className=" text-lg font-medium opacity-60">Crea frases que motiven y conecten. Tu historia merece ser contada. Únete a nosotros y comparte tu inspiración</h4>
-          <div className="flex justify-center items-center gap-4 mt-4">
-            <Link className="text-black bg-white border border-gray-500  py-2 px-4 rounded-lg" href="/generator">Generador</Link>
-            <Link className="text-white bg-blue-600 py-2 px-4 rounded-lg" href="/templates">Plantillas <i className="ri-arrow-right-line"></i> </Link>
+    <EmotionProvider>
+      <main className="flex min-h-screen flex-col items-center justify-center mx-auto">
+        <section className="min-h-screen min-w-screen" id="heroHome">
+          <section className="max-w-6xl mt-44 mx-auto">
+            <div className="flex items-center justify-center">
+              <Badge text="Generador de indirectas ya disponible" icon={true} type="success" />
+            </div>
+            <div className="flex flex-col max-w-3xl mx-auto text-center mt-8">
+              <h1 className="text-6xl font-bold">Tu historia, tus palabras, nuestro generador único.</h1>
+              <h4 className=" text-lg font-medium opacity-60">Crea frases que motiven y conecten. Tu historia merece ser contada. Únete a nosotros y comparte tu inspiración</h4>
+              <div className="flex justify-center items-center gap-4 mt-8">
+                <Link className="text-black bg-transparent border border-gray-300 py-2 px-4 rounded-lg hover:bg-black hover:text-white transition-all duration-200" href="/generator">Generador</Link>
+                <button className="text-white select-none cursor-not-allowed  bg-blue-600 py-2 px-4 rounded-lg transition-all duration-200">Plantillas <i className="ri-arrow-right-line"></i> </button>
+              </div>
+            </div>
+            <div className="flex flex-col gap-y-16 sm:flex-row sm:gap-24 justify-center items-center mt-32">
+              {
+                HomeSteps.map((step, index) => (
+                  <div className="max-w-[180px]" key={index}>
+                    <img src={`/assets/imgs/home/${step.img}`} alt={`Paso numero ${index}`} />
+                    <p className="opacity-70">{step.text}</p>
+                  </div>
+                ))
+              }
+            </div>
+          </section>
+        </section>
+        <section className="max-w-6xl mx-auto my-24 grid grid-cols-2 " id="heroTemplates">
+          <div className="max-w-xl flex flex-col gap-4">
+            <h2 className="font-extrabold text-5xl">Las <span className="font-extrabold bg-gradient-to-b from-[#10468F] to-[#106beb59]  bg-clip-text text-transparent">plantillas perfectas</span> para dar vida a <span className="font-extrabold bg-gradient-to-b from-[#943C95] to-[#F778EC]  bg-clip-text text-transparent">tus pensamientos</span></h2>
+            <h4 className="opacity-50 font-medium text-xl">Libera tu imaginación con nuestras plantillas personalizables. Únete y dale vida a tus ideas.</h4>
+            <div className="mt-6">
+              <Link className="text-white bg-blue-600 py-2 px-4 rounded-lg hover:bg-blue-200 hover:text-blue-600  transition-all duration-200" href="/templates">Explorar <i className="ri-arrow-right-line"></i> </Link>
+            </div>
           </div>
-        </div>
-      </section>
-      <section id="heroTemplates"></section>
-      <section id="heroGenerator"></section>
-    </main>
+          <div className="">
+              {/* Templates Cards 2th Column */}
+          </div>
+        </section>
+        <section className="w-full" id="heroGenerator">
+          <section className="max-w-6xl mt-28 mb-6 mx-auto">
+            <div className="flex flex-col gap-4 text-center max-w-2xl mx-auto ">
+              <h2 className="text-5xl font-extrabold text-pretty"><span className="font-extrabold bg-gradient-to-b from-[#943C95] to-[#F778EC]  bg-clip-text text-transparent">Sorpresa, intriga y diversion</span> Con nuestro <span className="font-extrabold bg-gradient-to-b from-[#10468F] to-[#106beb59]  bg-clip-text text-transparent">generador</span> de indirectas único</h2>
+              <h4 className="opacity-50 text-xl ">Expresa tus pensamientos con un toque de misterio. Nuestro generador de indirectas te guía</h4>
+            </div>
+            <div className="my-32">
+              <GenTab select={1} />
+            </div>
+          </section>
+        </section>
+      </main>
+    </EmotionProvider>
   )
 }

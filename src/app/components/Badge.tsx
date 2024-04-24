@@ -15,10 +15,10 @@ interface Types {
 
 const types: Types = {
     defaultStyle: {
-        style: ' bg-opacity-50 px-3 py-1 rounded-md text-xs font-medium ',
+        style: ' bg-opacity-50 px-3 py-1 rounded-md text-sm font-medium ',
         icon: 'arrow-right-s-line'
     },
-    succes: {
+    success: {
         style: ' bg-green-200 text-green-600 ',
         icon: 'shield-check-line'
     },
@@ -49,7 +49,7 @@ const Badge: React.FC<BadgeProps> = ({ text, type, icon }) => {
         <div>
            {icon ? (
                 <span className={`${defaultStyle.style} ${selectedType.style}`}>
-                    <i className={`ri-${selectedType.icon}`}></i>
+                    <i className={`ri-${selectedType.icon} mr-2`}></i>
                     {text}
                 </span>
             ) : (

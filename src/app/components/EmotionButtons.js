@@ -6,13 +6,14 @@ import { useSearchParams, useRouter } from 'next/navigation'
 import Tooltip from './Tooltip';
 import useEmblaCarousel from 'embla-carousel-react'
 import { Suspense } from 'react';
+import { usePathname } from 'next/navigation'
 
 const EmotionButtons = () => {
     const router = useRouter();
+    const pathname = usePathname();
 
     const searchParams = typeof window !== 'undefined' ? new URLSearchParams(window.location.search) : null;
     const focus = searchParams ? searchParams.get('focus') : null;
-
 
     // Carousel Ref
     const [emblaRef] = useEmblaCarousel()
@@ -23,14 +24,13 @@ const EmotionButtons = () => {
         changeEmotion(newEmotion);
         // Verificación de router para uso en el cliente
         if (router) {
-            router.push(`/?focus=${newEmotion}`, { shallow: true, scroll: false });
+            router.push(`${pathname}?focus=${newEmotion}`, { shallow: true, scroll: false });
         }
     };
 
     useEffect(() => {
 
         // Obtener el valor actual del contexto
-
         if (focus) {
             // Validación para permitir solo ciertos valores
             const allowedEmotions = ['Triste', 'Enamorado', 'Feliz', 'Enojado', 'Loco'];

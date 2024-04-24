@@ -2,7 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
-* { -webkit-tap-highlight-color: rgba(0,0,0,0); }
+* {
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
 :root {
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;
@@ -34,7 +37,7 @@ body {
 #heroTitle {
   background: linear-gradient(270deg, #106BEB 69.08%, rgba(184, 213, 255, 0.70) 98.29%);
   background-clip: text;
-  
+
 }
 
 #heroTitleSecond {
@@ -42,20 +45,45 @@ body {
 }
 
 #heroTitleThirst {
- background: linear-gradient(90deg, #106BEB 30.59%, rgba(16, 107, 235, 0.00) 89.37%);
-background-clip: text;
--webkit-background-clip: text;
--webkit-text-fill-color: transparent;
+  background: linear-gradient(90deg, #106BEB 30.59%, rgba(16, 107, 235, 0.00) 89.37%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
-.mainCard{
+#heroHome {
+  background-image: url('/assets/imgs/home/bgHome.png');
+  background-size:contain;
+  height: 1700px;
+  width: 100%;
+  background-repeat: no-repeat;
+  background-position: bottom;
+}
+
+#heroTemplates {
+  background-image: url('/assets/imgs/home/bgHeroTemplates.png');
+  background-size: contain;
+  min-height: 900px;
+  background-repeat: no-repeat;
+  background-position: bottom;
+}
+
+#heroGenerator{
+  background-image: url('/assets/imgs/home/bgHeroGenerator.png');
+  background-size: cover;
+  overflow: hidden;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.mainCard {
   background-image: url('/bg-main-card.png');
   background-size: auto;
   background-repeat: no-repeat;
   background-position: center;
 }
 
-Footer{
+Footer {
   background-image: url('/footer-background.png');
   background-size: cover;
   background-repeat: no-repeat;
@@ -67,13 +95,14 @@ Footer{
     from {
       opacity: 0;
     }
+
     to {
       opacity: 1;
     }
   }
 }
 
-#loginLogo{
+#loginLogo {
   background-image: url('/logo.png');
   background-size: cover;
   background-repeat: no-repeat;

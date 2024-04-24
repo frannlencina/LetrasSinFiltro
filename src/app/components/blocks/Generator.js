@@ -237,7 +237,7 @@ export default function Generator() {
             <div className="flex justify-center items-center ">
                 <div className="mt-16 ">
                     <div className="mb-4">
-                        <Badge text={cardData.name} type="" icon={false} />
+                        <Badge text={cardData.name} type="warning" icon={true} />
                     </div>
                     <div id="elementToDownload" className="transition-all duration-200 mx-auto ">
                         <CardTemplate cardData={cardData} text={textFocus && textFocus.length > 1 ? textFocus : noTextFocusReturn()} />
