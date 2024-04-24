@@ -2,8 +2,7 @@
 import { useEffect } from 'react';
 import Image from 'next/image';
 import { useEmotion } from '../context/EmotionContext';
-import { useSearchParams, useRouter } from 'next/navigation'
-import Tooltip from './Tooltip';
+import { useRouter } from 'next/navigation'
 import useEmblaCarousel from 'embla-carousel-react'
 import { Suspense } from 'react';
 import { usePathname } from 'next/navigation'
@@ -56,7 +55,7 @@ const EmotionButtons = () => {
                 <div className="flex gap-4 items-center justify-center sm:justify-start ">
                     <h4 className="font-black text-black text-2xl ">Mood</h4>
                     <div className='relative group overflow-hidden'>
-                        <Tooltip text={'focus'} />
+                        
                         <svg className="icon icon-tabler icon-tabler-target opacity-10" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" fill="none" strokeLinecap="round" strokeLinejoin="round">
                             <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
                             <path d="M12 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"></path>
