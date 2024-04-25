@@ -16,6 +16,8 @@ import dynamic from 'next/dynamic'
 const AuthButton = dynamic(() => import('../../utils/AuthButton'), { ssr: false })
 
 export default function Generator() {
+    
+    const { logged } = useLogged()
 
     const BASE_URL = process.env.BASE_URL
     const GET_URL_EMOTIONS = process.env.GET_URL_EMOTIONS
@@ -55,7 +57,6 @@ export default function Generator() {
         }
     }, [emotion]);
 
-    const { logged } = useLogged()
 
     const downloadToImage = async () => {
         if (textFocus !== noTextFocus || textFocus === null) {

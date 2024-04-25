@@ -20,6 +20,7 @@ const EmotionButtons = () => {
     const { changeEmotion, emotion } = useEmotion();
 
     const handleButtonClick = (newEmotion) => {
+        console.log("Emotion: " + newEmotion)
         changeEmotion(newEmotion);
         // Verificación de router para uso en el cliente
         if (router) {

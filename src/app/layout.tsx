@@ -2,6 +2,7 @@ import Navbar from './components/Navbar'
 import Footer from './components/Footer'
 
 import { LoggedProvider } from './context/LoggedContext'
+import { EmotionProvider } from './context/EmotionContext'
 
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
@@ -47,38 +48,40 @@ export default function RootLayout({
   return (
     <html lang="en">
       <LoggedProvider>
-        <head>
+        <EmotionProvider>
+          <head>
 
-          {/* Google tag (gtag.js) */}
-          <Script async src="https://www.googletagmanager.com/gtag/js?id=G-LQ7375CC8N"></Script>
-          <Script id='google-analytics'>
-            {`
+            {/* Google tag (gtag.js) */}
+            <Script async src="https://www.googletagmanager.com/gtag/js?id=G-LQ7375CC8N"></Script>
+            <Script id='google-analytics'>
+              {`
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
             gtag('js', new Date());
-
+            
             gtag('config', 'G-LQ7375CC8N');
             
             `}
-          </Script>
+            </Script>
 
-          {/* Google Adsense */}
+            {/* Google Adsense */}
 
-          <Script
-            async
-            src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${process.env.GOOGLE_ADS_CLIENT_ID}`}
-            crossOrigin="anonymous"
-          ></Script>
+            <Script
+              async
+              src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${process.env.GOOGLE_ADS_CLIENT_ID}`}
+              crossOrigin="anonymous"
+            ></Script>
 
-          <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet" />
-        </head>
-        <body className={inter.className}>
-          <Navbar />
-          {children}
-          <SpeedInsights />
-          <Analytics />
-          <Footer />
-        </body>
+            <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet" />
+          </head>
+          <body className={inter.className}>
+            <Navbar />
+            {children}
+            <SpeedInsights />
+            <Analytics />
+            <Footer />
+          </body>
+        </EmotionProvider>
       </LoggedProvider>
     </html>
   )
