@@ -9,7 +9,7 @@ const AdBanner = (props) => {
       console.log(err);
     }
   }, []);
-
+  
   return (
     <ins
       className="adsbygoogle adbanner-customize"
