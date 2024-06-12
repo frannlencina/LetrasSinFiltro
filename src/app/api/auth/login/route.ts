@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 
 import { connectDB } from "@/app/libs/mongodb";
 import User from '@/app/models/user'
+import Cookies from "js-cookie";
 
 const bcrypt = require('bcryptjs');
 

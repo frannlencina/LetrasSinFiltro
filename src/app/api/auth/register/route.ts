@@ -1,7 +1,9 @@
 import { NextResponse } from "next/server";
 import { connectDB } from "@/app/libs/mongodb";
 import User from "@/app/models/user";
+import { v4 as uuidv4 } from 'uuid';
 
+import { sendVerificationEmail } from '../../../libs/email'
 // Crear cuentas
 export async function POST(request: Request) {
   try {
@@ -34,6 +36,8 @@ export async function POST(request: Request) {
 
     } else {
 
+      const emailToken = uuidv4();
+      
       const nuevoUsuario = await User.create({
         username: username,
         avatar: "default",
@@ -46,9 +50,28 @@ export async function POST(request: Request) {
           last_name: last_name,
         },
         terms_and_conditions: terms_and_conditions,
+        email_verify: {
+          isVerify: false,
+          emailToken: emailToken,
+        
+        },
       });
 
-      return NextResponse.json({ nuevoUsuario }, { status: 200 });
+
+      try {
+        await sendVerificationEmail(email, emailToken, username);
+        return new Response(JSON.stringify({ message: 'User has been created and verification email sent.' }), {
+          status: 200,
+          headers: { 'Content-Type': 'application/json' },
+        });
+      } catch (err: any) {
+        return new Response(JSON.stringify({ message: err.message }), {
+          status: 500,
+          headers: { 'Content-Type': 'application/json' },
+        });
+      }
+
+      // return NextResponse.json({ nuevoUsuario }, { status: 200 });
     }
   } catch (err) {
     console.error(err);

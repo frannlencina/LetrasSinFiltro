@@ -4,7 +4,7 @@ const JSONWKEY = process.env.JSONWKEY;
 
 // Función para verificar y decodificar el token JWT
 export function verifyAndDecodeJWT(tokenJWT) {
-    try {
+      try {
         const decodedToken = jwt.verify(tokenJWT, JSONWKEY);
         return decodedToken;
     } catch (error) {

@@ -45,18 +45,43 @@ export default function Login() {
 
         setButtonState(false)
         event.preventDefault();
+        
         // Cambiar username por email y en el backend tambien
         const data = { username: `${body.username}`, password: `${body.password}`, };
+
+        // if (data.username.length < 1 || data.password.length < 1) {
+        //     ToastCustom({ text: "Datos invalidos" })
+        // } else {
+        //     axios.post(POST_URL_LOGIN, data)
+        //         .then(response => {
+
+        //             const tokenInfo = response.data.resultado
+        //             // Generar un token JWT firmado y encriptado
+
+        //             const token = jwt.sign(tokenInfo, JSONWKEY, { algorithm: 'HS256', expiresIn: '1h' });
+        //             Cookies.set('tokenFirmado', token, { expires: 1 / 24, secure: true, sameSite: 'strict' })
+
+        //             ToastCustom({ text: "Bienvenido de vuelta :)" })
+
+        //             // Cambiamos estado global de loggeo 
+        //             changeLogged(true)
+        //             Redirect()
+        //         })
+        //         .catch(error => {
+        //             // ToastCustom({ text: error.response.data.error })
+        //             setButtonState(true)
+        //         });
+        // }
 
         if (data.username.length < 1 || data.password.length < 1) {
             ToastCustom({ text: "Datos invalidos" })
         } else {
-            axios.post(POST_URL_LOGIN, data)
+            axios.post("/api/auth/login", data)
                 .then(response => {
 
                     const tokenInfo = response.data.resultado
+                    
                     // Generar un token JWT firmado y encriptado
-
                     const token = jwt.sign(tokenInfo, JSONWKEY, { algorithm: 'HS256', expiresIn: '1h' });
                     Cookies.set('tokenFirmado', token, { expires: 1 / 24, secure: true, sameSite: 'strict' })
 
@@ -67,7 +92,7 @@ export default function Login() {
                     Redirect()
                 })
                 .catch(error => {
-                    // ToastCustom({ text: error.response.data.error })
+                    ToastCustom({ text: "Datos invalidos" })
                     setButtonState(true)
                 });
         }

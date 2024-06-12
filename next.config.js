@@ -23,6 +23,7 @@ module.exports = {
     GET_URL_EMOTIONS: process.env.GET_URL_EMOTIONS,
     POST_URL_LOGIN: process.env.POST_URL_LOGIN,
     POST_URL_REGISTER: process.env.POST_URL_REGISTER,
+    POST_CONFIRM_EMAIL: process.env.POST_CONFIRM_EMAIL,
     GOOGLE_ADS_CLIENT_ID: process.env.GOOGLE_ADS_CLIENT_ID
   },
   ...nextConfig

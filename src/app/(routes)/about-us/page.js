@@ -22,7 +22,6 @@ export default function AboutUs() {
         }
     };
 
-
     return (
         <main className="w-full h-full flex flex-col justify-center items-center mt-48">
             <section>
@@ -39,7 +38,6 @@ export default function AboutUs() {
                     )
 
                 }
-
             </section>
         </main>
     )

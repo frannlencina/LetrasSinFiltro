@@ -2,6 +2,7 @@
 import { useState } from 'react';
 import { useLogged } from '../context/LoggedContext';
 import LoginModal from '../components/LoginModal';
+import { getLoginData } from '../utils/getLoginData';
 
 const AuthButton = ({ onClick, children }) => {
   
@@ -11,6 +12,8 @@ const AuthButton = ({ onClick, children }) => {
   const handleClick = () => {
     if (logged) {
       onClick();
+
+      
     } else {
       setShowModal(true);
     }
