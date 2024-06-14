@@ -107,7 +107,7 @@ export default function Register() {
                             Acepto los términos y condiciones
                         </label>
                         <hr />
-                        <ActionButton disabled={!isChecked} type="submit" onClick={handleSubmit} text="Registrarse" />
+                        <ActionButton disabled={!isChecked} type="submit" onClick={handleSubmit}>Registrarse</ActionButton>
                         <p className="text-black opacity-70 text-center">Ya tienes cuenta? <span className="text-blue-500 hover:text-blue-300"><Link href='/login'>Ingresa aqui</Link></span></p>
 
                     </form>

@@ -85,7 +85,7 @@ export default function Login() {
                         <label className="mb-4">
                             <input onChange={inputChange} value={body.password} className="min-w-full placeholder:text-black font-semibold placeholder:opacity-30 focus:ring-4 focus:ring-stone-300 py-2 px-4 bg-opacity-40 bg-[#D9D9D9] outline outline-2 outline-[#1e1e1e25] rounded-lg transition-all duration-200" type="password" name="password" placeholder="Ingresa tu contraseña" />
                         </label>
-                        <ActionButton type="submit" onClick={handleSubmit} text="Login" />
+                        <ActionButton type="submit" onClick={handleSubmit}>Entrar</ActionButton>
                         <p className="text-black opacity-70 text-center">No tienes cuenta? <span className="text-blue-500 hover:text-blue-300"><Link href='/register'>Registrate aqui</Link></span></p>
                     </form>
                 </div>
