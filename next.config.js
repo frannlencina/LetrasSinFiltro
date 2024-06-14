@@ -26,6 +26,9 @@ module.exports = {
     POST_CONFIRM_EMAIL: process.env.POST_CONFIRM_EMAIL,
     GOOGLE_ADS_CLIENT_ID: process.env.GOOGLE_ADS_CLIENT_ID
   },
+  experimental: {
+    missingSuspenseWithCSRBailout: false,
+  },
   ...nextConfig
 }
 

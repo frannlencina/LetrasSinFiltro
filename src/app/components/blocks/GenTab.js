@@ -7,7 +7,8 @@ import { stylesNavFooter } from '../../utils/styles'
 import { Suspense } from "react";
 
 import dynamic from 'next/dynamic'
-const Generator = dynamic(() => import('./Generator'), { ssr: false })
+// const Generator = dynamic(() => import('./Generator'), { ssr: false })
+import Generator from "./Generator";
 
 export default function GenTab({ select }) {
     const { logged } = useLogged();
