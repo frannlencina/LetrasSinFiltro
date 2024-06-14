@@ -1,6 +1,6 @@
 'use client';
 import { useSearchParams } from 'next/navigation';
-import VerifyEmailComponent from '../VerifyEmailComponent';
+import VerifyEmailComponent from './VerifyEmailComponent';
 
 export default function VerifyEmailWrapper() {
     const searchParams = useSearchParams();

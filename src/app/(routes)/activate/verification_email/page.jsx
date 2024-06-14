@@ -1,5 +1,5 @@
 import { Suspense } from 'react';
-import VerifyEmailWrapper from '../../../components/blocks/EmailyVerifyWrapper';
+import VerifyEmailWrapper from './EmailyVerifyWrapper';
 
 export default function VerifyEmailPage() {
     return (
