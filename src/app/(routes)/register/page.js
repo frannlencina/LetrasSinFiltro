@@ -60,7 +60,7 @@ export default function Register() {
         // Cambiar username por email y en el backend tambien
         const data = { username: `${body.username}`, email: `${body.email}`, password: hashedPassword, terms_and_conditions: isChecked};
 
-        axios.post("/api/auth/register", data)
+        axios.post(POST_URL_REGISTER, data)
             .then(response => {
                 ToastCustom({ text: "Registrado correctamente" })
                 Redirect();
@@ -68,15 +68,6 @@ export default function Register() {
             .catch(error => {
                 setButtonState(true)
             });
-
-        // axios.post(POST_URL_REGISTER, data)
-        //     .then(response => {
-        //         ToastCustom({ text: "Registrado correctamente" })
-        //         Redirect();
-        //     })
-        //     .catch(error => {
-        //         setButtonState(true)
-        //     });
     }
 
     
