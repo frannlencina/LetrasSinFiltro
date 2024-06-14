@@ -7,6 +7,7 @@ import { EmotionProvider } from "./context/EmotionContext"
 import Link from "next/link"
 import Badge from "./components/Badge"
 import GenTab from "./components/blocks/GenTab"
+import ActionButton from "./components/ActionButton"
 
 // Utils
 import HomeSteps from './utils/HomeSteps.json'
@@ -27,7 +28,7 @@ export default function Home() {
               <h4 className="text-lg font-medium opacity-60">Crea frases que motiven y conecten. Tu historia merece ser contada. Únete a nosotros y comparte tu inspiración</h4>
               <div className="flex justify-center items-center gap-4 mt-8">
                 <Link className="text-black bg-transparent border border-gray-300 py-2 px-4 rounded-lg hover:bg-black hover:text-white transition-all duration-200" href="/generator">Generador</Link>
-                <button className="text-white select-none cursor-not-allowed  bg-blue-600 py-2 px-4 rounded-lg transition-all duration-200">Plantillas <i className="ri-arrow-right-line"></i> </button>
+                <ActionButton type="normal" > <div className="cursor-not-allowed"> Plantillas <i className="ri-arrow-right-line"></i>  </div></ActionButton>
               </div>
             </div>
             <div className="flex flex-col gap-y-16 sm:flex-row sm:gap-24 justify-center items-center mt-32">

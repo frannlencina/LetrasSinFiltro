@@ -10,6 +10,8 @@ import { useLogged } from "../../context/LoggedContext";
 
 import jwt from 'jsonwebtoken';
 
+import ActionButton from '../../components/ActionButton'
+
 export default function Login() {
 
     const JSONWKEY = process.env.JSONWKEY;
@@ -39,39 +41,27 @@ export default function Login() {
         return () => clearTimeout(timeout);
     }
 
-    const [buttonState, setButtonState] = useState(true)
-
     const handleSubmit = async () => {
-
-        setButtonState(false)
-        event.preventDefault();
-        
         // Cambiar username por email y en el backend tambien
-        const data = { username: `${body.username}`, password: `${body.password}`, };
+        const data = { username: body.username, password: body.password };
 
         if (data.username.length < 1 || data.password.length < 1) {
-            ToastCustom({ text: "Datos invalidos" })
-        } else {
-            axios.post(POST_URL_LOGIN, data)
-                .then(response => {
-
-                    const tokenInfo = response.data.resultado
-                    // Generar un token JWT firmado y encriptado
-
-                    const token = jwt.sign(tokenInfo, JSONWKEY, { algorithm: 'HS256', expiresIn: '1h' });
-                    Cookies.set('tokenFirmado', token, { expires: 1 / 24, secure: true, sameSite: 'strict' })
-
-                    ToastCustom({ text: "Bienvenido de vuelta :)" })
-
-                    // Cambiamos estado global de loggeo 
-                    changeLogged(true)
-                    Redirect()
-                })
-                .catch(error => {
-                    setButtonState(true)
-                });
+            ToastCustom({ text: "Datos invalidos" });
+            return;
         }
 
+        try {
+            const response = await axios.post(POST_URL_LOGIN, data);
+            const tokenInfo = response.data.resultado;
+            const token = jwt.sign(tokenInfo, JSONWKEY, { algorithm: 'HS256', expiresIn: '1h' });
+            Cookies.set('tokenFirmado', token, { expires: 1 / 24, secure: true, sameSite: 'strict' });
+            ToastCustom({ text: "Bienvenido de vuelta :)" });
+            changeLogged(true);
+            Redirect();
+        } catch (error) {
+            console.error(error);
+            ToastCustom({ text: "Error al iniciar sesión" });
+        }
     }
 
     return (
@@ -95,7 +85,7 @@ export default function Login() {
                         <label className="mb-4">
                             <input onChange={inputChange} value={body.password} className="min-w-full placeholder:text-black font-semibold placeholder:opacity-30 focus:ring-4 focus:ring-stone-300 py-2 px-4 bg-opacity-40 bg-[#D9D9D9] outline outline-2 outline-[#1e1e1e25] rounded-lg transition-all duration-200" type="password" name="password" placeholder="Ingresa tu contraseña" />
                         </label>
-                        <button onClick={handleSubmit} className="bg-[#5596F1] text-white px-4 py-2 my-4 rounded-lg hover:scale-105 focus:ring-4 focus:ring-blue-300 transition-all duration-200">Login</button>
+                        <ActionButton type="submit" onClick={handleSubmit} text="Login" />
                         <p className="text-black opacity-70 text-center">No tienes cuenta? <span className="text-blue-500 hover:text-blue-300"><Link href='/register'>Registrate aqui</Link></span></p>
                     </form>
                 </div>

@@ -6,6 +6,7 @@ import axios from "axios";
 import { Toaster } from 'react-hot-toast';
 import { ToastCustom } from "../../utils/ToastCustom";
 const bcrypt = require('bcryptjs');
+import ActionButton from "@/app/components/ActionButton";
 
 export default function Register() {
 
@@ -41,35 +42,35 @@ export default function Register() {
     }
 
     const handleSubmit = async () => {
-
         event.preventDefault();
-        // Hashear la contraseña antes de enviarla al servidor
-        const salt = await bcrypt.genSalt(10);
-        const hashedPassword = await bcrypt.hash(body.password, salt);
-
-        // Validar el formato del correo electrónico
-        const emailFormatValido = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(body.email);
-
-        if (!emailFormatValido) {
-            ToastCustom({ text: "Formato de correo electrónico inválido" });
-            return;
+        
+        try {
+            // Hashear la contraseña antes de enviarla al servidor
+            const salt = await bcrypt.genSalt(10);
+            const hashedPassword = await bcrypt.hash(body.password, salt);
+    
+            // Validar el formato del correo electrónico
+            const emailFormatValido = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(body.email);
+    
+            if (!emailFormatValido) {
+                ToastCustom({ text: "Formato de correo electrónico inválido" });
+                return;
+            }
+    
+            setButtonState(false);
+    
+            // Cambiar username por email y en el backend también
+            const data = { username: body.username, email: body.email, password: hashedPassword, terms_and_conditions: isChecked };
+    
+            const response = await axios.post(POST_URL_REGISTER, data);
+            ToastCustom({ text: "Registrado correctamente" });
+            Redirect();
+        } catch (error) {
+            ToastCustom({ text: "Error al registrarse" });
+            console.error(error);
+            setButtonState(true);
         }
-
-        setButtonState(false)
-
-        // Cambiar username por email y en el backend tambien
-        const data = { username: `${body.username}`, email: `${body.email}`, password: hashedPassword, terms_and_conditions: isChecked};
-
-        axios.post(POST_URL_REGISTER, data)
-            .then(response => {
-                ToastCustom({ text: "Registrado correctamente" })
-                Redirect();
-            })
-            .catch(error => {
-                setButtonState(true)
-            });
-    }
-
+    };
     
 
     return (
@@ -106,7 +107,7 @@ export default function Register() {
                             Acepto los términos y condiciones
                         </label>
                         <hr />
-                        <button disabled={!isChecked} onClick={handleSubmit} className="bg-[#004AAD] disabled:bg-stone-200 disabled:cursor-not-allowed disabled:hover:scale-100 text-white px-4 py-2 my-4 rounded-lg hover:scale-105 focus:ring-4 focus:ring-blue-300 transition-all duration-200">Registrarse</button>
+                        <ActionButton disabled={!isChecked} type="submit" onClick={handleSubmit} text="Registrarse" />
                         <p className="text-black opacity-70 text-center">Ya tienes cuenta? <span className="text-blue-500 hover:text-blue-300"><Link href='/login'>Ingresa aqui</Link></span></p>
 
                     </form>
