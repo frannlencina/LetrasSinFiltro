@@ -66,11 +66,6 @@ export default function VerifyEmailComponent({ tokenParams }) {
                                 <h1 className="font-black text-2xl sm:text-4xl">Verificacion de email</h1>
                                 <p className="opacity-60">Estamos verificando tu email, esto puede demorar dependiendo de tu conexion a internet</p>
                             </div>
-                            <div>
-                                <p className='text-lg text-muted-foreground'>
-                                    {'token' + tokenParams}
-                                </p>
-                            </div>
                         </div>
                     </main>
                 ) : (
